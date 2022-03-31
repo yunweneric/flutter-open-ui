@@ -1,6 +1,6 @@
-# Evas-BarMananger
+# AuthUI01
 
-My Mom Has a bar and finds it hard sometimes to manage her finances. This was a project I started working on sometime ago but due to so much work on my part, I didn't go far with it.
+Sample Authentication screens for your projects. Have in mind to do as much as I can. Please share related UIs and feel free to use.
 
 ## Installation
 
