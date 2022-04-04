@@ -15,4 +15,4 @@ Sample Authentication screens for your projects. Have in mind to do as much as I
 
 ## Gallery
 
-<img width="1920" alt="Facebook post - 1 (1)" src="https://user-images.githubusercontent.com/57493613/161568801-88b76ff1-c9d8-41c6-9bda-9a0d48eb2c18.png">
+![Facebook post - 1](https://user-images.githubusercontent.com/57493613/161568894-e135009b-194c-4744-aef1-5d1b2def2863.png)
