@@ -103,7 +103,9 @@ class Welcome extends StatelessWidget {
                       // top: 0,
                     ],
                   )),
-              SizedBox(height: 30.h,)
+              SizedBox(
+                height: 30.h,
+              )
             ],
           ),
         ),
