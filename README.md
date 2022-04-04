@@ -1,16 +1,18 @@
-# auth_02
+# AuthUI02
 
-A new Flutter project.
+Sample Authentication screens for your projects. Have in mind to do as much as I can. Please share related UIs and feel free to use.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+1. Clone Project from repository
+2. Run the command to get dependencies
 
-A few resources to get you started if this is your first Flutter project:
+```
+    flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+3. You are done!
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Gallery
+
+![InShot_20220331_193920261](https://user-images.githubusercontent.com/57493613/161128259-3e7c2305-670b-497a-9d7d-5f5553c93aca.jpg)
