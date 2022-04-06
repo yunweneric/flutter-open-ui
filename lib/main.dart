@@ -1,6 +1,8 @@
-import 'package:auth_02/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kalio/screens/login_screen.dart';
+import 'package:kalio/utils/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Color(0xFF191720),
+        statusBarColor: kgreen,
         statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: Color(0xFF191720),
+        systemNavigationBarColor: kgreen,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             themeMode: ThemeMode.system,
             theme: ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: kdarkcolor,
+              // scaffoldBackgroundColor: kdarkcolor,
               bottomAppBarColor: Color(0xFF1A2634),
               floatingActionButtonTheme: FloatingActionButtonThemeData(backgroundColor: Colors.teal),
               bottomNavigationBarTheme: BottomNavigationBarThemeData(selectedItemColor: Color(0xFF1A2634)),
