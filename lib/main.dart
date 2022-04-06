@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Kalio Auth',
+      title: 'AuthUI03',
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
