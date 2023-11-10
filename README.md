@@ -39,7 +39,7 @@ To contribute to this repo,
   git push origin branch_name
   ```
 
-- Make a pull request to the `contribution_branch`.
+- Make a pull request to the `main` branch.
 
 ## Gallery
 
