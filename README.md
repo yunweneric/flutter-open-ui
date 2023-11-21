@@ -1,4 +1,5 @@
-# Flutter UI Templates for your projects!
+# Flutter Open UIs for your projects!
+![thumbnail](https://github.com/yunweneric/flutter_openUI/assets/57493613/45f99c55-4e43-441c-94c8-ed2ae4026006)
 
 Sample UIs screens for your projects and demos.
 Have in mind to do as much as I can.
