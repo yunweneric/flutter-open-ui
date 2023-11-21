@@ -43,7 +43,7 @@ To contribute to this repo,
 - Make a pull request to the `contribution` branch.
 
 ## Gallery
-![Slide 16_9 - 1](https://github.com/yunweneric/flutter_openUI/assets/57493613/2e98fc6e-8fb9-480f-bb70-e7ec9034c32e)
+![Slide 16_9 - 1](https://github.com/yunweneric/flutter_openUI/assets/57493613/682fdc00-1c7e-44db-a8e7-4bcb7e793b9b)
 
 <!--- ![Slide 16_9 - 1](https://user-images.githubusercontent.com/57493613/161910269-6d82861e-22c3-4dd6-80ae-9f18715a411f.png) --->
 
