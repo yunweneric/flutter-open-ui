@@ -124,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               children: [
                 kh20Spacer(),
+                kh20Spacer(),
                 Image.asset(
                   ImageAsset.illustration + "${i}.png",
                   width: kWidth(context),
