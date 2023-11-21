@@ -1,28 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_openui/utils/image_assets.dart';
+import 'package:flutter_openui/utils/sizing.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        systemNavigationBarColor: Color(0XFFF4F5F0),
+        statusBarColor: Color(0XFFF4F5F0),
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ));
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        // primarySwatch: Colors.teal,
+        primaryColor: const Color(0xFF02CA92),
+        scaffoldBackgroundColor: const Color(0XFFF4F5F0),
+        textTheme: TextTheme(
+          displayLarge: GoogleFonts.poppins(fontSize: 32.0, fontWeight: FontWeight.w600, color: const Color(0xFF4A4848)),
+          bodyMedium: GoogleFonts.poppins(fontSize: 18.0, fontWeight: FontWeight.w300),
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -32,15 +53,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -48,68 +60,143 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+  PageController controller = PageController(initialPage: 0);
+  int currentIndex = 0;
+  List<ScreenData> data = [
+    ScreenData(title: "Buy tickets", description: "Get your tickets with easy and have access to your e-ticket anywhere,anytime."),
+    ScreenData(title: "Schedule Info", description: "Know your schedule and ticket update ahead."),
+    ScreenData(title: "Track your location", description: "Track and share your location with family and friends via text or whatsapp.")
+  ];
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+      body: SafeArea(
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            appPage(context),
+            Positioned(
+              top: 20,
+              left: 20,
+              right: 20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  currentIndex > 0
+                      ? GestureDetector(
+                          onTap: () {
+                            if (currentIndex > 0) controller.animateToPage(currentIndex - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                          },
+                          child: const Icon(Icons.arrow_back_outlined, size: 30),
+                        )
+                      : const SizedBox.shrink(),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        controller.animateToPage(data.length - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                      },
+                      child: const Text("Skip", style: TextStyle(fontWeight: FontWeight.w500)),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  PageView appPage(BuildContext context) {
+    return PageView.builder(
+      controller: controller,
+      itemCount: data.length,
+      onPageChanged: (index) {
+        setState(() {
+          currentIndex = index;
+        });
+      },
+      itemBuilder: (c, i) {
+        ScreenData item = data[i];
+        return Column(
+          children: [
+            Column(
+              children: [
+                kh20Spacer(),
+                Image.asset(
+                  ImageAsset.illustration + "${i}.png",
+                  width: kWidth(context),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Container(
+              padding: kPadding(30, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.title, style: Theme.of(context).textTheme.displayLarge),
+                  kh10Spacer(),
+                  Text(
+                    item.description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  kh20Spacer(),
+                  kh20Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          indicator(i == 0),
+                          indicator(i == 1),
+                          indicator(i == 2),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (i < 2) controller.animateToPage(i + 1, duration: Duration(milliseconds: 500), curve: Curves.linear);
+                          // setState(() {
+                          //   if (i < 2) i = i++;
+                          // });
+                        },
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Color(0XFF02CA92),
+                          child: Icon(Icons.arrow_right_alt, size: 30, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                  kh20Spacer(),
+                  kh20Spacer(),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Container indicator(bool isActive) {
+    return Container(
+      margin: EdgeInsets.only(right: 10),
+      height: isActive ? 8 : 10,
+      width: isActive ? 40 : 10,
+      decoration: BoxDecoration(
+        color: Color(0XFF02CA92),
+        borderRadius: isActive ? BorderRadius.circular(10) : null,
+        shape: isActive ? BoxShape.rectangle : BoxShape.circle,
+      ),
+    );
+  }
+}
+
+class ScreenData {
+  final String title;
+  final String description;
+
+  ScreenData({required this.title, required this.description});
 }
