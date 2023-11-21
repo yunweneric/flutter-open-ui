@@ -75,35 +75,77 @@ class _MyHomePageState extends State<MyHomePage> {
           clipBehavior: Clip.none,
           children: [
             appPage(context),
-            Positioned(
-              top: 20,
-              left: 20,
-              right: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  currentIndex > 0
-                      ? GestureDetector(
-                          onTap: () {
-                            if (currentIndex > 0) controller.animateToPage(currentIndex - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                          },
-                          child: const Icon(Icons.arrow_back_outlined, size: 30),
-                        )
-                      : const SizedBox.shrink(),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        controller.animateToPage(data.length - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                      },
-                      child: const Text("Skip", style: TextStyle(fontWeight: FontWeight.w500)),
-                    ),
-                  ),
-                ],
+            topNavigation(),
+            bottomNavigation(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Positioned bottomNavigation() {
+    return Positioned(
+      bottom: 20,
+      left: 30,
+      right: 30,
+      child: SizedBox(
+        height: 40,
+        width: kWidth(context),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                indicator(currentIndex == 0),
+                indicator(currentIndex == 1),
+                indicator(currentIndex == 2),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {
+                if (currentIndex < 2) controller.animateToPage(currentIndex + 1, duration: Duration(milliseconds: 500), curve: Curves.linear);
+              },
+              child: const CircleAvatar(
+                radius: 25,
+                backgroundColor: Color(0XFF02CA92),
+                child: Icon(Icons.arrow_right_alt, size: 30, color: Colors.white),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Positioned topNavigation() {
+    return Positioned(
+      top: 20,
+      left: 20,
+      right: 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AnimatedSwitcher(
+            duration: Duration(milliseconds: 900),
+            child: currentIndex > 0
+                ? GestureDetector(
+                    onTap: () {
+                      if (currentIndex > 0) controller.animateToPage(currentIndex - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                    },
+                    child: const Icon(Icons.arrow_back_outlined, size: 30),
+                  )
+                : const SizedBox(height: 10),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () {
+                controller.animateToPage(data.length - 1, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+              },
+              child: const Text("Skip", style: TextStyle(fontWeight: FontWeight.w600)),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -145,31 +187,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   kh20Spacer(),
                   kh20Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          indicator(i == 0),
-                          indicator(i == 1),
-                          indicator(i == 2),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (i < 2) controller.animateToPage(i + 1, duration: Duration(milliseconds: 500), curve: Curves.linear);
-                          // setState(() {
-                          //   if (i < 2) i = i++;
-                          // });
-                        },
-                        child: const CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Color(0XFF02CA92),
-                          child: Icon(Icons.arrow_right_alt, size: 30, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
                   kh20Spacer(),
                   kh20Spacer(),
                 ],
@@ -181,15 +198,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container indicator(bool isActive) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
+  Widget indicator(bool isActive) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      margin: const EdgeInsets.only(right: 10),
       height: isActive ? 8 : 10,
       width: isActive ? 40 : 10,
       decoration: BoxDecoration(
-        color: Color(0XFF02CA92),
-        borderRadius: isActive ? BorderRadius.circular(10) : null,
-        shape: isActive ? BoxShape.rectangle : BoxShape.circle,
+        color: const Color(0XFF02CA92),
+        borderRadius: isActive ? BorderRadius.circular(10) : BorderRadius.circular(10),
+        // shape: isActive ? BoxShape.rectangle : BoxShape.circle,
       ),
     );
   }
