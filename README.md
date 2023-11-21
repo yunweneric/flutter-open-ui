@@ -42,5 +42,5 @@ To contribute to this repo,
 - Make a pull request to the `main` branch.
 
 ## Gallery
+<img width="7481" alt="Group 4" src="https://github.com/yunweneric/flutter_openUI/assets/57493613/93fbc0ce-69d9-4817-9fdd-2151ca9ff02b">
 
-![Slide 16_9 - 1](https://user-images.githubusercontent.com/57493613/161910269-6d82861e-22c3-4dd6-80ae-9f18715a411f.png)
