@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_stack/flutter_image_stack.dart';
-import 'package:flutter_openui/ui/components/home_screen.dart';
+import 'package:flutter_openui/ui/pages/home_screen.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:iconoir_flutter/regular/circle.dart';

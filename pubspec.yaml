@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.18.1
   gap: ^3.0.1
   flutter_image_stack: ^0.0.7
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:

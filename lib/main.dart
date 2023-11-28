@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_openui/routes.dart';
 import 'package:flutter_openui/theme/app_themes.dart';
 import 'package:flutter_openui/ui/pages/home.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      getPages: pages,
       home: const HomePage(),
     );
   }
