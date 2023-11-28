@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_image_stack/flutter_image_stack.dart';
+import 'package:flutter_openui/ui/pages/task_details.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:iconoir_flutter/regular/edit.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import 'helper.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -71,21 +74,21 @@ class _HomeScreenState extends State<HomeScreen>
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border:
-                      Border.all(color: Constant.borderColor, width: 2.0),
+                          Border.all(color: Constant.borderColor, width: 2.0),
                       color: Constant.foregroundColor),
                   child: const Icon(LucideIcons.search),
                 ),
                 suffixIcon: searchController.text.isEmpty
                     ? const SizedBox()
                     : IconButton(
-                  tooltip: 'Clear',
-                  onPressed: () {
-                    setState(() {
-                      searchController.clear();
-                    });
-                  },
-                  icon: const Icon(LucideIcons.x),
-                ),
+                        tooltip: 'Clear',
+                        onPressed: () {
+                          setState(() {
+                            searchController.clear();
+                          });
+                        },
+                        icon: const Icon(LucideIcons.x),
+                      ),
                 hintText: 'Search task...',
                 hintStyle: TextStyle(
                     color: Constant.textColor, fontWeight: FontWeight.normal),
@@ -184,67 +187,81 @@ class _HomeScreenState extends State<HomeScreen>
             controller: tabController,
             children: List.generate(
               4,
-                  (index) => Padding(
+              (index) => Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ListView.separated(
                   itemCount: tasks.length,
                   separatorBuilder: (context, index) => const Gap(10),
                   itemBuilder: (context, index) {
                     {
-                      final task = tasks[index];
-                      return Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                            color: Constant.foregroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                const Color(0xFF101828).withOpacity(0.06),
-                                offset: const Offset(0, 3),
-                                spreadRadius: -2,
-                                blurRadius: 10.0,
-                              ),
-                              BoxShadow(
-                                color:
-                                const Color(0xFF101828).withOpacity(0.04),
-                                blurRadius: 4.0,
-                                spreadRadius: -2,
-                                offset: const Offset(0, 2),
-                              )
-                            ]),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ListTile(
-                              title: Text(task.title),
-                              subtitle: Text(task.subtitle),
-                            ),
-                            const Gap(10.0),
-                            Divider(color: Constant.borderColor),
-                            const Gap(10.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(LucideIcons.clock4, color: Constant.borderColor,),
-                                    const Gap(8.0),
-                                    Text(task.date)
-                                  ],
+                      final TaskCard task = tasks[index];
+                      return GestureDetector(
+                        onTap: () => Get.to(TaskDetails(task: task,)),
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                              color: Constant.foregroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color(0xFF101828).withOpacity(0.06),
+                                  offset: const Offset(0, 3),
+                                  spreadRadius: -2,
+                                  blurRadius: 10.0,
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                                  decoration: BoxDecoration(
-                                    color: task.status == 'On Progress' ? Constant.surfaceGreen : Constant.surfacePurple,
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  child: Text(task.status, style: task.status == 'On Progress' ? TextStyle(fontWeight: FontWeight.w600, color: Constant.deepGreen) : const TextStyle()),
+                                BoxShadow(
+                                  color:
+                                      const Color(0xFF101828).withOpacity(0.04),
+                                  blurRadius: 4.0,
+                                  spreadRadius: -2,
+                                  offset: const Offset(0, 2),
                                 )
-                              ],
-                            )
-                          ],
+                              ]),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                title: Text(task.title),
+                                subtitle: Text(task.subtitle),
+                              ),
+                              const Gap(10.0),
+                              Divider(color: Constant.borderColor),
+                              const Gap(10.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        LucideIcons.clock4,
+                                        color: Constant.borderColor,
+                                      ),
+                                      const Gap(8.0),
+                                      Text(task.dueDate)
+                                    ],
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 12.0),
+                                    decoration: BoxDecoration(
+                                      color: task.status == 'On Progress'
+                                          ? Constant.surfaceGreen
+                                          : Constant.surfacePurple,
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                    child: Text(task.status,
+                                        style: task.status == 'On Progress'
+                                            ? TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: Constant.deepGreen)
+                                            : const TextStyle()),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     }
@@ -259,44 +276,102 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Widget listHeading(BuildContext context, {required String heading}) => Text(
-    heading,
-    style: Theme.of(context)
-        .textTheme
-        .titleLarge
-        ?.copyWith(fontWeight: FontWeight.bold),
-  );
+        heading,
+        style: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(fontWeight: FontWeight.bold),
+      );
+}
+
+class Task {
+  String name;
+  bool isCompleted;
+
+  Task({required this.name, required this.isCompleted});
 }
 
 class TaskCard {
   String title;
   String subtitle;
-  String date;
+  String dueDate;
   String status;
+  String description;
+  List<ImageProvider> members;
+  List<Task> tasks;
 
-  TaskCard(
-      {required this.title,
-        required this.subtitle,
-        required this.date,
-        required this.status});
+  TaskCard({
+    required this.title,
+    required this.subtitle,
+    required this.dueDate,
+    required this.status,
+    required this.description,
+    required this.members,
+    required this.tasks,
+  });
 }
 
 List<TaskCard> tasks = [
   TaskCard(
     title: 'NFT Web App Prototype',
     subtitle: 'Your team has used 80% of your available space. Need more?',
-    date: '08:30 AM, 22 May 2022',
+    dueDate: '08:30 AM, 22 May 2022',
     status: 'On Progress',
+    description:
+        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [
+      AssetImage(ImagePath.logo_jf),
+      AssetImage(ImagePath.avatar1),
+      AssetImage(ImagePath.avatar2),
+      AssetImage(ImagePath.avatar3)
+    ],
+    tasks: List.generate(
+      5,
+      (index) => Task(
+          name: 'Lorem ipsum dolor sit amed ... whatever task',
+          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+    ),
   ),
   TaskCard(
-      title: 'This is another boring task I won\'t do',
-      subtitle: 'Since I\'m testing this new app in town, let me break it down',
-      date: '08:30 AM, 22 May 2022',
-      status: 'Completed'),
+    title: 'This is another boring task I won\'t do',
+    subtitle: 'Since I\'m testing this new app in town, let me break it down',
+    dueDate: '08:30 AM, 22 May 2022',
+    status: 'Completed',
+    description:
+        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [
+      AssetImage(ImagePath.avatar),
+      AssetImage(ImagePath.avatar1),
+      AssetImage(ImagePath.logo_jf),
+      AssetImage(ImagePath.avatar3)
+    ],
+    tasks: List.generate(
+      5,
+          (index) => Task(
+          name: 'Lorem ipsum dolor sit amed ... whatever task',
+          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+    ),
+  ),
   TaskCard(
-      title: 'Just an extra task, but who cares',
-      subtitle: 'Since I\'m testing this new app in town, let me break it down',
-      date: '08:30 AM, 22 May 2022',
-      status: 'Extra'),
+    title: 'Just an extra task, but who cares',
+    subtitle: 'Since I\'m testing this new app in town, let me break it down',
+    dueDate: '08:30 AM, 22 May 2022',
+    status: 'Extra',
+    description:
+        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [
+      AssetImage(ImagePath.avatar),
+      AssetImage(ImagePath.avatar1),
+      AssetImage(ImagePath.avatar2),
+      AssetImage(ImagePath.logo_jf)
+    ],
+    tasks: List.generate(
+      5,
+          (index) => Task(
+          name: 'Lorem ipsum dolor sit amed ... whatever task',
+          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+    ),
+  ),
 ];
 
 class CategoryCard extends StatelessWidget {

@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
             leading: const CircleAvatar(
               backgroundImage: AssetImage(ImagePath.logo_jf),
             ),
-            title: Text('John Doe',
+            title: Text('Joel Fah',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
