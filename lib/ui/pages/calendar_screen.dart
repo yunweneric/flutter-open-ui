@@ -34,33 +34,31 @@ class CalendarScreen extends StatelessWidget {
                         color: card.backgroundColor,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              card.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Constant.dark),
-                            ),
-                            const Gap(8.0),
-                            Text(card.description),
-                            const Gap(8.0),
-                            Text(
-                              '${card.startTime}-${card.endTime}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Constant.dark),
-                            )
-                          ],
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            card.title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Constant.dark),
+                          ),
+                          const Gap(8.0),
+                          Text(card.description),
+                          const Gap(8.0),
+                          Text(
+                            '${card.startTime}-${card.endTime}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Constant.dark),
+                          )
+                        ],
                       ),
                     ),
                   )
