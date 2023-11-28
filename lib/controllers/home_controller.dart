@@ -8,6 +8,10 @@ class HomeController extends GetxController {
   TextEditingController _searchController = TextEditingController();
   TextEditingController get searchController => _searchController;
 
+  RxInt _dropDownValue = DateTime.now().month.obs;
+  RxInt get dropDownValue => _dropDownValue;
+
+
   void setCurrentBottomNavbarTabIndex(int index) {
     _currentBottomNavbarTabIndex.value = index;
   }
@@ -15,5 +19,9 @@ class HomeController extends GetxController {
   void clearSearchInput(){
     _searchController.clear();
     update();
+  }
+
+  void setDropDownValue(int newValue){
+    _dropDownValue.value = newValue;
   }
 }

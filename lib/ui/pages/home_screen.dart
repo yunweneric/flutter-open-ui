@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:iconoir_flutter/regular/edit.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import 'helper.dart';
+import '../components/helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen>
                     {
                       final TaskCard task = tasks[index];
                       return GestureDetector(
-                        onTap: () => Get.to(TaskDetails(task: task,)),
+                        onTap: () => Get.to(TaskDetails(task: task,), duration: const Duration(seconds: 1), transition: Transition.cupertinoDialog),
                         child: Container(
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
@@ -274,14 +274,6 @@ class _HomeScreenState extends State<HomeScreen>
       ],
     );
   }
-
-  Widget listHeading(BuildContext context, {required String heading}) => Text(
-        heading,
-        style: Theme.of(context)
-            .textTheme
-            .titleLarge
-            ?.copyWith(fontWeight: FontWeight.bold),
-      );
 }
 
 class Task {

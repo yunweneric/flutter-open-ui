@@ -37,3 +37,11 @@ class Constant {
   // padding
   static EdgeInsets listviewPadding = const EdgeInsets.symmetric(horizontal: 16.0);
 }
+
+Widget listHeading(BuildContext context, {required String heading}) => Text(
+  heading,
+  style: Theme.of(context)
+      .textTheme
+      .titleLarge
+      ?.copyWith(fontWeight: FontWeight.bold),
+);
