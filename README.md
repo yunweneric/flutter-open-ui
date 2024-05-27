@@ -62,14 +62,28 @@ To contribute to this repo,
 <table>
   <tr>
     <td>
-     <a>
-      <img src="./showcase/Frame 2.png" alt="Image 1" width="300"/>
+      <a href="">
+        <img src="./showcase/Frame 4.png" alt="Image 1" width="1000"/>
       </a>
     </td>
-    <td><img src="./showcase/Frame 3.png" alt="Image 2" width="300"/></td>
-    <td><img src="./showcase/Frame 4.png" alt="Image 3" width="300"/></td>
+     <td>
+      <a href="">
+        <img src="./showcase/Frame 3.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+    
+   
   </tr>
   <tr>
-    <td><img src="./showcase/Frame 5.png" alt="Image 1" width="300"/></td>
+   <td>
+      <a href="">
+        <img src="./showcase/Frame 2.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+     <td>
+      <a href="">
+        <img src="./showcase/Frame 5.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
   </tr>
 </table>
