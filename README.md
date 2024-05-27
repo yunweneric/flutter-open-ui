@@ -61,9 +61,9 @@ To contribute to this repo,
 
 <table>
   <tr>
-    <td><img src="./showcase/Frame 2.png" alt="Image 1" width="200"/></td>
-    <td><img src="./showcase/Frame 3.png" alt="Image 2" width="200"/></td>
-    <td><img src="./showcase/Frame 4.png" alt="Image 3" width="200"/></td>
+    <td><img src="./showcase/Frame 2.png" alt="Image 1" width="300"/></td>
+    <td><img src="./showcase/Frame 3.png" alt="Image 2" width="300"/></td>
+    <td><img src="./showcase/Frame 4.png" alt="Image 3" width="300"/></td>
   </tr>
 </table>
 
