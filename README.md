@@ -61,7 +61,11 @@ To contribute to this repo,
 
 <table>
   <tr>
-    <td><img src="./showcase/Frame 2.png" alt="Image 1" width="300"/></td>
+    <td>
+     <a>
+      <img src="./showcase/Frame 2.png" alt="Image 1" width="300"/>
+      </a>
+    </td>
     <td><img src="./showcase/Frame 3.png" alt="Image 2" width="300"/></td>
     <td><img src="./showcase/Frame 4.png" alt="Image 3" width="300"/></td>
   </tr>
@@ -69,7 +73,3 @@ To contribute to this repo,
     <td><img src="./showcase/Frame 5.png" alt="Image 1" width="300"/></td>
   </tr>
 </table>
-
-<!-- ![Slide 16_9 - 1](https://github.com/yunweneric/flutter_openUI/assets/57493613/682fdc00-1c7e-44db-a8e7-4bcb7e793b9b) -->
-
-<!--- ![Slide 16_9 - 1](https://user-images.githubusercontent.com/57493613/161910269-6d82861e-22c3-4dd6-80ae-9f18715a411f.png) --->
