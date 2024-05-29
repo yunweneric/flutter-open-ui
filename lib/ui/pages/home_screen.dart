@@ -19,8 +19,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   TextEditingController searchController = TextEditingController();
   TabController? tabController;
 
@@ -46,36 +45,20 @@ class _HomeScreenState extends State<HomeScreen>
           padding: Constant.listviewPadding,
           child: Container(
             padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-                color: Constant.foregroundColor,
-                borderRadius: BorderRadius.circular(50.0),
-                boxShadow: [
-                  BoxShadow(
-                      color: const Color(0xFF101828).withOpacity(0.06),
-                      offset: const Offset(0, 3),
-                      blurRadius: 10.0,
-                      spreadRadius: -2),
-                  BoxShadow(
-                      color: const Color(0xFF101828).withOpacity(0.04),
-                      offset: const Offset(0, 2),
-                      blurRadius: 4.0,
-                      spreadRadius: -2),
-                ]),
+            decoration: BoxDecoration(color: Constant.foregroundColor, borderRadius: BorderRadius.circular(50.0), boxShadow: [
+              BoxShadow(color: const Color(0xFF101828).withOpacity(0.06), offset: const Offset(0, 3), blurRadius: 10.0, spreadRadius: -2),
+              BoxShadow(color: const Color(0xFF101828).withOpacity(0.04), offset: const Offset(0, 2), blurRadius: 4.0, spreadRadius: -2),
+            ]),
             child: TextField(
               controller: searchController,
               onChanged: (value) {
                 setState(() {});
               },
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+              style: const TextStyle(fontWeight: FontWeight.w600, decoration: TextDecoration.none),
               decoration: InputDecoration(
                 prefixIcon: Container(
                   margin: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border:
-                          Border.all(color: Constant.borderColor, width: 2.0),
-                      color: Constant.foregroundColor),
+                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Constant.borderColor, width: 2.0), color: Constant.foregroundColor),
                   child: const Icon(LucideIcons.search),
                 ),
                 suffixIcon: searchController.text.isEmpty
@@ -90,8 +73,7 @@ class _HomeScreenState extends State<HomeScreen>
                         icon: const Icon(LucideIcons.x),
                       ),
                 hintText: 'Search task...',
-                hintStyle: TextStyle(
-                    color: Constant.textColor, fontWeight: FontWeight.normal),
+                hintStyle: TextStyle(color: Constant.textColor, fontWeight: FontWeight.normal),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -120,12 +102,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   title: 'Landing Page Designs',
                   subtitle: '18 Projects',
-                  imageList: const [
-                    AssetImage(ImagePath.avatar),
-                    AssetImage(ImagePath.avatar1),
-                    AssetImage(ImagePath.avatar2),
-                    AssetImage(ImagePath.avatar3)
-                  ],
+                  imageList: const [AssetImage(ImagePath.avatar), AssetImage(ImagePath.avatar1), AssetImage(ImagePath.avatar2), AssetImage(ImagePath.avatar3)],
                   progressValue: 0.7,
                   titleColor: Constant.foregroundColor,
                   subtitleColor: const Color(0xFFF2F4F7),
@@ -140,12 +117,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   title: 'Meeting on',
                   subtitle: '13 Projects',
-                  imageList: const [
-                    AssetImage(ImagePath.avatar),
-                    AssetImage(ImagePath.avatar1),
-                    AssetImage(ImagePath.avatar2),
-                    AssetImage(ImagePath.avatar3)
-                  ],
+                  imageList: const [AssetImage(ImagePath.avatar), AssetImage(ImagePath.avatar1), AssetImage(ImagePath.avatar2), AssetImage(ImagePath.avatar3)],
                   progressValue: 0.4,
                 ),
                 const Gap(16.0),
@@ -160,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         const Gap(20.0),
         TabBar(
-          dividerHeight: 0,
+          // dividerHeight: 0,
           splashFactory: NoSplash.splashFactory,
           splashBorderRadius: BorderRadius.circular(10.0),
           tabs: const [
@@ -196,28 +168,28 @@ class _HomeScreenState extends State<HomeScreen>
                     {
                       final TaskCard task = tasks[index];
                       return GestureDetector(
-                        onTap: () => Get.to(TaskDetails(task: task,), duration: const Duration(seconds: 1), transition: Transition.cupertinoDialog),
+                        onTap: () => Get.to(
+                            TaskDetails(
+                              task: task,
+                            ),
+                            duration: const Duration(seconds: 1),
+                            transition: Transition.cupertinoDialog),
                         child: Container(
                           padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                              color: Constant.foregroundColor,
-                              borderRadius: BorderRadius.circular(16.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      const Color(0xFF101828).withOpacity(0.06),
-                                  offset: const Offset(0, 3),
-                                  spreadRadius: -2,
-                                  blurRadius: 10.0,
-                                ),
-                                BoxShadow(
-                                  color:
-                                      const Color(0xFF101828).withOpacity(0.04),
-                                  blurRadius: 4.0,
-                                  spreadRadius: -2,
-                                  offset: const Offset(0, 2),
-                                )
-                              ]),
+                          decoration: BoxDecoration(color: Constant.foregroundColor, borderRadius: BorderRadius.circular(16.0), boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF101828).withOpacity(0.06),
+                              offset: const Offset(0, 3),
+                              spreadRadius: -2,
+                              blurRadius: 10.0,
+                            ),
+                            BoxShadow(
+                              color: const Color(0xFF101828).withOpacity(0.04),
+                              blurRadius: 4.0,
+                              spreadRadius: -2,
+                              offset: const Offset(0, 2),
+                            )
+                          ]),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,20 +215,12 @@ class _HomeScreenState extends State<HomeScreen>
                                     ],
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 12.0),
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                                     decoration: BoxDecoration(
-                                      color: task.status == 'On Progress'
-                                          ? Constant.surfaceGreen
-                                          : Constant.surfacePurple,
+                                      color: task.status == 'On Progress' ? Constant.surfaceGreen : Constant.surfacePurple,
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
-                                    child: Text(task.status,
-                                        style: task.status == 'On Progress'
-                                            ? TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: Constant.deepGreen)
-                                            : const TextStyle()),
+                                    child: Text(task.status, style: task.status == 'On Progress' ? TextStyle(fontWeight: FontWeight.w600, color: Constant.deepGreen) : const TextStyle()),
                                   ),
                                 ],
                               )
@@ -309,19 +273,11 @@ List<TaskCard> tasks = [
     subtitle: 'Your team has used 80% of your available space. Need more?',
     dueDate: '08:30 AM, 22 May 2022',
     status: 'On Progress',
-    description:
-        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
-    members: const [
-      AssetImage(ImagePath.logo_jf),
-      AssetImage(ImagePath.avatar1),
-      AssetImage(ImagePath.avatar2),
-      AssetImage(ImagePath.avatar3)
-    ],
+    description: 'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [AssetImage(ImagePath.logo_jf), AssetImage(ImagePath.avatar1), AssetImage(ImagePath.avatar2), AssetImage(ImagePath.avatar3)],
     tasks: List.generate(
       5,
-      (index) => Task(
-          name: 'Lorem ipsum dolor sit amed ... whatever task',
-          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+      (index) => Task(name: 'Lorem ipsum dolor sit amed ... whatever task', isCompleted: [false, true][Random().nextInt([false, true].length)]),
     ),
   ),
   TaskCard(
@@ -329,19 +285,11 @@ List<TaskCard> tasks = [
     subtitle: 'Since I\'m testing this new app in town, let me break it down',
     dueDate: '08:30 AM, 22 May 2022',
     status: 'Completed',
-    description:
-        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
-    members: const [
-      AssetImage(ImagePath.avatar),
-      AssetImage(ImagePath.avatar1),
-      AssetImage(ImagePath.logo_jf),
-      AssetImage(ImagePath.avatar3)
-    ],
+    description: 'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [AssetImage(ImagePath.avatar), AssetImage(ImagePath.avatar1), AssetImage(ImagePath.logo_jf), AssetImage(ImagePath.avatar3)],
     tasks: List.generate(
       5,
-          (index) => Task(
-          name: 'Lorem ipsum dolor sit amed ... whatever task',
-          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+      (index) => Task(name: 'Lorem ipsum dolor sit amed ... whatever task', isCompleted: [false, true][Random().nextInt([false, true].length)]),
     ),
   ),
   TaskCard(
@@ -349,19 +297,11 @@ List<TaskCard> tasks = [
     subtitle: 'Since I\'m testing this new app in town, let me break it down',
     dueDate: '08:30 AM, 22 May 2022',
     status: 'Extra',
-    description:
-        'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
-    members: const [
-      AssetImage(ImagePath.avatar),
-      AssetImage(ImagePath.avatar1),
-      AssetImage(ImagePath.avatar2),
-      AssetImage(ImagePath.logo_jf)
-    ],
+    description: 'Last year was a fantastic year for NFTs, with the market reaching a \$40 billion valuation for the first time. In addition, more than \$10 billion worth of NFTs are now sold every week – with NFT..',
+    members: const [AssetImage(ImagePath.avatar), AssetImage(ImagePath.avatar1), AssetImage(ImagePath.avatar2), AssetImage(ImagePath.logo_jf)],
     tasks: List.generate(
       5,
-          (index) => Task(
-          name: 'Lorem ipsum dolor sit amed ... whatever task',
-          isCompleted: [false, true][Random().nextInt([false, true].length)]),
+      (index) => Task(name: 'Lorem ipsum dolor sit amed ... whatever task', isCompleted: [false, true][Random().nextInt([false, true].length)]),
     ),
   ),
 ];
@@ -382,12 +322,7 @@ class CategoryCard extends StatelessWidget {
     this.subtitleColor,
   });
 
-  final Color? foregroundColor,
-      progressBgColor,
-      progressValueColor,
-      iconBgColor,
-      titleColor,
-      subtitleColor;
+  final Color? foregroundColor, progressBgColor, progressValueColor, iconBgColor, titleColor, subtitleColor;
   final Widget icon;
   final String title, subtitle;
   final List<ImageProvider> imageList;
@@ -398,21 +333,10 @@ class CategoryCard extends StatelessWidget {
     return Container(
       width: ContextVariables.width(context) / 1.4,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
-      decoration: BoxDecoration(
-          color: foregroundColor ?? Constant.foregroundColor,
-          borderRadius: BorderRadius.circular(24.0),
-          boxShadow: [
-            BoxShadow(
-                color: const Color(0xFF101828).withOpacity(0.08),
-                offset: const Offset(0, 2),
-                spreadRadius: -4.0,
-                blurRadius: 16.0),
-            BoxShadow(
-                color: const Color(0xFF101828).withOpacity(0.03),
-                offset: const Offset(0, 4),
-                spreadRadius: -2.0,
-                blurRadius: 6.0)
-          ]),
+      decoration: BoxDecoration(color: foregroundColor ?? Constant.foregroundColor, borderRadius: BorderRadius.circular(24.0), boxShadow: [
+        BoxShadow(color: const Color(0xFF101828).withOpacity(0.08), offset: const Offset(0, 2), spreadRadius: -4.0, blurRadius: 16.0),
+        BoxShadow(color: const Color(0xFF101828).withOpacity(0.03), offset: const Offset(0, 4), spreadRadius: -2.0, blurRadius: 6.0)
+      ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -448,8 +372,7 @@ class CategoryCard extends StatelessWidget {
             backgroundColor: progressBgColor ?? Constant.surfacePurple,
             borderRadius: BorderRadius.circular(5.0),
             minHeight: 4,
-            valueColor: AlwaysStoppedAnimation<Color>(
-                progressValueColor ?? Constant.purple),
+            valueColor: AlwaysStoppedAnimation<Color>(progressValueColor ?? Constant.purple),
             value: progressValue,
           ),
           const Gap(10),
