@@ -38,7 +38,7 @@ samples, guidance on mobile development, and a full API reference.
    
   </tr>
     <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/doughnut_shop">
+      <a href="https://github.com/yunweneric/flutter-open-animate/tree/fruits_animation">
         <img src="./assets/showcase/fruits_demo.png" alt="Image 1" width="1000"/>
       </a>
     </td>
