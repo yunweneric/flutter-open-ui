@@ -7,9 +7,9 @@ flutter pub get
 flutter run
 ```
 
-- [Figma File ](<https://www.figma.com/design/W2y6dqHqRVb4irEfpBAldx/Donut---3D-Carousel-Figma-Animation-Prototyping-Website-UI-Design-(Community)?m=auto&t=7CgmZqvZKIvoiwu1-6>)
+- [Figma File ](<https://www.figma.com/design/Sn883J01rFsGdS14wujOGz/Intro-Slider-Effect-Animation-di-Figma-(Community)?node-id=0%3A1&t=xnD31wuPmzp6nC0g-1>)
 
-- [Demo Link](https://flutterdoughnuts.netlify.app/)
+- [Demo Link](https://flutter-nike-animation.netlify.app/)
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -20,31 +20,4 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Gallery
-
-<table>
-  <tr>
-    <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/doughnut_shop">
-        <img src="./assets/showcase/doughnuts.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/nike_slider">
-              <img src="./assets/showcase/nike_slider.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-
-  </tr>
-     <td>
-      <a href="#">
-      </a>
-    </td>
-     <td>
-      <a href="#">
-      </a>
-    </td>
-
-  </tr>
-
-</table>
+<img src="./ui.gif"/>
