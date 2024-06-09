@@ -79,7 +79,7 @@ To contribute to this repo,
     </td>
      <td>
       <a href="https://github.com/yunweneric/flutter-open-animate/tree/car_rental">
-        <img src="./assets/showcase/car.png" alt="Image 1" width="1000" height="120"/>
+        <img src="./assets/showcase/car.png" alt="Image 1" width="1000"/>
       </a>
     </td>
 
