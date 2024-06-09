@@ -1,4 +1,4 @@
-package com.example.flutter_fruits_animation
+package com.example.flutter_3d_nike_shop
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const strawberry = Color(0xFFFF3D6C);
-  static const strawberry_light = Color(0xFFFFCCD9);
-  static const orange = Color(0xFFFFA31E);
-  static const orange_light = Color(0xFFFFE4C1);
-  static const apple = Color(0xFF7FD925);
-  static const apple_light = Color(0XFFE0FFC1);
+  static const bgGray = Color(0XFF3B3B3B);
+  static const lightGray = Color(0xFF707070);
+
+  static const bGreen = Color(0xFF105C5C);
+  static const lightGreen = Color(0xFF1EA9A9);
+
+  static const bgRed = Color(0xFF410100);
+  static const lightRed = Color(0xFFA10200);
+
+  static const darkBlue = Color(0xFF314559);
+  static const red = Color(0xFFFF5A5A);
+  static const yellow = Color(0xFFFFCE6D);
   static const white = Color(0xFFFFFFFF);
-  static const black = Color(0xFF000000);
+  static const black = Color(0xff000000);
+  static const bg = Color(0xFFE3E3E3);
+  static const gray = Color(0xFF5B5B5F);
 }

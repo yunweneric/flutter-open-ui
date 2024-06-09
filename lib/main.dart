@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fruits_animation/utils/colors.dart';
-import 'package:flutter_fruits_animation/pages/home.dart';
+import 'package:flutter_3d_nike_shop/pages/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter 3D Carousel',
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.strawberry),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 55, fontWeight: FontWeight.w700),
+          displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          displaySmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        primaryColor: AppColors.strawberry,
       ),
-      home: const MyHomePage(title: 'Home'),
+      home: const HomePage(),
     );
   }
 }
