@@ -1,10 +1,13 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_open_animate/pages/components/animated_bg.dart';
-import 'package:flutter_open_animate/pages/components/clipper.dart';
-import 'package:flutter_open_animate/pages/components/rotated_items.dart';
-import 'package:flutter_open_animate/pages/components/toggle_items.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_open_animate/pages/components/nar_bar.dart';
 import 'package:flutter_open_animate/pages/models/doughnut.dart';
 import 'package:flutter_open_animate/utils/colors.dart';
+import 'package:flutter_open_animate/utils/sizing.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,21 +19,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animatedAngle;
-
-  // double rotationFactor = 1.58;
-  double rotationFactor = 1.58;
-  int activeIndex = 0;
-  final duration = const Duration(milliseconds: 500);
+  PageController pageController = PageController(initialPage: 0);
+  PageController textPageController = PageController(initialPage: 1);
+  PageController leavePageController = PageController(initialPage: 0);
+  double activeIndex = 0;
+  final duration = const Duration(milliseconds: 1500);
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 2500));
-    final curvedAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticInOut,
-    );
-    _animatedAngle = Tween<double>(begin: -rotationFactor, end: 0).animate(curvedAnimation);
-    _controller.forward();
   }
 
   @override
@@ -39,45 +35,139 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  animate(Doughnut item) {
-    final curvedAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticOut,
-    );
-    _animatedAngle = Tween<double>(begin: activeIndex * -rotationFactor, end: rotationFactor * -item.index).animate(curvedAnimation);
-    _controller.reset();
-    _controller.forward();
-    setState(() => activeIndex = item.index);
+  animate() {
+    if (pageController.page == 1) {
+      pageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo).whenComplete(() {
+        setState(() {
+          activeIndex = pageController.page ?? 0.0;
+        });
+      });
+      textPageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
+      leavePageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
+    } else {
+      textPageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
+      pageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo).whenComplete(() {
+        setState(() {
+          activeIndex = pageController.page ?? 0.0;
+        });
+      });
+      leavePageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
+    }
   }
 
-  List<Doughnut> items = [
-    Doughnut(index: 0, color: AppColors.yellow),
-    Doughnut(index: 1, color: AppColors.blue),
-    Doughnut(index: 2, color: AppColors.red),
-    Doughnut(index: 3, color: AppColors.green),
-  ];
+  double translate = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgBlack,
       body: Stack(
         children: [
-          clipper(activeIndex, duration, items[activeIndex].color),
-          ...animatedBg(duration, activeIndex, items),
-          titleAndTogglers(
-            context: context,
-            onTap: animate,
-            duration: duration,
-            items: items,
-            activeIndex: activeIndex,
+          // Image.asset("assets/images/dark_bottle.png"),
+
+          Positioned(
+            child: Center(
+              child: Image.asset(
+                "assets/images/bottle.png",
+                fit: BoxFit.fitHeight,
+              ),
+            ),
           ),
-          rotatedItems(
-            context: context,
-            items: items,
-            controller: _controller,
-            animatedAngle: _animatedAngle,
-            activeIndex: activeIndex,
-            duration: duration,
+
+          // Positioned(
+          //   child: Transform.translate(
+          //     offset: Offset(-translate, 0),
+          //     // child: Image.asset("assets/images/dark_pattern.png"),
+          //     child: SvgPicture.asset("assets/images/clipper.svg"),
+          //   ),
+          // ),
+          PageView.builder(
+            itemCount: 2,
+            controller: pageController,
+            itemBuilder: (c, i) {
+              return AnimatedContainer(
+                duration: Duration(milliseconds: 1000),
+                height: Sizing.height(context),
+                width: Sizing.width(context),
+                color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
+              );
+            },
           ),
+          PageView.builder(
+            itemCount: 2,
+            controller: textPageController,
+            itemBuilder: (c, i) {
+              return Center(
+                child: Text(
+                  i == 0 ? "DARK" : "LIGHT",
+                  style: TextStyle(
+                    fontSize: 300,
+                    color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              );
+            },
+          ),
+          Center(
+            child: Image.asset(
+              "assets/images/bottle.png",
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          PageView.builder(
+            itemCount: 2,
+            scrollDirection: Axis.vertical,
+            controller: leavePageController,
+            itemBuilder: (c, i) {
+              return Transform.translate(
+                offset: Offset(0, Sizing.height(context) * 0.1),
+                child: Container(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 2.5),
+                    child: SvgPicture.asset(i == 1 ? "assets/images/dark_leaves.svg" : "assets/images/light_leaves.svg"),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          //  PageView.builder(
+          //   itemCount: 2,
+          //   controller: pageController,
+          //   itemBuilder: (c, i) {
+          //     return AnimatedContainer(
+          //       duration: Duration(milliseconds: 1000),
+          //       height: Sizing.height(context),
+          //       width: Sizing.width(context),
+          //       child: Center(
+          //         child: Image.asset(
+          //           "assets/images/bottle.png",
+          //           fit: BoxFit.fitHeight,
+          //         ),
+          //       ),
+          //       color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
+          //     );
+          //   },
+          // ),
+
+          // Slider(
+          //     min: -1000,
+          //     max: 1000,
+          //     value: translate,
+          //     onChanged: (val) {
+          //       setState(() {
+          //         translate = val;
+          //       });
+          //     }),
+
+          Center(
+            child: ElevatedButton(
+              onPressed: () => animate(),
+              child: Text("toggle"),
+            ),
+          ),
+
+          NavBar(activeIndex: activeIndex),
         ],
       ),
     );

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Doughnuts',
+      title: 'Animated Dark',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: const TextTheme(
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           displaySmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.bgBlack),
         useMaterial3: true,
       ),
       home: const HomePage(),

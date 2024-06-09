@@ -29,13 +29,13 @@ class Follow extends StatelessWidget {
       child: TextButton.icon(
         style: TextButton.styleFrom(
           alignment: Alignment.centerLeft,
-          backgroundColor: AppColors.white,
+          backgroundColor: AppColors.bgWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
         onPressed: () => Helper.navigate(link.url),
-        label: Text(link.title, style: const TextStyle(color: AppColors.black, fontSize: 12)),
+        label: Text(link.title, style: const TextStyle(color: AppColors.bgBlack, fontSize: 12)),
         icon: SvgPicture.asset("assets/icons/${link.icon}.svg"),
       ),
     );
