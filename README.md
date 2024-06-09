@@ -78,7 +78,7 @@ To contribute to this repo,
       </a>
     </td>
      <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/fruits_animation">
+      <a href="https://github.com/yunweneric/flutter-open-animate/tree/car_rental">
         <img src="./assets/showcase/car.png" alt="Image 1" width="1000" height="120"/>
       </a>
     </td>
