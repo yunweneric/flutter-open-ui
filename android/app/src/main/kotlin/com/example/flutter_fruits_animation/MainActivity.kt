@@ -1,4 +1,4 @@
-package com.example.flutter_open_animate
+package com.example.flutter_fruits_animation
 
 import io.flutter.embedding.android.FlutterActivity
 

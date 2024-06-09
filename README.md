@@ -1,15 +1,10 @@
-### Getting Started
+# Flutter 3D Carousel Slider
 
-An amazing UI Design from figma community. Done with Flutter
+An amazing [UI Design](<[Link](https://github.com/ln-dev7/3D-Carousel-Slider-UI)>) I saw from a friend. Initially done by [LN](https://github.com/ln-dev7)
 
-```bash
-flutter pub get
-flutter run
-```
+## Getting Started
 
-- [Figma File ](<https://www.figma.com/design/W2y6dqHqRVb4irEfpBAldx/Donut---3D-Carousel-Figma-Animation-Prototyping-Website-UI-Design-(Community)?m=auto&t=7CgmZqvZKIvoiwu1-6>)
-
-- [Demo Link](https://flutterdoughnuts.netlify.app/)
+This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -20,31 +15,4 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Gallery
-
-<table>
-  <tr>
-    <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/doughnut_shop">
-        <img src="./assets/showcase/doughnuts.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/nike_slider">
-        <img src="./assets/showcase/nike_ui.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-   
-   
-  </tr>
-    <td>
-      <a href="https://github.com/yunweneric/flutter-open-animate/tree/fruits_animation">
-        <img src="./assets/showcase/fruits_demo.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-    </td>
-
-  </tr>
-
-</table>
+<img src="https://github.com/yunweneric/flutter-3DCarousel-Slider/blob/main/demo.png?raw=true"/>
