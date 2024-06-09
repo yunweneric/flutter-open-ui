@@ -26,15 +26,15 @@ samples, guidance on mobile development, and a full API reference.
   <tr>
     <td>
       <a href="https://github.com/yunweneric/flutter-open-animate/tree/doughnut_shop">
-        <img src="./assets/showcase//doughnuts.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/doughnuts.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
-      <a href="#">
+      <a href="https://github.com/yunweneric/flutter-open-animate/tree/nike_slider">
+              <img src="./assets/showcase/nike_slider.png" alt="Image 1" width="1000"/>
       </a>
     </td>
-   
-   
+
   </tr>
      <td>
       <a href="#">
