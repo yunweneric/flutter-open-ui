@@ -1,24 +1,59 @@
-### Getting Started
+# Flutter Open UIs for your projects!
 
-An amazing UI Design from figma community. Done with Flutter
+![thumbnail](./assets/showcase/cover.png)
 
-```bash
-flutter pub get
-flutter run
-```
+Flutter animated open-source project that's all about pushing the boundaries of User Interfaces! 🌟✨ If you're a Flutter enthusiast or just someone who appreciates stunning UI/UX, this project is tailor-made for you! 🚀🎨
 
-- [Figma File ](<https://www.figma.com/design/W2y6dqHqRVb4irEfpBAldx/Donut---3D-Carousel-Figma-Animation-Prototyping-Website-UI-Design-(Community)?m=auto&t=7CgmZqvZKIvoiwu1-6>)
+## Setup guide
 
-- [Demo Link](https://flutterdoughnuts.netlify.app/)
+- Install and use [Fvm](https://fvm.app/) to manage your flutter version
 
-A few resources to get you started if this is your first Flutter project:
+- Specify your fvm version
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  ```
+  fvm use 3.xx
+  ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Get your dependencies
+  ```
+   flutter pub get
+  ```
+
+## Contribution guide
+
+To contribute to this repo,
+
+- Fork the repo
+- Check out to the `starter_app`. This branch is the simple `flutter counter app`
+- Create your own branch from the `starter_app` branch
+- Make sure the branch name follows the numbering ex: AuthUI01, AuthUI02, AuthUI03, OnboardingUI01 ...
+- Change your flutter version using fvm
+
+  ```
+  fvm use 3.xx
+  ```
+
+- You can learn how to use fvm here [How to use Fvm](https://fvm.app/)
+
+- Create your mockup and add it in the assets/showcase folder
+- Add all your changes
+  ```
+  git add .
+  ```
+- Commit your changes
+
+  ```![Uploading app_logo3.png…]()
+
+  git commit -m 'proper commit message'
+  ```
+
+- Push your changes to your branch
+
+  ```
+  git push origin branch_name
+  ```
+
+- Make a pull request to the `contribution` branch.
 
 ## Gallery
 
@@ -43,6 +78,9 @@ samples, guidance on mobile development, and a full API reference.
       </a>
     </td>
      <td>
+      <a href="https://github.com/yunweneric/flutter-open-animate/tree/fruits_animation">
+        <img src="./assets/showcase/car.png" alt="Image 1" width="1000" height="120"/>
+      </a>
     </td>
 
   </tr>
