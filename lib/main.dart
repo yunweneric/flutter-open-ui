@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Animated Dark',
+      title: "S'wips",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(

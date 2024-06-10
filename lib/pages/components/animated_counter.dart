@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_open_animate/pages/models/watch.dart';
 import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/sizing.dart';
@@ -24,19 +26,29 @@ class AnimatedCounter extends StatelessWidget {
               (watch) {
                 return InkWell(
                   onTap: () => onTap(watch.index),
-                  child: AnimatedScale(
-                    duration: duration,
-                    scale: activeIndex == watch.index ? 1.8 : 1,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 30),
-                      child: Text(
-                        "0${watch.index + 1}",
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                              fontSize: 20,
-                              color: AppColors.textWhite,
-                            ),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    // alignment: Alignment.center,
+                    children: [
+                      AnimatedScale(
+                        duration: duration,
+                        scale: activeIndex == watch.index ? 1.8 : 1,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 30),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            "0${watch.index + 1}",
+                            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  fontSize: 30,
+                                  color: AppColors.textWhite,
+                                  // decoration: activeIndex == watch.index ? TextDecoration.lineThrough : TextDecoration.none,
+                                  // decorationColor: activeIndex == watch.index ? watches[activeIndex].color : Colors.transparent,
+                                  // decorationThickness: 5,
+                                ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               },

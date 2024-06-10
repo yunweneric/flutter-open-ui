@@ -22,11 +22,11 @@ class StackedCircles extends StatelessWidget {
             Positioned(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 1200),
-                width: Sizing.height(context) * 0.5,
-                height: Sizing.height(context) * 0.5,
+                width: Sizing.width(context) * 0.3,
+                height: Sizing.width(context) * 0.3,
                 decoration: BoxDecoration(
                   color: watches[activeIndex].borderColor,
-                  borderRadius: BorderRadius.circular(Sizing.height(context) * 0.5),
+                  borderRadius: BorderRadius.circular(Sizing.width(context) * 0.5),
                   boxShadow: [
                     BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 16, blurRadius: 20),
                   ],
@@ -36,8 +36,8 @@ class StackedCircles extends StatelessWidget {
             Positioned(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 1200),
-                width: Sizing.height(context) * 0.4,
-                height: Sizing.height(context) * 0.4,
+                width: Sizing.width(context) * 0.22,
+                height: Sizing.width(context) * 0.22,
                 decoration: BoxDecoration(
                   color: watches[activeIndex].color,
                   shape: BoxShape.circle,
