@@ -63595,13 +63595,10 @@ a0P(a){var s=this
 s.e.IQ(a,B.kb,B.fu)
 s.d.IQ(a,B.kb,B.fu)
 s.aF(new A.a4i(s,a))},
-V(a){var s,r,q=this,p=4294963954,o=null,n=A.a([new A.fx(0,B.pU,new A.r(p)),new A.fx(1,B.Hr,new A.r(4291879160)),new A.fx(2,B.Ht,A.aw(255,255,254,245)),new A.fx(3,B.Hu,new A.r(4294965486)),new A.fx(4,B.pU,new A.r(p)),new A.fx(5,B.Hq,new A.r(4294765311))],t.CY),m=t.w,l=A.br(a,o,m).w
-l=A.fU(o,A.aaL("assets/icons/eclipse_left.svg",A.br(a,o,m).w.a.b,o),o,o,l.a.a*-0.1,o,o,o)
-s=A.br(a,o,m).w
-s=A.fU(o,A.aaL("assets/icons/eclipse_right.svg",A.br(a,o,m).w.a.b,o),o,o,o,s.a.a*-0.1,o,o)
-m=A.fU(o,A.pg(B.yI,A.br(a,o,m).w.a.b,o),o,o,o,-20,o,o)
-r=q.f
-return new A.vA(A.wf(B.db,A.a([l,s,m,new A.Aj(q.d,n,r,o),new A.Ai(n,q.ga0O(),B.fu,r,o),new A.G1(q.e,n,r,o),new A.un(o)],t.F),B.as,B.d3),o)}}
+V(a){var s,r=this,q=4294963954,p=null,o=A.a([new A.fx(0,B.pU,new A.r(q)),new A.fx(1,B.Hr,new A.r(4291879160)),new A.fx(2,B.Ht,A.aw(255,255,254,245)),new A.fx(3,B.Hu,new A.r(4294965486)),new A.fx(4,B.pU,new A.r(q)),new A.fx(5,B.Hq,new A.r(4294765311))],t.CY),n=t.w,m=A.fU(p,A.aaL("assets/icons/eclipse_left.svg",A.br(a,p,n).w.a.b,A.br(a,p,n).w.a.a*0.3),p,p,0,p,p,p),l=A.fU(p,A.aaL("assets/icons/eclipse_right.svg",A.br(a,p,n).w.a.b,A.br(a,p,n).w.a.a*0.7),p,p,p,0,p,p)
+n=A.fU(p,A.pg(B.yI,A.br(a,p,n).w.a.b,p),p,p,p,-20,p,p)
+s=r.f
+return new A.vA(A.wf(B.db,A.a([m,l,n,new A.Aj(r.d,o,s,p),new A.Ai(o,r.ga0O(),B.fu,s,p),new A.G1(r.e,o,s,p),new A.un(p)],t.F),B.as,B.d3),p)}}
 A.a4i.prototype={
 $0(){this.a.f=this.b},
 $S:0}
@@ -65128,10 +65125,9 @@ r=g.e
 g=f.b
 q=g.gM(0)
 if(!q)s=r/g.b*g.a
-else if(s!=null&&!g.gM(0))r=s/g.a*g.b
-g=f.b
+else{q=g.gM(0)
+if(!q)r=s/g.a*g.b}g=f.b
 q=g.a
-s.toString
 g=g.b
 p=Math.min(q/s,g/r)
 if($.akp()){o=i.d.b

@@ -49,12 +49,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       body: Stack(
         children: [
           Positioned(
-            left: Sizing.width(context) * -0.1,
-            child: SvgPicture.asset("assets/icons/eclipse_left.svg", height: Sizing.height(context)),
+            left: 0,
+            child: SvgPicture.asset(
+              "assets/icons/eclipse_left.svg",
+              height: Sizing.height(context),
+              width: Sizing.width(context) * 0.3,
+            ),
           ),
           Positioned(
-            right: Sizing.width(context) * -0.1,
-            child: SvgPicture.asset("assets/icons/eclipse_right.svg", height: Sizing.height(context)),
+            // right: Sizing.width(context) * -0.1,
+            right: 0,
+            child: SvgPicture.asset(
+              "assets/icons/eclipse_right.svg",
+              height: Sizing.height(context),
+              width: Sizing.width(context) * 0.7,
+            ),
           ),
           Positioned(
             right: -20,
