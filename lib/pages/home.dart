@@ -1,10 +1,18 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_open_animate/pages/components/animated_counter.dart';
+import 'package:flutter_open_animate/pages/components/animated_text.dart';
 import 'package:flutter_open_animate/pages/components/nar_bar.dart';
 import 'package:flutter_open_animate/pages/components/shaded_bottle.dart';
+import 'package:flutter_open_animate/pages/components/stacked_circles.dart';
+import 'package:flutter_open_animate/pages/components/watch_slider.dart';
+import 'package:flutter_open_animate/pages/models/watch.dart';
 import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,11 +24,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animatedAngle;
-  PageController bottleController = PageController(initialPage: 0);
+  PageController textController = PageController(initialPage: 0);
   PageController pageController = PageController(initialPage: 0);
-  PageController textPageController = PageController(initialPage: 1);
-  PageController leavePageController = PageController(initialPage: 0);
-  double activeIndex = 0;
+  int activeIndex = 0;
   final duration = const Duration(milliseconds: 1500);
   @override
   void initState() {
@@ -33,136 +39,73 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  animate() {
-    if (pageController.page == 1) {
-      pageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
-      // bottleController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
-      textPageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
-      leavePageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
-    } else {
-      pageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
-      // bottleController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
-      textPageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
-      leavePageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
-    }
+  animate(int index) {
+    pageController.animateToPage(index, duration: duration, curve: Curves.easeInOutExpo);
+    textController.animateToPage(index, duration: duration, curve: Curves.easeInOutExpo);
     setState(() {
-      activeIndex = pageController.page ?? 0.0;
+      activeIndex = index;
     });
   }
 
   double translate = 0;
+
   @override
   Widget build(BuildContext context) {
+    List<AppWatch> watches = [
+      AppWatch(index: 0, color: Colors.redAccent, borderColor: Color(0xFFFFF2F2)),
+      AppWatch(index: 1, color: Colors.blueAccent, borderColor: Color(0xFFD0E0F8)),
+      AppWatch(index: 2, color: Colors.yellow, borderColor: Color.fromARGB(255, 255, 254, 245)),
+      AppWatch(index: 3, color: Colors.orange, borderColor: Color(0xFFFFF8EE)),
+      AppWatch(index: 4, color: Colors.redAccent, borderColor: Color(0xFFFFF2F2)),
+      AppWatch(index: 5, color: Colors.purpleAccent, borderColor: Color(0xFFFCEAFF)),
+    ];
     return Scaffold(
-      backgroundColor: AppColors.bgBlack,
       body: Stack(
         children: [
-          // Image.asset("assets/images/dark_bottle.png"),
-
           Positioned(
-            child: Center(
-              child: Image.asset(
-                "assets/images/bottle.png",
-                fit: BoxFit.fitHeight,
+            left: Sizing.width(context) * -0.1,
+            child: SvgPicture.asset("assets/icons/eclipse_left.svg", height: Sizing.height(context)),
+          ),
+          Positioned(
+            right: Sizing.width(context) * -0.2,
+            child: SvgPicture.asset("assets/icons/eclipse_right.svg", height: Sizing.height(context)),
+          ),
+          Positioned(
+            right: -20,
+            child: SizedBox(
+              height: Sizing.height(context),
+              child: const Center(
+                child: RotatedBox(
+                  quarterTurns: 3,
+                  child: Text(
+                    "WATCHES",
+                    style: TextStyle(
+                      fontSize: 120,
+                      color: AppColors.textGray,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-
-          // Positioned(
-          //   child: Transform.translate(
-          //     offset: Offset(-translate, 0),
-          //     // child: Image.asset("assets/images/dark_pattern.png"),
-          //     child: SvgPicture.asset("assets/images/clipper.svg"),
-          //   ),
-          // ),
-          PageView.builder(
-            itemCount: 2,
-            controller: pageController,
-            itemBuilder: (c, i) {
-              return AnimatedContainer(
-                duration: Duration(milliseconds: 1000),
-                height: Sizing.height(context),
-                width: Sizing.width(context),
-                color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
-              );
-            },
+          AnimatedText(
+            textController: textController,
+            activeIndex: activeIndex,
+            watches: watches,
           ),
-          PageView.builder(
-            itemCount: 2,
-            controller: textPageController,
-            itemBuilder: (c, i) {
-              return Center(
-                child: Text(
-                  i == 0 ? "DARK" : "LIGHT",
-                  style: TextStyle(
-                    fontSize: 300,
-                    color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-              );
-            },
-          ),
-          Center(
-            child: Image.asset(
-              "assets/images/bottle.png",
-              fit: BoxFit.fitHeight,
-            ),
-          ),
-
-          // PageView.builder(
-          //   itemCount: 2,
-          //   controller: bottleController,
-          //   itemBuilder: (c, i) {
-          //     return AnimatedContainer(
-          //       duration: Duration(milliseconds: 1000),
-          //       height: Sizing.height(context),
-          //       width: Sizing.width(context),
-          //       color: Colors.teal.withOpacity(0.1),
-          //       // child: Center(
-          //       //   child: Image.asset(
-          //       //     activeIndex == 0 ? "assets/images/light_pattern.png" : "assets/images/dark_pattern.png",
-          //       //     fit: BoxFit.fitHeight,
-          //       //   ),
-          //       // ),
-          //     );
-          //   },
-          // ),
-
-          PageView.builder(
-            itemCount: 2,
-            scrollDirection: Axis.vertical,
-            controller: leavePageController,
-            itemBuilder: (c, i) {
-              return Transform.translate(
-                offset: Offset(0, Sizing.height(context) * 0.1),
-                child: Container(
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 2.5),
-                    child: SvgPicture.asset(i == 1 ? "assets/images/dark_leaves.svg" : "assets/images/light_leaves.svg"),
-                  ),
-                ),
-              );
-            },
-          ),
-
-          TweenAnimationBuilder(
-            key: ValueKey(activeIndex),
-            tween: Tween<Offset>(begin: Offset(50, 0), end: Offset(0, 0)),
+          AnimatedCounter(
+            watches: watches,
+            activeIndex: activeIndex,
+            onTap: animate,
             duration: duration,
-            builder: (context, value, child) {
-              return Transform.translate(
-                offset: value,
-                // child: Center(
-                //   child: Image.asset("assets/images/dark_pattern.png"),
-                // ),
-              );
-            },
           ),
-
-          // const ShadedBottle(),
-
-          NavBar(activeIndex: activeIndex, onToggle: animate),
+          StackedCircles(
+            pageController: pageController,
+            watches: watches,
+            activeIndex: activeIndex,
+          ),
+          NavBar(activeIndex: activeIndex)
         ],
       ),
     );
