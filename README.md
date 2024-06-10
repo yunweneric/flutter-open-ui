@@ -7,9 +7,9 @@ flutter pub get
 flutter run
 ```
 
-- [Figma File ](<https://www.figma.com/design/W2y6dqHqRVb4irEfpBAldx/Donut---3D-Carousel-Figma-Animation-Prototyping-Website-UI-Design-(Community)?m=auto&t=7CgmZqvZKIvoiwu1-6>)
+- [Figma File ](<https://www.figma.com/design/qo3m6wj7JS6q5Dp4bGCt8Y/Fossil-Watch-Modern-Web-Landing-Page-Example-%7C-Web-Design-(Community)?m=auto&t=CXvbB2LIjHryG63w-6>)
 
-- [Demo Link](https://flutterdoughnuts.netlify.app/)
+- [Demo Link](https://flutterwatchstore.netlify.app/)
 
 A few resources to get you started if this is your first Flutter project:
 
