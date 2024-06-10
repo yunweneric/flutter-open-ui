@@ -22,6 +22,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Gallery
 
+<img src="./short.gif" alt="Image 1" width="1000"/>
+<!-- 
 <table>
   <tr>
     <td>
@@ -63,4 +65,4 @@ samples, guidance on mobile development, and a full API reference.
 
   </tr>
 
-</table>
+</table> -->
