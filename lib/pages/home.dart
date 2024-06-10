@@ -1,10 +1,7 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_open_animate/pages/components/nar_bar.dart';
-import 'package:flutter_open_animate/pages/models/doughnut.dart';
+import 'package:flutter_open_animate/pages/components/shaded_bottle.dart';
 import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animatedAngle;
+  PageController bottleController = PageController(initialPage: 0);
   PageController pageController = PageController(initialPage: 0);
   PageController textPageController = PageController(initialPage: 1);
   PageController leavePageController = PageController(initialPage: 0);
@@ -37,22 +35,19 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   animate() {
     if (pageController.page == 1) {
-      pageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo).whenComplete(() {
-        setState(() {
-          activeIndex = pageController.page ?? 0.0;
-        });
-      });
+      pageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
+      // bottleController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
       textPageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
       leavePageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
     } else {
+      pageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
+      // bottleController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
       textPageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
-      pageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo).whenComplete(() {
-        setState(() {
-          activeIndex = pageController.page ?? 0.0;
-        });
-      });
       leavePageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
     }
+    setState(() {
+      activeIndex = pageController.page ?? 0.0;
+    });
   }
 
   double translate = 0;
@@ -114,6 +109,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               fit: BoxFit.fitHeight,
             ),
           ),
+
+          // PageView.builder(
+          //   itemCount: 2,
+          //   controller: bottleController,
+          //   itemBuilder: (c, i) {
+          //     return AnimatedContainer(
+          //       duration: Duration(milliseconds: 1000),
+          //       height: Sizing.height(context),
+          //       width: Sizing.width(context),
+          //       color: Colors.teal.withOpacity(0.1),
+          //       // child: Center(
+          //       //   child: Image.asset(
+          //       //     activeIndex == 0 ? "assets/images/light_pattern.png" : "assets/images/dark_pattern.png",
+          //       //     fit: BoxFit.fitHeight,
+          //       //   ),
+          //       // ),
+          //     );
+          //   },
+          // ),
+
           PageView.builder(
             itemCount: 2,
             scrollDirection: Axis.vertical,
@@ -131,43 +146,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             },
           ),
 
-          //  PageView.builder(
-          //   itemCount: 2,
-          //   controller: pageController,
-          //   itemBuilder: (c, i) {
-          //     return AnimatedContainer(
-          //       duration: Duration(milliseconds: 1000),
-          //       height: Sizing.height(context),
-          //       width: Sizing.width(context),
-          //       child: Center(
-          //         child: Image.asset(
-          //           "assets/images/bottle.png",
-          //           fit: BoxFit.fitHeight,
-          //         ),
-          //       ),
-          //       color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
-          //     );
-          //   },
-          // ),
-
-          // Slider(
-          //     min: -1000,
-          //     max: 1000,
-          //     value: translate,
-          //     onChanged: (val) {
-          //       setState(() {
-          //         translate = val;
-          //       });
-          //     }),
-
-          Center(
-            child: ElevatedButton(
-              onPressed: () => animate(),
-              child: Text("toggle"),
-            ),
+          TweenAnimationBuilder(
+            key: ValueKey(activeIndex),
+            tween: Tween<Offset>(begin: Offset(50, 0), end: Offset(0, 0)),
+            duration: duration,
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: value,
+                // child: Center(
+                //   child: Image.asset("assets/images/dark_pattern.png"),
+                // ),
+              );
+            },
           ),
 
-          NavBar(activeIndex: activeIndex),
+          // const ShadedBottle(),
+
+          NavBar(activeIndex: activeIndex, onToggle: animate),
         ],
       ),
     );
