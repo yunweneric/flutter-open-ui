@@ -22,22 +22,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animatedAngle;
   PageController textController = PageController(initialPage: 0);
   PageController pageController = PageController(initialPage: 0);
   int activeIndex = 0;
   final duration = const Duration(milliseconds: 1500);
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   animate(int index) {
     pageController.animateToPage(index, duration: duration, curve: Curves.easeInOutExpo);
@@ -46,8 +34,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       activeIndex = index;
     });
   }
-
-  double translate = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +53,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             child: SvgPicture.asset("assets/icons/eclipse_left.svg", height: Sizing.height(context)),
           ),
           Positioned(
-            right: Sizing.width(context) * -0.2,
+            right: Sizing.width(context) * -0.1,
             child: SvgPicture.asset("assets/icons/eclipse_right.svg", height: Sizing.height(context)),
           ),
           Positioned(
@@ -79,11 +65,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   quarterTurns: 3,
                   child: Text(
                     "WATCHES",
-                    style: TextStyle(
-                      fontSize: 120,
-                      color: AppColors.textGray,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: TextStyle(fontSize: 120, color: AppColors.textGray, fontWeight: FontWeight.w800),
                   ),
                 ),
               ),

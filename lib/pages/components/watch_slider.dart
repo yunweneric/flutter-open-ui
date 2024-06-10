@@ -12,14 +12,17 @@ class WatchSlider extends StatelessWidget {
     return Positioned(
       top: 0,
       child: Container(
+        // color: Colors.teal,
+        clipBehavior: Clip.none,
         height: Sizing.height(context),
-        width: Sizing.width(context) * 0.3,
+        width: Sizing.width(context) * 0.25,
         child: PageView.builder(
+          physics: NeverScrollableScrollPhysics(),
           itemCount: watches.length,
           controller: pageController,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return Image.asset("assets/images/watch_$index.png");
+            return Image.asset("assets/images/watch_$index.png", fit: BoxFit.contain);
           },
         ),
       ),

@@ -41,13 +41,7 @@ class StackedCircles extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: watches[activeIndex].color,
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 16,
-                      blurRadius: 20,
-                    )
-                  ],
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 16, blurRadius: 20)],
                 ),
               ),
             ),

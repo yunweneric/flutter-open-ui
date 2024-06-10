@@ -26,12 +26,12 @@ samples, guidance on mobile development, and a full API reference.
   <tr>
     <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_3.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_0.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_4.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_1.png" alt="Image 1" width="1000"/>
       </a>
     </td>
    
@@ -39,12 +39,25 @@ samples, guidance on mobile development, and a full API reference.
   </tr>
      <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_5.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_2.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_6.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_3.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+
+  </tr>
+    </tr>
+     <td>
+      <a href="#">
+        <img src="./assets/showcase/showcase_4.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+     <td>
+      <a href="#">
+        <img src="./assets/showcase/showcase_5.png" alt="Image 1" width="1000"/>
       </a>
     </td>
 
