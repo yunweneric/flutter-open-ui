@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "S'wips",
+      title: "S'wisp",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(
