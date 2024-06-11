@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             },
           ),
 
-          // const ShadedBottle(),
+          const ShadedBottle(),
 
           NavBar(activeIndex: activeIndex, onToggle: animate),
         ],

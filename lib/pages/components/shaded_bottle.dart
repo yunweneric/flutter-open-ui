@@ -29,7 +29,7 @@ class _ShadedBottleState extends State<ShadedBottle> {
 
   @override
   void initState() {
-    imgFuture = loadImageFromFile("assets/images/darK_0.png"); // Works now
+    imgFuture = loadImageFromFile("assets/images/pattern.png"); // Works now
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _ShadedBottleState extends State<ShadedBottle> {
                         child: Image.asset(
                           "assets/images/bottle.png",
                           height: Sizing.height(context),
-                          color: AppColors.bgBlack,
+                          // color: AppColors.bgBlack,
                           // width: 100,
                           // color: Colors.white,
                         ),
@@ -77,6 +77,12 @@ class _ShadedBottleState extends State<ShadedBottle> {
               },
             ),
           ),
+        ),
+        Image.asset(
+          'assets/images/bottle.png',
+          width: 300,
+          height: 600,
+          fit: BoxFit.cover,
         ),
         Slider(
           min: -1000,
