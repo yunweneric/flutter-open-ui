@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/screens/home.dart';
+import 'package:flutter_openui/screens/splash_screen.dart';
 import 'package:flutter_openui/utils/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,10 +32,11 @@ class MyApp extends StatelessWidget {
           backgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
+            side: const BorderSide(color: AppColors.primary),
           ),
         ),
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
