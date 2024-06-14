@@ -26,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> with SingleTickerProviderStateM
   bool isAnimating = false;
   @override
   void initState() {
-    controller = AnimationController(duration: Duration(milliseconds: 2000), vsync: this);
+    controller = AnimationController(duration: Duration(milliseconds: 8000), vsync: this);
     final Animation<double> curve = CurvedAnimation(parent: controller!, curve: Curves.easeInOutBack);
     animateRotation = Tween<double>(begin: 0, end: pi * 2).animate(curve);
     scaleAnimation = Tween<double>(begin: 1.1, end: 1).animate(curve);

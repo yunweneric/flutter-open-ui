@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+        statusBarColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
       ),
       child: Scaffold(
         body: Stack(
@@ -68,25 +68,24 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 height: AppSizing.height(context) * 0.4,
               ),
             ),
-            SafeArea(
-              child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-                width: AppSizing.width(context),
-                height: AppSizing.height(context),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      appbar(context),
-                      AppSizing.k30(context),
-                      Text("How may I help\nyou today?", style: Theme.of(context).textTheme.displayLarge),
-                      AppSizing.k30(context),
-                      homeCards(context),
-                      AppSizing.k20(context),
-                      listItems(context),
-                    ],
-                  ),
+            Container(
+              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+              width: AppSizing.width(context),
+              height: AppSizing.height(context),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppSizing.k30(context),
+                    appbar(context),
+                    AppSizing.k30(context),
+                    Text("How may I help\nyou today?", style: Theme.of(context).textTheme.displayLarge),
+                    AppSizing.k30(context),
+                    homeCards(context),
+                    AppSizing.k20(context),
+                    listItems(context),
+                  ],
                 ),
               ),
             ),
