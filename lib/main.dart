@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Bot',
+      title: 'Flutter Bot',
       theme: ThemeData(
         primaryColorLight: AppColors.white,
         primaryColorDark: AppColors.bgColor,

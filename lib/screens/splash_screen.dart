@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     AppAsset.splash_grid,
                     color: Colors.white.withOpacity(0.3),
                     width: AppSizing.width(context),
-                    height: AppSizing.height(context) * 0.6,
+                    // height: AppSizing.height(context) * 0.6,
                     fit: BoxFit.cover,
                   ),
                 );
@@ -91,14 +91,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                         },
                       ),
                       AppSizing.k20(context),
-                      AppSizing.k20(context),
+                      // AppSizing.k20(context),
                     ],
                   ),
                   Container(
                     // color: AppColors.pink,
                     alignment: Alignment.center,
                     height: AppSizing.height(context) * 0.5,
-                    child: Transform.scale(scale: 1.2, child: Image.asset(AppAsset.botImage)),
+                    child: Transform.scale(scale: 1.2, child: Image.asset(AppAsset.botImage, color: Theme.of(context).primaryColor)),
                   ),
                   TweenAnimationBuilder(
                       tween: Tween<Offset>(begin: Offset(0, 500), end: Offset.zero),
