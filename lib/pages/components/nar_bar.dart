@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_open_animate/utils/theme.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class NavBar extends StatefulWidget {
+  final double activeIndex;
   final void Function()? onToggle;
-  const NavBar({super.key, required this.onToggle});
+  const NavBar({super.key, required this.onToggle, required this.activeIndex});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -20,16 +19,15 @@ class _NavBarState extends State<NavBar> {
       top: 30,
       right: 50,
       child: Builder(builder: (context) {
-        final theme = Provider.of<AppTheme>(context, listen: true);
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 0),
           child: TweenAnimationBuilder(
-            key: ValueKey(theme.currentTheme),
+            key: ValueKey(widget.activeIndex),
             duration: const Duration(milliseconds: 1500),
             curve: Curves.easeInOutExpo,
             tween: Tween<double>(begin: 0, end: 1),
             builder: (context, value, child) {
-              return Opacity(opacity: value, child: navBar(theme));
+              return Opacity(opacity: value, child: navBar(widget.activeIndex));
             },
           ),
         );
@@ -37,7 +35,7 @@ class _NavBarState extends State<NavBar> {
     );
   }
 
-  Widget navBar(AppTheme theme) {
+  Widget navBar(double activeIndex) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -64,9 +62,9 @@ class _NavBarState extends State<NavBar> {
             navItem(title: 'EN'),
             navDivider(width: 20),
             TweenAnimationBuilder(
-              key: ValueKey(theme.currentTheme),
+              key: ValueKey(activeIndex),
               tween: Tween<Offset>(
-                begin: Offset(0, theme.currentTheme == AppTheme.light() ? 90 : -90),
+                begin: Offset(0, activeIndex == 0 ? 90 : -90),
                 end: const Offset(0, 0),
               ),
               duration: const Duration(milliseconds: 1500),
@@ -80,7 +78,7 @@ class _NavBarState extends State<NavBar> {
                       onTap: () {
                         widget.onToggle!();
                       },
-                      child: theme.currentTheme == AppTheme.dark()
+                      child: activeIndex == 0
                           ? SvgPicture.asset(
                               "assets/icons/moon.svg",
                               height: 25,

@@ -23,7 +23,6 @@ class _MyAppState extends State<MyApp> {
       create: (context) => AppTheme(),
       child: Consumer<AppTheme>(
         builder: (context, theme, child) {
-          print(theme.currentTheme);
           return MaterialApp(
             title: 'Animated Dark',
             debugShowCheckedModeBanner: false,

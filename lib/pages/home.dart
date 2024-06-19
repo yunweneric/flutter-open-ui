@@ -7,7 +7,6 @@ import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/sizing.dart';
 import 'package:flutter_open_animate/utils/theme.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final duration = const Duration(milliseconds: 1200);
   @override
   void initState() {
-    Future.delayed(duration, () => animate(AppTheme.dark()));
+    Future.delayed(duration, () => animate());
     super.initState();
   }
 
@@ -37,7 +36,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  animate(theme) {
+  animate({AppTheme? theme}) {
     if (pageController.page == 1) {
       pageController.animateToPage(0, duration: duration, curve: Curves.easeInOutExpo);
       textPageController.animateToPage(1, duration: duration, curve: Curves.easeInOutExpo);
@@ -50,68 +49,70 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     setState(() {
       activeIndex = pageController.page ?? 0.0;
     });
-    theme.updateTheme(
-      theme.currentTheme == AppTheme.light() ? AppTheme.dark() : AppTheme.light(),
-    );
+    if (theme != null) {
+      theme.updateTheme(
+        theme.currentTheme == AppTheme.light() ? AppTheme.dark() : AppTheme.light(),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<AppTheme>(context, listen: true);
     return Scaffold(
-      body: Builder(builder: (context) {
-        final theme = Provider.of<AppTheme>(context, listen: true);
-        return Stack(
-          children: [
-            PageView.builder(
-              itemCount: 2,
-              controller: pageController,
-              itemBuilder: (c, i) {
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 1000),
-                  height: Sizing.height(context),
-                  width: Sizing.width(context),
-                  color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
-                );
-              },
-            ),
-            PageView.builder(
-              itemCount: 2,
-              controller: textPageController,
-              itemBuilder: (c, i) {
-                return Center(
-                  child: Text(
-                    i == 1 ? "DARK" : "LIGHT",
-                    style: GoogleFonts.inter(
-                      fontSize: 300,
-                      color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                );
-              },
-            ),
-            PageView.builder(
-              itemCount: 2,
-              scrollDirection: Axis.vertical,
-              controller: leavePageController,
-              itemBuilder: (c, i) {
-                return Transform.translate(
-                  offset: Offset(0, Sizing.height(context) * 0.1),
-                  child: Container(
-                    child: ImageFiltered(
-                      imageFilter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 2.5),
-                      child: SvgPicture.asset(i == 1 ? "assets/images/dark_leaves.svg" : "assets/images/light_leaves.svg"),
-                    ),
-                  ),
-                );
-              },
-            ),
-            ShadedBottle(activeIndex: activeIndex, duration: duration),
-            NavBar(onToggle: () => animate(theme)),
-            Positioned(bottom: 10, left: 0, right: 0, child: Follow(activeIndex: activeIndex))
-          ],
-        );
-      }),
+      body: Stack(
+        children: [
+          PageView.builder(
+            itemCount: 2,
+            controller: pageController,
+            itemBuilder: (c, i) {
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 1000),
+                height: Sizing.height(context),
+                width: Sizing.width(context),
+                color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
+              );
+            },
+          ),
+          PageView.builder(
+            itemCount: 2,
+            controller: textPageController,
+            itemBuilder: (c, i) {
+              return Center(
+                child: Text(
+                  i == 1 ? "DARK" : "LIGHT",
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontSize: 300,
+                        color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
+                      ),
+                ),
+              );
+            },
+          ),
+          PageView.builder(
+            itemCount: 2,
+            scrollDirection: Axis.vertical,
+            controller: leavePageController,
+            itemBuilder: (c, i) {
+              return Transform.translate(
+                offset: Offset(0, Sizing.height(context) * 0.1),
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 2.5),
+                  child: SvgPicture.asset(i == 1 ? "assets/images/dark_leaves.svg" : "assets/images/light_leaves.svg"),
+                ),
+              );
+            },
+          ),
+          ShadedBottle(activeIndex: activeIndex, duration: duration),
+          NavBar(
+            onToggle: () {
+              animate(theme: theme);
+            },
+            activeIndex: activeIndex,
+          ),
+          Positioned(bottom: 10, left: 0, right: 0, child: Follow(activeIndex: activeIndex))
+        ],
+      ),
     );
   }
 }
