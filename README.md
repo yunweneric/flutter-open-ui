@@ -7,9 +7,9 @@ flutter pub get
 flutter run
 ```
 
-- [Figma File ](<https://www.figma.com/design/W2y6dqHqRVb4irEfpBAldx/Donut---3D-Carousel-Figma-Animation-Prototyping-Website-UI-Design-(Community)?m=auto&t=7CgmZqvZKIvoiwu1-6>)
+- [Figma File ](<https://www.figma.com/design/UX8wqjYrXkOCXnHagdcXtT/3D-Carousel-Slider---FigChallenge---Sepideh-Yazdi-(Community)?node-id=1-348&t=80JBooOgWfKWmtPr-1>)
 
-- [Demo Link](https://flutterdoughnuts.netlify.app/)
+- [Demo Link](http://fluttertheming.netlify.app/)
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -26,28 +26,13 @@ samples, guidance on mobile development, and a full API reference.
   <tr>
     <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_3.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_0.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="#">
-        <img src="./assets/showcase/showcase_4.png" alt="Image 1" width="1000"/>
+        <img src="./assets/showcase/showcase_1.png" alt="Image 1" width="1000"/>
       </a>
     </td>
-   
-   
-  </tr>
-     <td>
-      <a href="#">
-        <img src="./assets/showcase/showcase_5.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="#">
-        <img src="./assets/showcase/showcase_6.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-
-  </tr>
 
 </table>
