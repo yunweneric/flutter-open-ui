@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -19,15 +21,23 @@ class _ShadedBottleState extends State<ShadedBottle> {
   Future<ui.Image>? imgFuture;
 
   // New helper function
-  Future<ui.Image> loadImage(String path) async {
+  Future<ui.Image> loadImage(String url) async {
+    Completer<ui.Image> completer = Completer();
     // var fileData = Uint8List.sublistView(await rootBundle.load(path));
-    var fileData = Uint8List.sublistView(await rootBundle.load(path));
-    return await decodeImageFromList(fileData);
+    // var fileData = Uint8List.sublistView(await rootBundle.load(url));
+    final stream = NetworkImage(url).resolve(ImageConfiguration());
+    stream.addListener(ImageStreamListener((info, _) {
+      completer.complete(info.image);
+    }));
+    return completer.future;
+    // return await decodeImageFromList(fileData);
   }
 
   @override
   void initState() {
-    imgFuture = loadImage("assets/images/pattern.png"); // Works now
+    imgFuture = loadImage(
+      "https://github.com/yunweneric/flutter-open-animate/blob/dark_light_theme/assets/images/pattern.png?raw=true",
+    ); // Works now
     super.initState();
   }
 
