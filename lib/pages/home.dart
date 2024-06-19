@@ -7,6 +7,7 @@ import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/sizing.dart';
 import 'package:flutter_open_animate/utils/theme.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final duration = const Duration(milliseconds: 1200);
   @override
   void initState() {
-    Future.delayed(duration, () => animate(AppTheme.light()));
+    Future.delayed(duration, () => animate(AppTheme.dark()));
     super.initState();
   }
 
@@ -69,7 +70,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   duration: const Duration(milliseconds: 1000),
                   height: Sizing.height(context),
                   width: Sizing.width(context),
-                  // color: theme.currentTheme == AppTheme.dark() ? AppColors.bgBlack : AppColors.bgWhite,
                   color: i == 0 ? AppColors.textBlack : AppColors.bgWhite,
                 );
               },
@@ -81,10 +81,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 return Center(
                   child: Text(
                     i == 1 ? "DARK" : "LIGHT",
-                    style: TextStyle(
+                    style: GoogleFonts.inter(
                       fontSize: 300,
                       color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 );

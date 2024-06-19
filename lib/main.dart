@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_open_animate/pages/home.dart';
-import 'package:flutter_open_animate/utils/colors.dart';
 import 'package:flutter_open_animate/utils/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

@@ -19,14 +19,15 @@ class _ShadedBottleState extends State<ShadedBottle> {
   Future<ui.Image>? imgFuture;
 
   // New helper function
-  Future<ui.Image> loadImageFromFile(String path) async {
+  Future<ui.Image> loadImage(String path) async {
+    // var fileData = Uint8List.sublistView(await rootBundle.load(path));
     var fileData = Uint8List.sublistView(await rootBundle.load(path));
     return await decodeImageFromList(fileData);
   }
 
   @override
   void initState() {
-    imgFuture = loadImageFromFile("assets/images/pattern_main.png"); // Works now
+    imgFuture = loadImage("assets/images/pattern.png"); // Works now
     super.initState();
   }
 
@@ -71,7 +72,11 @@ class _ShadedBottleState extends State<ShadedBottle> {
                   },
                 );
               } else {
-                return const CircularProgressIndicator();
+                return Container(
+                  height: Sizing.height(context),
+                  width: Sizing.width(context),
+                  child: const Center(child: const CircularProgressIndicator()),
+                );
               }
             },
           ),
