@@ -23,21 +23,20 @@ class _ShadedBottleState extends State<ShadedBottle> {
   // New helper function
   Future<ui.Image> loadImage(String url) async {
     Completer<ui.Image> completer = Completer();
-    // var fileData = Uint8List.sublistView(await rootBundle.load(path));
+    var fileData = Uint8List.sublistView(await rootBundle.load(url));
     // var fileData = Uint8List.sublistView(await rootBundle.load(url));
-    final stream = NetworkImage(url).resolve(ImageConfiguration());
-    stream.addListener(ImageStreamListener((info, _) {
-      completer.complete(info.image);
-    }));
-    return completer.future;
-    // return await decodeImageFromList(fileData);
+    // final stream = NetworkImage(url).resolve(ImageConfiguration());
+    // stream.addListener(ImageStreamListener((info, _) {
+    //   completer.complete(info.image);
+    // }));
+    // return completer.future;
+    return await decodeImageFromList(fileData);
   }
 
   @override
   void initState() {
-    imgFuture = loadImage(
-      "https://github.com/yunweneric/flutter-open-animate/blob/dark_light_theme/assets/images/pattern.png?raw=true",
-    ); // Works now
+    imgFuture = loadImage("assets/images/pattern.png"); // Works now
+    // "https://github.com/yunweneric/flutter-open-animate/blob/dark_light_theme/assets/images/pattern.png?raw=true",
     super.initState();
   }
 
