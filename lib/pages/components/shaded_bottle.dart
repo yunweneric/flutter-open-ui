@@ -72,10 +72,13 @@ class _ShadedBottleState extends State<ShadedBottle> {
                   },
                 );
               } else {
-                return Container(
+                return SizedBox(
                   height: Sizing.height(context),
                   width: Sizing.width(context),
-                  child: const Center(child: const CircularProgressIndicator()),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  )),
                 );
               }
             },
