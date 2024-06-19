@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_open_animate/pages/home.dart';
 import 'package:flutter_open_animate/utils/colors.dart';
+import 'package:flutter_open_animate/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Animated Dark',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 55, fontWeight: FontWeight.w700),
-          displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-          displaySmall: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.bgBlack),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => AppTheme(),
+      child: Consumer<AppTheme>(
+        builder: (context, theme, child) {
+          print(theme.currentTheme);
+          return MaterialApp(
+            title: 'Animated Dark',
+            debugShowCheckedModeBanner: false,
+            theme: theme.currentTheme,
+            // darkTheme: AppTheme.dark(),
+            home: const HomePage(),
+          );
+        },
       ),
-      home: const HomePage(),
     );
   }
 }

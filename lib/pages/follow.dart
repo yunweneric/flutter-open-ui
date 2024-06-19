@@ -14,7 +14,7 @@ class Link {
 }
 
 class Follow extends StatelessWidget {
-  final int activeIndex;
+  final double activeIndex;
   Follow({super.key, required this.activeIndex});
 
   List<Link> links = [
@@ -29,38 +29,49 @@ class Follow extends StatelessWidget {
       child: TextButton.icon(
         style: TextButton.styleFrom(
           alignment: Alignment.centerLeft,
-          backgroundColor: AppColors.bgWhite,
+          backgroundColor: activeIndex == 0 ? AppColors.bgBlack : AppColors.bgWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
         onPressed: () => Helper.navigate(link.url),
-        label: Text(link.title, style: const TextStyle(color: AppColors.bgBlack, fontSize: 12)),
-        icon: SvgPicture.asset("assets/icons/${link.icon}.svg"),
+        label: Text(link.title, style: TextStyle(color: activeIndex == 0 ? AppColors.bgWhite : AppColors.bgBlack, fontSize: 12)),
+        icon: SvgPicture.asset(
+          "assets/icons/${link.icon}.svg",
+          color: activeIndex == 0 ? AppColors.bgWhite : AppColors.bgBlack,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Sizing.width(context) * 0.25,
-      height: 40,
-      margin: EdgeInsets.only(top: 20),
-      decoration: BoxDecoration(
-        // color: AppColors.white,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...links.map((link) {
-              return linkItem(link, context);
-            })
-          ],
-        ),
-      ),
+    return TweenAnimationBuilder(
+      key: ValueKey(activeIndex),
+      duration: const Duration(milliseconds: 1200),
+      curve: Curves.easeInOutExpo,
+      tween: Tween<Offset>(begin: Offset(0, 500), end: Offset.zero),
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: value,
+          child: Container(
+            width: Sizing.width(context) * 0.25,
+            height: 40,
+            margin: const EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...links.map((link) {
+                    return linkItem(link, context);
+                  })
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
