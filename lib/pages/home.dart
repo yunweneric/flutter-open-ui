@@ -1,11 +1,12 @@
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_nike_slider/utils/colors.dart';
-import 'package:flutter_nike_slider/components/follow.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_nike_slider/components/navbar.dart';
+import 'package:flutter_nike_slider/components/switcher.dart';
+import 'package:flutter_nike_slider/components/video_player.dart';
+import 'package:flutter_nike_slider/model/scene.dart';
 import 'package:flutter_nike_slider/utils/sizing.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,101 +15,82 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  int activeIndex = 5;
-  final duration = const Duration(milliseconds: 400);
-  AnimationController? _controller;
-  Animation<double>? _widthAnimation;
-  Animation<double>? _textTranslationAnimation;
-  Animation<double>? _widthReduceAnimation;
-  Animation<double>? _rotationAnimation;
-  bool hasReversed = false;
+class _HomeScreenState extends State<HomeScreen> {
+  int activeIndex = 0;
+  bool hasFocus = false;
+  List<AppScene> scenes = [
+    AppScene(
+      title: 'Exotic Jellyfish',
+      desc: 'EVERY TUESDAY | 6PM',
+      index: 0,
+      videoUrl: 'https://videos.pexels.com/video-files/2731905/2731905-uhd_2560_1440_24fps.mp4',
+      thumbnail: 'assets/images/slide_0.png',
+      duration: '120 Min',
+      longDesc:
+          'Experience the mesmerizing beauty of jellyfish as they gracefully glide through the water. Watch their delicate, translucent bodies pulse with an ethereal glow, showcasing a captivating dance of color and light. This video captures the serene and hypnotic movement of these fascinating sea creatures, providing a peaceful and enchanting glimpse into the underwater world',
+    ),
+    AppScene(
+      title: 'Deep Sea Dive',
+      desc: 'EVERY FRIDAY | 8PM',
+      index: 1,
+      videoUrl: 'https://videos.pexels.com/video-files/2556894/2556894-hd_1920_1080_25fps.mp4',
+      thumbnail: 'assets/images/slide_1.png',
+      duration: '10 Min',
+      longDesc:
+          "Dive into the thrilling world of sharks with this captivating video. Witness the power and grace of these majestic predators as they glide effortlessly through the ocean. From the sleek great whites to the agile hammerheads, observe their fascinating behavior and impressive hunting skills up close. This video offers an exhilarating glimpse into the lives of one of the ocean's most formidable and awe-inspiring creatures.",
+    ),
+    AppScene(
+      title: 'In Plain Sight',
+      desc: 'JULY 27 | 6PM',
+      index: 2,
+      videoUrl: "https://videos.pexels.com/video-files/14097807/14097807-uhd_2560_1440_30fps.mp4",
+      thumbnail: 'assets/images/slide_2.png',
+      duration: '90 Min',
+      longDesc:
+          "Explore the intriguing world of lizards with this fascinating video. Observe the diverse array of these agile reptiles, from the vibrant chameleons to the swift geckos, as they navigate their environments. Watch their unique behaviors, stunning adaptations, and impressive hunting techniques up close. This video provides a captivating glimpse into the lives of these remarkable creatures, showcasing their beauty and the diversity of the reptilian world.",
+    ),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this, duration: duration);
-    Timer(Duration(seconds: 2), () {
-      setAnimatedValues(5, context);
-    });
-  }
-
-  curve(ctrl) => CurvedAnimation(parent: ctrl, curve: Curves.linear);
-
-  setAnimatedValues(int index, BuildContext? context) {
-    if (context != null) {
-      _widthAnimation = Tween<double>(
-        begin: Sizing.width(context) / 3,
-        end: Sizing.width(context),
-      ).animate(curve(_controller!));
-
-      _textTranslationAnimation = Tween<double>(
-        begin: 1.8,
-        end: 2.5,
-      ).animate(curve(_controller!));
-
-      _widthReduceAnimation = Tween<double>(
-        begin: Sizing.width(context) / 3,
-        end: 0,
-      ).animate(curve(_controller!));
-
-      _rotationAnimation = Tween<double>(
-        begin: -0.7,
-        end: -0.1,
-      ).animate(curve(_controller!));
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  void _toggleAnimation(int index) async {
-    if (index == activeIndex) {
-      if (hasReversed) {
-        _controller?.forward();
-        setState(() => hasReversed = !hasReversed);
-      } else {
-        _controller?.reverse();
-        setState(() => hasReversed = !hasReversed);
-      }
-    } else {
-      _controller?.forward();
-    }
-    setState(() => activeIndex = index);
+  Widget generateVideoPlayerWidget() {
+    return AppVideoPlayer(
+      url: scenes[activeIndex].videoUrl,
+      thumbnail: scenes[activeIndex].thumbnail,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColorDark,
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Row(
-              children: [
-                ...[0, 1, 2].map(
-                  (index) {
-                    return AnimatedBuilder(
-                      animation: _controller!,
-                      builder: (context, _) {
-                        return nikeSlide(context, index);
-                      },
-                    );
-                  },
-                ).toList()
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Follow(activeIndex: activeIndex),
+          TweenAnimationBuilder(
+            key: ValueKey(activeIndex),
+            // curve: Curves.bounceOut,
+            curve: Curves.elasticOut,
+            duration: const Duration(milliseconds: 1800),
+            tween: Tween<Offset>(begin: Offset(0, -Sizing.height(context) * 0.2), end: Offset.zero),
+            // duration: const Duration(milliseconds: 2500),
+            builder: (context, value, child) {
+              return Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.01)
+                  ..translate(value.dx, value.dy),
+                child: TweenAnimationBuilder(
+                    key: ValueKey(hasFocus),
+                    tween: Tween<double>(begin: hasFocus ? 0 : 10, end: hasFocus ? 10 : 0),
+                    duration: const Duration(milliseconds: 500),
+                    builder: (context, blurValue, child) {
+                      return ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaX: blurValue, sigmaY: blurValue),
+                        child: AppVideoPlayer(
+                          url: scenes[activeIndex].videoUrl,
+                          thumbnail: scenes[activeIndex].thumbnail,
+                        ),
+                      );
+                    }),
+              );
+            },
           ),
           Positioned(
             top: 0,
@@ -116,62 +98,23 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             right: 0,
             child: NavBar(),
           ),
-        ],
-      ),
-    );
-  }
-
-  Container nikeSlide(BuildContext context, int index) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: index == 0
-            ? AppColors.blue
-            : index == 1
-                ? AppColors.red
-                : AppColors.yellow,
-      ),
-      width: index == activeIndex ? _widthAnimation?.value ?? Sizing.width(context) / 3 : _widthReduceAnimation?.value ?? Sizing.width(context) / 3,
-      height: Sizing.height(context),
-      child: Stack(
-        clipBehavior: Clip.hardEdge,
-        children: [
           Positioned(
-            top: 0,
             bottom: 0,
-            left: 0,
             right: 0,
-            child: Center(
-              child: Transform.scale(
-                scale: _textTranslationAnimation?.value ?? 1.8,
-                child: Text(
-                  overflow: TextOverflow.ellipsis,
-                  index == 0
-                      ? "BLUE"
-                      : index == 1
-                          ? "RED"
-                          : "YELLOW",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 100,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.white,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            bottom: 0,
             left: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () => _toggleAnimation(index),
-              child: Transform.rotate(
-                angle: _rotationAnimation?.value ?? -0.7,
-                child: Image.asset("assets/images/nike_${index}.png"),
-              ),
+            child: Switcher(
+              onHover: (focus) {
+                setState(() {
+                  hasFocus = focus;
+                });
+              },
+              scenes: scenes,
+              activeIndex: activeIndex,
+              onSwitch: (index) {
+                setState(() {
+                  activeIndex = index;
+                });
+              },
             ),
           ),
         ],
