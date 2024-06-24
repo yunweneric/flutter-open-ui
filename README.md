@@ -8,7 +8,7 @@ flutter run
 ```
 
 - [Figma File ](<https://www.figma.com/design/Sn883J01rFsGdS14wujOGz/Intro-Slider-Effect-Animation-di-Figma-(Community)?node-id=0%3A1&t=xnD31wuPmzp6nC0g-1>)
-
+  o
 - [Demo Link](https://flutter-nike-animation.netlify.app/)
 
 A few resources to get you started if this is your first Flutter project:
@@ -20,4 +20,4 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-<img src="./ui.gif"/>
+<img src="./cover.jpg">
