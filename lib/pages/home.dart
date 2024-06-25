@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int activeIndex = 0;
   bool hasFocus = false;
+
+  Timer? timer;
   List<AppScene> scenes = [
     AppScene(
       title: 'Exotic Jellyfish',
@@ -56,6 +59,36 @@ class _HomeScreenState extends State<HomeScreen> {
       url: scenes[activeIndex].videoUrl,
       thumbnail: scenes[activeIndex].thumbnail,
     );
+  }
+
+  @override
+  void initState() {
+    countdownAnimate();
+    super.initState();
+  }
+
+  int counter = 100;
+
+  void countdownAnimate() {
+    timer = Timer.periodic(const Duration(milliseconds: 50), (time) {
+      setState(() {
+        counter = --counter;
+        if (counter == 0) {
+          counter = 100;
+          if (activeIndex == 0 || activeIndex < 2) {
+            activeIndex = activeIndex + 1;
+          } else {
+            activeIndex = 0;
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -103,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 0,
             left: 0,
             child: Switcher(
+              counter: counter,
               onHover: (focus) {
                 setState(() {
                   hasFocus = focus;
