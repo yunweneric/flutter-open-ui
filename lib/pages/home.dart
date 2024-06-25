@@ -54,13 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
-  Widget generateVideoPlayerWidget() {
-    return AppVideoPlayer(
-      url: scenes[activeIndex].videoUrl,
-      thumbnail: scenes[activeIndex].thumbnail,
-    );
-  }
-
   @override
   void initState() {
     countdownAnimate();
@@ -116,9 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, blurValue, child) {
                       return ImageFiltered(
                         imageFilter: ImageFilter.blur(sigmaX: blurValue, sigmaY: blurValue),
-                        child: AppVideoPlayer(
-                          url: scenes[activeIndex].videoUrl,
-                          thumbnail: scenes[activeIndex].thumbnail,
+                        child: Container(
+                          width: Sizing.width(context),
+                          height: Sizing.height(context),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(scenes[activeIndex].thumbnail),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       );
                     }),
