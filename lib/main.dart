@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primaryColorDark: AppColors.black,
         primaryColorLight: AppColors.white,
+        primaryColor: AppColors.yellow,
         textTheme: TextTheme(
           displayLarge: GoogleFonts.inter(color: AppColors.white, fontSize: 48),
           displayMedium: GoogleFonts.inter(color: AppColors.white, fontSize: 16),
