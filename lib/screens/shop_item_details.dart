@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/model/shopping_item.dart';
+import 'package:flutter_openui/screens/cart_screen.dart';
 import 'package:flutter_openui/utils/colors.dart';
+import 'package:flutter_openui/utils/helper.dart';
 import 'package:flutter_openui/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -71,7 +73,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
       bottomNavigationBar: SafeArea(
         child: TweenAnimationBuilder(
           duration: Duration(milliseconds: 1000),
-          curve: Curves.easeOutExpo,
+          curve: Curves.decelerate,
           tween: generateTweens(),
           builder: (context, value, child) {
             return Transform.translate(offset: value, child: bottomAddBar(context));
@@ -166,6 +168,18 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                             ],
                           ),
                         ),
+                        AppSizing.k10(context),
+                        Container(
+                          height: 2,
+                          width: AppSizing.width(context),
+                          decoration: BoxDecoration(
+                            color: AppColors.bgCard,
+                            gradient: LinearGradient(
+                              stops: [0.1, 0.5, 0.85],
+                              colors: [Colors.transparent, AppColors.grayLight.withOpacity(0.5), Colors.transparent],
+                            ),
+                          ),
+                        ),
                         AppSizing.k20(context),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 30),
@@ -226,7 +240,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                 height: 40,
                 width: 40,
                 child: TweenAnimationBuilder(
-                  duration: Duration(milliseconds: 700),
+                  duration: const Duration(milliseconds: 700),
                   curve: Curves.easeInOutBack,
                   key: ValueKey(quantity),
                   tween: Tween<double>(begin: 1.5, end: 1),
@@ -253,7 +267,12 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final result = await UtilHelper.navigate(
+                context: context,
+                page: const CartScreen(),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).primaryColor,
               padding: const EdgeInsets.symmetric(
@@ -280,7 +299,10 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: widget.item.color.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
             ),
             child: AnimatedScale(
               curve: Curves.elasticInOut,
