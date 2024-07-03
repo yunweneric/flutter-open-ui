@@ -1,11 +1,6 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_openui/screens/animated_bg.dart';
-import 'package:flutter_openui/screens/chat_screen.dart';
-import 'package:flutter_openui/utils/assets.dart';
+import 'package:flutter_openui/model/shopping_item.dart';
+import 'package:flutter_openui/screens/shop_item_details.dart';
 import 'package:flutter_openui/utils/colors.dart';
 import 'package:flutter_openui/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,244 +12,164 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  List<ListItem> items = [
-    ListItem(title: "I need some UI inspiration for dark...", icon: AppAsset.speech, color: AppColors.pink),
-    ListItem(title: "Show me some color palettes for AI...", icon: AppAsset.chat, color: AppColors.purple),
-    ListItem(title: "What are the best mobile apps 2023...", icon: AppAsset.picture, color: AppColors.purple),
-  ];
-
-  AnimationController? controller;
-  Animation<double>? animateRotation;
-  Animation<double>? scaleAnimation;
-  bool isAnimating = false;
-  @override
-  void initState() {
-    controller = AnimationController(duration: Duration(seconds: 5), vsync: this)..repeat();
-    final Animation<double> curve = CurvedAnimation(parent: controller!, curve: Curves.ease);
-    animateRotation = Tween<double>(begin: 0, end: pi * 2).animate(curve);
-    scaleAnimation = Tween<double>(begin: 1.1, end: 1).animate(curve);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+class _HomeScreenState extends State<HomeScreen> {
+  bool isPushing = false;
+  Tween<Offset> generateTweens() {
+    print(["isPushing", isPushing]);
+    return isPushing
+        ? Tween<Offset>(
+            begin: Offset.zero,
+            end: Offset(0, AppSizing.height(context) / 5),
+          )
+        : Tween<Offset>(
+            begin: Offset(0, AppSizing.height(context)),
+            end: Offset.zero,
+          );
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
-      ),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              child: AnimatedBG(controller: controller!, animateRotation: animateRotation),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.arrow_back),
+        title: const Text("Fashion Shop"),
+        actions: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: SvgPicture.asset('assets/icons/more.svg'),
             ),
-            Positioned(
-              top: -20,
-              left: 50,
-              child: SvgPicture.asset(
-                AppAsset.home_grid,
-                color: AppColors.white.withOpacity(0.8),
-                width: AppSizing.width(context),
-                height: AppSizing.height(context) * 0.4,
-              ),
-            ),
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-              width: AppSizing.width(context),
-              height: AppSizing.height(context),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppSizing.k30(context),
-                    appbar(context),
-                    AppSizing.k30(context),
-                    Text("How may I help\nyou today?", style: Theme.of(context).textTheme.displayLarge),
-                    AppSizing.k30(context),
-                    homeCards(context),
-                    AppSizing.k20(context),
-                    listItems(context),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Column listItems(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Text("History", style: Theme.of(context).textTheme.displayMedium),
-          trailing: Text("See all", style: Theme.of(context).textTheme.displaySmall),
-        ),
-        ...items.map(
-          (e) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Theme.of(context).cardColor.withOpacity(0.8),
-            ),
-            margin: EdgeInsets.only(bottom: 10),
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              tileColor: Theme.of(context).cardColor,
-              leading: CircleAvatar(
-                backgroundColor: e.color,
-                child: Image.asset(e.icon, height: 20, width: 20),
-              ),
-              title: Text(
-                e.title,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              trailing: Icon(Icons.more_vert_rounded),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Row homeCards(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: ((context, animation, secondaryAnimation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: const ChatScreen(),
-                  );
-                }),
-              ),
-            );
-          },
-          child: Container(
-            height: AppSizing.height(context) * 0.25,
-            width: AppSizing.width(context) * 0.42,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Theme.of(context).primaryColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      child: Image.asset(AppAsset.speech, width: 20, height: 20),
-                      backgroundColor: Theme.of(context).cardColor.withOpacity(0.2),
-                    ),
-                    Icon(CupertinoIcons.arrow_up_right),
-                  ],
-                ),
-                Text(
-                  "Talk \nwith Bot",
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 28, color: AppColors.bgColor),
-                )
-              ],
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            homeMinorCard(
-              context: context,
-              icon: AppAsset.chat,
-              text: "Chat with bot",
-              color: AppColors.pink,
-            ),
-            AppSizing.k10(context),
-            homeMinorCard(
-              context: context,
-              icon: AppAsset.picture,
-              text: "Search by Image",
-              color: AppColors.purple,
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  Row appbar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Theme.of(context).cardColor,
-          child: SvgPicture.asset(AppAsset.menu),
-        ),
-        Text("Hi, Flutter 👋"),
-        ClipOval(
-          child: Image.asset(AppAsset.user, width: 40, height: 40),
-        ),
-      ],
-    );
-  }
-
-  Container homeMinorCard({required BuildContext context, required String icon, required Color color, required String text}) {
-    return Container(
-      height: AppSizing.height(context) * 0.25 * 0.48,
-      width: AppSizing.width(context) * 0.42,
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: color,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(
-                backgroundColor: Theme.of(context).cardColor.withOpacity(0.2),
-                child: Image.asset(icon, width: 20, height: 20),
-              ),
-              Icon(CupertinoIcons.arrow_up_right),
-            ],
-          ),
-          Text(
-            text,
-            style: TextStyle(color: AppColors.bgColor, fontWeight: FontWeight.w500),
           )
         ],
       ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: AppSizing.width(context),
+          padding: EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.05),
+          child: TweenAnimationBuilder(
+              // tween: generateTweens(),
+              tween: generateTweens(),
+              curve: Curves.easeOutExpo,
+              // curve: Curves.easeInOutExpo,
+              key: ValueKey(isPushing),
+              duration: Duration(milliseconds: 750),
+              builder: (context, value, child) {
+                return Transform.translate(
+                  // offset: Offset(0, AppSizing.height(context) / 2),
+                  offset: value,
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      ...ShoppingItem.data().map((e) => shoppingItem(e)).toList(),
+                      // ...ShoppingItem.data().map((e) => shoppingItem(e)).toList(),
+                    ],
+                  ),
+                );
+              }),
+        ),
+      ),
     );
   }
-}
 
-class ListItem {
-  final String title;
-  final String icon;
-  final Color color;
-
-  ListItem({required this.title, required this.icon, required this.color});
+  Widget shoppingItem(ShoppingItem item) {
+    return Container(
+      margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 50 : 0),
+      child: InkWell(
+        onTap: () async {
+          setState(() {
+            isPushing = !isPushing;
+          });
+          final result = await Navigator.of(context).push(
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 1000),
+              reverseTransitionDuration: Duration(milliseconds: 1000),
+              pageBuilder: (context, animation, secondaryAnimation) => ShopItemDetails(item: item),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                // return child;
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            ),
+          );
+          setState(() {
+            isPushing = result;
+          });
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                height: 30,
+                width: 30,
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.grayLight),
+                ),
+                child: SvgPicture.asset("assets/icons/heart.svg"),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Hero(
+                  tag: item.title,
+                  child: Container(
+                    width: AppSizing.width(context) * 0.42,
+                    margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 0 : 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: item.color.withOpacity(0.1),
+                    ),
+                    child: Image.asset("assets/images/shop_item_${item.index}.png"),
+                  ),
+                ),
+                AppSizing.k10(context),
+                Text(item.title),
+                Text(item.price.toString()),
+                SizedBox(
+                  width: AppSizing.width(context) * 0.42,
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Text(
+                      "\$${item.price}",
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                          ),
+                    ),
+                    title: Text(
+                      "\$${item.discount}",
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                            fontWeight: FontWeight.w100,
+                            fontSize: 11,
+                          ),
+                    ),
+                    trailing: Transform.scale(
+                      scale: 0.8,
+                      child: Chip(
+                        side: BorderSide.none,
+                        padding: EdgeInsets.zero,
+                        label: Text(
+                          "${item.itemSold} Sold",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
