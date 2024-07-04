@@ -36,7 +36,7 @@ To contribute to this repo,
 - You can learn how to use fvm here [How to use Fvm](https://fvm.app/)
 
 - Create your mockups
-- Add your mockup images to the image on the Readme file using this [Figma Link](https://www.figma.com/file/axwX3ST1oPyOJPtyzq1oKR/Untitled?node-id=6%3A2)
+- Add your mockup images to the image on the Readme file using this [Figma Link](https://www.figma.com/design/UkbKjgmGzKFubnmE9VO2IL/Flutter-Open-UI?t=1Rp4VYHVXIp8manu-1)
 - Update the README.md file on the main branch by replacing the image with the new image containing your mockup
 - Add all your changes
   ```
@@ -60,8 +60,9 @@ To contribute to this repo,
 ## Gallery
 
 <table>
-  <tr>
-   <td>
+
+<tr>
+ <td>
       <a href="">
         <img src="./showcase/coming_soon.png" alt="Image 1" width="1000"/>
       </a>
@@ -72,13 +73,31 @@ To contribute to this repo,
       </a>
     </td>
     <td>
+  </tr>
+
+  <tr>
+   <td>
+      <a href="">
+        <img src="./showcase/ios.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+   <td>
+      <a href="">
+        <img src="./showcase/Todo.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+   
+    
+  </tr>
+  <tr>
+    <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
-        <img src="./showcase/colab_login.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/Collaboration.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
-        <img src="./showcase/bar_login.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/BarLogin.png" alt="Image 1" width="1000"/>
       </a>
     </td>
     
@@ -87,24 +106,15 @@ To contribute to this repo,
   <tr>
    <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
-        <img src="./showcase/train_onboarding.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/Frame 13.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
-        <img src="./showcase/pet_onboarding.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/Frame 15.png" alt="Image 1" width="1000"/>
       </a>
     </td>
     
   </tr>
 
-  <tr>
-   <td>
-      <a href="">
-        <img src="./showcase/TodoApp.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-   
-    
-  </tr>
 </table>
