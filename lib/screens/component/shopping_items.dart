@@ -66,7 +66,7 @@ class _ShoppingItemsState extends State<ShoppingItems> {
             offset: offset,
             child: Container(
               margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 30 : 0),
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () async {
                   setState(() {
                     selectedItem = item;
