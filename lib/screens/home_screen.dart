@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/model/shopping_item.dart';
 import 'package:flutter_openui/screens/component/shopping_items.dart';
-import 'package:flutter_openui/screens/shop_item_details.dart';
-import 'package:flutter_openui/utils/colors.dart';
-import 'package:flutter_openui/utils/helper.dart';
 import 'package:flutter_openui/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -35,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           width: AppSizing.width(context),
           padding: EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.05),
-          child: ShoppingItems(),
+          child: const ShoppingItems(),
         ),
       ),
     );

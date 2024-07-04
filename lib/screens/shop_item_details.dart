@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/model/shopping_item.dart';
 import 'package:flutter_openui/screens/cart_screen.dart';
+import 'package:flutter_openui/screens/component/gradient_btn.dart';
 import 'package:flutter_openui/utils/colors.dart';
 import 'package:flutter_openui/utils/helper.dart';
 import 'package:flutter_openui/utils/sizing.dart';
@@ -39,6 +38,8 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
   ];
   late ShoppingSize activeSize;
 
+  final duration = const Duration(milliseconds: 900);
+  final curve = Curves.fastOutSlowIn;
   List<ShoppingSize> sizes = [
     ShoppingSize(label: "XS", factor: 0.8),
     ShoppingSize(label: "S", factor: 0.9),
@@ -49,13 +50,18 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
   ];
   int quantity = 0;
   bool isPushing = true;
+  late String tag;
+
   @override
   void initState() {
-    activeSize = sizes[2];
+    setState(() {
+      tag = widget.item.title;
+      activeSize = sizes[2];
+    });
     super.initState();
   }
 
-  Tween<Offset> generateTweens() {
+  Tween<Offset> generateTween() {
     return isPushing
         ? Tween<Offset>(
             begin: Offset(0, AppSizing.height(context)),
@@ -72,9 +78,10 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
     return Scaffold(
       bottomNavigationBar: SafeArea(
         child: TweenAnimationBuilder(
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.decelerate,
-          tween: generateTweens(),
+          duration: duration,
+          curve: curve,
+          tween: generateTween(),
+          key: ValueKey(isPushing),
           builder: (context, value, child) {
             return Transform.translate(offset: value, child: bottomAddBar(context));
           },
@@ -86,9 +93,10 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
           children: [
             shoppingItemHero(context),
             TweenAnimationBuilder(
-                duration: Duration(milliseconds: 1000),
-                curve: Curves.decelerate,
-                tween: generateTweens(),
+                duration: duration,
+                curve: curve,
+                tween: generateTween(),
+                key: ValueKey(isPushing),
                 builder: (context, value, child) {
                   return Transform.translate(
                     offset: value,
@@ -97,8 +105,8 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                       children: [
                         AppSizing.k20(context),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 30),
-                          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                           decoration: BoxDecoration(
                             color: AppColors.grayLight.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(10),
@@ -112,7 +120,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                                     color: huddy.color.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  margin: const EdgeInsets.symmetric(horizontal: 10),
                                   child: Image.asset(
                                     "assets/images/huddies_${huddy.index}.png",
                                     scale: 4,
@@ -124,14 +132,14 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                         ),
                         AppSizing.k20(context),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("${widget.item.title}", style: Theme.of(context).textTheme.displayMedium),
+                                  Text(widget.item.title, style: Theme.of(context).textTheme.displayMedium),
                                   Text("\$${widget.item.price}", style: Theme.of(context).textTheme.displayMedium),
                                 ],
                               ),
@@ -144,7 +152,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                                       SvgPicture.asset("assets/icons/star.svg"),
                                       Text("4.3(2.5k Reviews)", style: Theme.of(context).textTheme.bodyMedium),
                                       Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 10),
+                                        margin: const EdgeInsets.symmetric(horizontal: 10),
                                         child: CircleAvatar(
                                           backgroundColor: Theme.of(context).primaryColor,
                                           radius: 5,
@@ -175,14 +183,14 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                           decoration: BoxDecoration(
                             color: AppColors.bgCard,
                             gradient: LinearGradient(
-                              stops: [0.1, 0.5, 0.85],
+                              stops: const [0.1, 0.5, 0.85],
                               colors: [Colors.transparent, AppColors.grayLight.withOpacity(0.5), Colors.transparent],
                             ),
                           ),
                         ),
                         AppSizing.k20(context),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -240,7 +248,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                 height: 40,
                 width: 40,
                 child: TweenAnimationBuilder(
-                  duration: const Duration(milliseconds: 700),
+                  duration: duration,
                   curve: Curves.easeInOutBack,
                   key: ValueKey(quantity),
                   tween: Tween<double>(begin: 1.5, end: 1),
@@ -266,25 +274,22 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
               ),
             ],
           ),
-          ElevatedButton(
-            onPressed: () async {
-              final result = await UtilHelper.navigate(
+          GradientButton(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+            onTap: () async {
+              setState(() {
+                isPushing = !isPushing;
+              });
+              await UtilHelper.navigate(
                 context: context,
-                page: const CartScreen(),
+                page: CartScreen(item: widget.item),
               );
+              setState(() {
+                isPushing = !isPushing;
+              });
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-              padding: const EdgeInsets.symmetric(
-                vertical: 25,
-                horizontal: 50,
-              ),
-            ),
-            child: const Text(
-              "Add to cart",
-              style: TextStyle(color: AppColors.white),
-            ),
-          )
+            title: "Add to cart",
+          ),
         ],
       ),
     );
@@ -294,12 +299,14 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
     return Stack(
       children: [
         Hero(
-          tag: widget.item.title,
+          tag: tag,
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: widget.item.color.withOpacity(0.3),
               borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
               ),
@@ -329,7 +336,7 @@ class _ShopItemDetailsState extends State<ShopItemDetails> {
                   });
                   Navigator.pop(context, isPushing);
                 },
-                child: Icon(Icons.arrow_back),
+                child: const Icon(Icons.arrow_back),
               ),
               Container(
                 height: 40,

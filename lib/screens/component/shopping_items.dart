@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_openui/model/shopping_item.dart';
 import 'package:flutter_openui/screens/shop_item_details.dart';
@@ -7,7 +9,8 @@ import 'package:flutter_openui/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ShoppingItems extends StatefulWidget {
-  const ShoppingItems({super.key});
+  final bool? hideTags;
+  const ShoppingItems({super.key, this.hideTags});
 
   @override
   State<ShoppingItems> createState() => _ShoppingItemsState();
@@ -15,7 +18,7 @@ class ShoppingItems extends StatefulWidget {
 
 class _ShoppingItemsState extends State<ShoppingItems> {
   bool isPushing = false;
-
+  final duration = const Duration(milliseconds: 900);
   Tween<Offset> generateTweens() {
     return isPushing
         ? Tween<Offset>(
@@ -40,6 +43,7 @@ class _ShoppingItemsState extends State<ShoppingItems> {
     super.initState();
   }
 
+  final curve = Curves.fastOutSlowIn;
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -55,12 +59,13 @@ class _ShoppingItemsState extends State<ShoppingItems> {
     return TweenAnimationBuilder(
         tween: item == selectedItem ? Tween<Offset>(begin: Offset.zero, end: Offset.zero) : generateTweens(),
         key: ValueKey(item.index),
-        duration: const Duration(milliseconds: 700),
+        duration: duration,
+        curve: curve,
         builder: (context, offset, child) {
           return Transform.translate(
             offset: offset,
             child: Container(
-              margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 50 : 0),
+              margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 30 : 0),
               child: InkWell(
                 onTap: () async {
                   setState(() {
@@ -95,10 +100,9 @@ class _ShoppingItemsState extends State<ShoppingItems> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Hero(
-                          tag: item.title,
+                          tag: widget.hideTags == true ? Random().nextDouble() * 1000 : item.title,
                           child: Container(
-                            width: AppSizing.width(context) * 0.42,
-                            margin: EdgeInsets.only(bottom: item.index % 2 == 0 ? 0 : 0),
+                            width: AppSizing.width(context) * 0.4,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: item.color.withOpacity(0.1),
@@ -109,7 +113,7 @@ class _ShoppingItemsState extends State<ShoppingItems> {
                         TweenAnimationBuilder(
                             tween: item != selectedItem ? Tween<double>(begin: 1, end: 1) : generateScaleTween(),
                             key: ValueKey(item.index),
-                            duration: const Duration(milliseconds: 700),
+                            duration: duration,
                             builder: (context, value, child) {
                               return Transform.scale(
                                 alignment: item.index % 2 == 0 ? Alignment.bottomLeft : Alignment.bottomRight,
@@ -117,13 +121,14 @@ class _ShoppingItemsState extends State<ShoppingItems> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    AppSizing.k10(context),
+                                    AppSizing.k5(context),
                                     Text(item.title),
                                     Text(item.price.toString()),
                                     SizedBox(
                                       width: AppSizing.width(context) * 0.42,
                                       child: ListTile(
                                         contentPadding: EdgeInsets.zero,
+                                        dense: true,
                                         leading: Text(
                                           "\$${item.price}",
                                           style: Theme.of(context).textTheme.displayMedium!.copyWith(

@@ -14,4 +14,6 @@ class AppColors {
   static const black = Color(0xff000000);
   static const gray = Color(0xff0C1221);
   static const grayLight = Color(0xffD9D9D9);
+  static const circleAvatarDark = Color(0xff080808);
+  static const circleAvatarBgDark = Color(0xff080808);
 }
