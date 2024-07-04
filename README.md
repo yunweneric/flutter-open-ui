@@ -63,17 +63,28 @@ To contribute to this repo,
 
   <tr>
    <td>
-      <a href="">
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/chatbot_ui">
+      <img src="./showcase/coming_soon.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>  
+   <td>
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
+        <img src="./showcase/fashion_shop.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+    
+  </tr>
+  <tr>
+   <td>
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
         <img src="./showcase/ios.png" alt="Image 1" width="1000"/>
       </a>
     </td>
    <td>
-      <a href="">
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/todo_by_joelFah">
         <img src="./showcase/Todo.png" alt="Image 1" width="1000"/>
       </a>
-    </td>
-   
-    
+    </td>    
   </tr>
   <tr>
     <td>
