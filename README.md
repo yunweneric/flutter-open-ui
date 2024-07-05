@@ -1,13 +1,16 @@
-# **To Do App 01**
+# flutter_openui
 
-Sample To Do app UI.
+A new Flutter project.
 
-## **Installation**
+## Getting Started
 
-1. Clone Project from repository
-2. Run the command to get dependencies
-    flutter pub get
-3. You are done!
+This project is a starting point for a Flutter application.
 
-## **Gallery**
-![To Do app UI](./assets/images/mockup.png)
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
