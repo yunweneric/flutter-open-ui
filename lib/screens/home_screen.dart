@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_openui/utils/colors.dart';
+import 'package:flutter_openui/utils/fruits.dart';
 import 'package:flutter_openui/utils/sizing.dart';
-
-class FruitItem {
-  final Color color;
-  final Color lightColor;
-  final String image;
-  final String fruit;
-
-  FruitItem({required this.color, required this.lightColor, required this.image, required this.fruit});
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,81 +10,103 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int activeIndex = 0;
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int activeBgIndex = 0;
-  List<FruitItem> fruits = [
-    FruitItem(
-      color: AppColors.yellow,
-      lightColor: AppColors.yellowLight,
-      image: "assets/images/yellow_bottle.png",
-      fruit: "assets/images/yellow_slice.png",
-    ),
-    FruitItem(
-      color: AppColors.green,
-      lightColor: AppColors.greenLight,
-      image: "assets/images/green_bottle.png",
-      fruit: "assets/images/gree_slice.png",
-    ),
-    FruitItem(
-      color: AppColors.purple,
-      lightColor: AppColors.purpleLight,
-      fruit: "assets/images/purple_slice.png",
-      image: "assets/images/purple_bottle.png",
-    ),
-  ];
+  int activeFruitIndex = 0;
 
-  generateGradient() {}
-  PageController controller = PageController();
+  AnimationController? fruitController;
+  AnimationController? fruitMiniController;
+  AnimationController? bottleController;
+  PageController pageController = PageController(initialPage: 0);
+
   bool isScrolling = true;
+  bool hasEndedScroll = false;
+  bool hasStartedScroll = false;
+  final fruitAnimationDuration = const Duration(milliseconds: 300);
+  final bottleAnimationDuration = const Duration(milliseconds: 500);
+  late Animation<double> fruitAnimation;
+  late Animation<double> bottleAnimation;
+  late Animation<double> fruitMiniAnimation;
   @override
   void initState() {
-    controller.addListener(listToScroll);
+    bottleController = AnimationController(vsync: this, duration: bottleAnimationDuration);
+    fruitController = AnimationController(vsync: this, duration: fruitAnimationDuration);
+    fruitMiniController = AnimationController(vsync: this, duration: fruitAnimationDuration);
+    final Animation<double> fruitCurve = CurvedAnimation(parent: fruitController!, curve: Curves.easeInBack);
+    final Animation<double> bottleCurve = CurvedAnimation(parent: bottleController!, curve: Curves.elasticOut);
+    bottleAnimation = Tween<double>(begin: 0.2, end: 1.5).animate(bottleCurve);
+    fruitAnimation = Tween<double>(begin: 1.5, end: 0).animate(fruitCurve);
+    fruitMiniAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(fruitCurve);
+    animate();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.removeListener(listToScroll);
-    controller.dispose();
+    pageController.removeListener(listToScroll);
+    pageController.dispose();
+    bottleController?.dispose();
+    fruitController?.dispose();
+    fruitMiniController?.dispose();
     super.dispose();
   }
 
   listToScroll() {
-    print(controller.offset);
+    // print(controller.offset);
   }
 
-  Offset scrollOffset = Offset.zero;
-
   _onStartScroll(ScrollStartNotification notification) {
-    print("Scroll Start");
-    setState(() => isScrolling = false);
+    setState(() {
+      isScrolling = false;
+      hasEndedScroll = false;
+      hasStartedScroll = true;
+    });
   }
 
   _onUpdateScroll(ScrollUpdateNotification notification) {
-    print("Scroll Update");
     setState(() {
       isScrolling = true;
+      hasEndedScroll = false;
+      hasStartedScroll = false;
     });
   }
 
   _onEndScroll(ScrollEndNotification notification) {
     updateActiveIndex(notification);
-    setState(() => isScrolling = false);
+    setState(() {
+      isScrolling = false;
+      hasEndedScroll = true;
+      hasStartedScroll = false;
+    });
   }
 
-  updateActiveIndex(ScrollEndNotification notification) {
-    print(notification.metrics.pixels);
-    final pixel = notification.metrics.pixels;
+  updateActiveIndex(ScrollEndNotification notification) async {
+    fruitController!.reset();
+    bottleController!.reset();
+    if (activeBgIndex > activeFruitIndex) {
+      fruits.add(fruits[activeFruitIndex]);
+    } else {
+      // fruits.insert(0, fruits[activeBgIndex]);
+    }
     setState(() {
-      if (pixel <= 0 && pixel <= 300) {
-        activeIndex = 0;
-      } else if (pixel > 300 && pixel <= 600) {
-        activeIndex = 1;
-      } else if (pixel > 600) {
-        activeIndex = 2;
-      }
+      activeFruitIndex = activeBgIndex;
     });
+    await fruitController!.forward();
+    await fruitMiniController!.forward();
+    await bottleController!.forward();
+
+    // fruits.forEach((item) => print(item.fruit));
+  }
+
+  animate() {
+    fruitController!.reset();
+    bottleController!.reset();
+    fruitController!.forward();
+    bottleController!.forward();
+  }
+
+  String generateAssetName(int index, String suffix) {
+    return "assets/images/${fruits[index].colorName}_${suffix}.png";
   }
 
   @override
@@ -116,21 +129,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   end: Alignment.topRight,
                   colors: [
                     fruits[activeBgIndex].color,
-                    fruits[activeBgIndex].lightColor,
+                    fruits[activeBgIndex].lightColor.withOpacity(0.9),
                   ],
                 ),
               ),
             ),
-            AnimatedContainer(
-              clipBehavior: Clip.none,
-              width: AppSizing.width(context),
-              height: AppSizing.height(context),
-              duration: const Duration(milliseconds: 700),
-              child: Transform.translate(
-                offset: Offset(100, 0),
-                child: Image.asset(
-                  fruits[activeBgIndex].fruit,
-                  fit: BoxFit.cover,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: AnimatedContainer(
+                width: AppSizing.width(context) / 2,
+                height: AppSizing.height(context) / 2,
+                duration: const Duration(milliseconds: 700),
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.5),
+                      fruits[activeBgIndex].color.withOpacity(0.2),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -142,14 +161,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 key: ValueKey(activeBgIndex),
                 duration: const Duration(milliseconds: 1500),
                 tween: Tween<Offset>(
-                  begin: Offset(0, 20),
+                  begin: Offset(0, 150),
                   end: Offset.zero,
                 ),
                 curve: Curves.bounceInOut,
                 builder: (context, offset, child) {
-                  return Transform.translate(
-                    offset: offset,
-                    child: Image.asset("assets/images/logo.png", scale: 4),
+                  return Container(
+                    child: Center(
+                      child: Transform.translate(
+                        offset: offset,
+                        child: Container(
+                          width: AppSizing.width(context) * 0.5,
+                          color: Colors.teal,
+                          child: Image.asset("assets/images/logo.png"),
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
@@ -160,24 +187,22 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 0,
               child: Container(
                 alignment: Alignment.bottomCenter,
-                height: AppSizing.height(context) * 0.8,
+                // height: AppSizing.height(context) * 0.8,
+                height: AppSizing.height(context),
                 width: AppSizing.width(context),
                 child: NotificationListener(
                   onNotification: (scrollNotification) {
                     if (scrollNotification is ScrollStartNotification) {
-                      print("Scroll start");
                       _onStartScroll(scrollNotification);
                     } else if (scrollNotification is ScrollUpdateNotification) {
-                      print("Scroll Update");
                       _onUpdateScroll(scrollNotification);
                     } else if (scrollNotification is ScrollEndNotification) {
-                      print("Scroll End");
                       _onEndScroll(scrollNotification);
                     }
                     return true;
                   },
                   child: PageView.builder(
-                    controller: controller,
+                    controller: pageController,
                     itemCount: fruits.length,
                     onPageChanged: (page) {
                       setState(() {
@@ -185,15 +210,80 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     itemBuilder: (c, i) {
-                      return AnimatedScale(
-                        curve: Curves.bounceIn,
-                        scale: i == activeIndex ? 1 : 0.0,
-                        duration: const Duration(milliseconds: 300),
-                        child: AnimatedOpacity(
-                          duration: Duration(milliseconds: 400),
-                          opacity: i == activeIndex ? 1 : 0,
-                          child: Image.asset(fruits[i].image),
-                        ),
+                      return Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          AnimatedBuilder(
+                            animation: bottleController!,
+                            builder: (context, child) {
+                              return Transform.scale(
+                                scale: bottleAnimation.value,
+                                child: Opacity(
+                                  opacity: i == activeFruitIndex ? 1 : 0,
+                                  child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Image.asset(generateAssetName(i, "bottle"), height: AppSizing.height(context) * 0.7),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          Positioned(
+                            child: AnimatedBuilder(
+                              animation: fruitController!,
+                              builder: (context, child) {
+                                return Transform.scale(
+                                  scale: isScrolling && activeFruitIndex == i ? 1 : fruitAnimation.value,
+                                  child: Opacity(
+                                    opacity: 1,
+                                    // opacity: fruitAnimation.value.clamp(0, 1),
+                                    child: Transform(
+                                      alignment: Alignment.center,
+                                      transform: Matrix4.identity()
+                                        ..translate(isScrolling ? AppSizing.width(context) * 0.8 : 0.0, 0)
+                                        ..scale(1.5),
+                                      child: AnimatedOpacity(
+                                        opacity: 1,
+                                        duration: Duration(milliseconds: 400),
+                                        // opacity: isScrolling && activeBgIndex == i ? 1 : 0,
+                                        child: Image.asset(
+                                          height: AppSizing.height(context),
+                                          width: AppSizing.width(context),
+                                          isScrolling && activeFruitIndex == i
+                                              ? generateAssetName(
+                                                  activeFruitIndex + 1,
+                                                  "slice",
+                                                )
+                                              : generateAssetName(activeFruitIndex + 1, "slice"),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Positioned(
+                            child: AnimatedBuilder(
+                              animation: fruitMiniController!,
+                              builder: (context, child) {
+                                return Transform.scale(
+                                  scale: isScrolling ? 0 : fruitAnimation.value,
+                                  child: Image.asset(
+                                    height: AppSizing.height(context),
+                                    width: AppSizing.width(context),
+                                    isScrolling && activeFruitIndex == i
+                                        ? generateAssetName(
+                                            activeFruitIndex + 1,
+                                            "mini_slice",
+                                          )
+                                        : generateAssetName(activeFruitIndex + 1, "mini_slice"),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
