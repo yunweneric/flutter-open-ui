@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_openui/utils/fruits.dart';
 import 'package:flutter_openui/utils/sizing.dart';
@@ -11,48 +12,46 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  int activeBgIndex = 0;
-  int activeFruitIndex = 0;
+  int activeBgIndex = 12;
+  int activeFruitIndex = 12;
 
   AnimationController? fruitController;
   AnimationController? fruitMiniController;
   AnimationController? bottleController;
-  PageController pageController = PageController(initialPage: 0);
+  PageController pageController = PageController(initialPage: 12);
 
-  bool isScrolling = true;
+  bool isScrolling = false;
   bool hasEndedScroll = false;
   bool hasStartedScroll = false;
-  final fruitAnimationDuration = const Duration(milliseconds: 300);
+  ScrollDirection? scrollDirection;
+  final fruitAnimationDuration = const Duration(milliseconds: 200);
   final bottleAnimationDuration = const Duration(milliseconds: 500);
   late Animation<double> fruitAnimation;
   late Animation<double> bottleAnimation;
   late Animation<double> fruitMiniAnimation;
+  List<FruitItem> fruits = generateItems();
   @override
   void initState() {
     bottleController = AnimationController(vsync: this, duration: bottleAnimationDuration);
     fruitController = AnimationController(vsync: this, duration: fruitAnimationDuration);
-    fruitMiniController = AnimationController(vsync: this, duration: fruitAnimationDuration);
-    final Animation<double> fruitCurve = CurvedAnimation(parent: fruitController!, curve: Curves.easeInBack);
-    final Animation<double> bottleCurve = CurvedAnimation(parent: bottleController!, curve: Curves.elasticOut);
+    fruitMiniController = AnimationController(vsync: this, duration: bottleAnimationDuration);
+    Animation<double> fruitCurve = CurvedAnimation(parent: fruitController!, curve: Curves.easeInBack);
+    Animation<double> bottleCurve = CurvedAnimation(parent: bottleController!, curve: Curves.elasticOut);
+    Animation<double> fruitMinCurve = CurvedAnimation(parent: fruitMiniController!, curve: Curves.elasticOut);
     bottleAnimation = Tween<double>(begin: 0.2, end: 1.5).animate(bottleCurve);
-    fruitAnimation = Tween<double>(begin: 1.5, end: 0).animate(fruitCurve);
-    fruitMiniAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(fruitCurve);
-    animate();
+    fruitAnimation = Tween<double>(begin: 1.5, end: 0.0).animate(fruitCurve);
+    fruitMiniAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(fruitMinCurve);
+    toggleAnimationAndUpdateFruitIndex();
     super.initState();
   }
 
   @override
   void dispose() {
-    pageController.removeListener(listToScroll);
     pageController.dispose();
     bottleController?.dispose();
     fruitController?.dispose();
     fruitMiniController?.dispose();
     super.dispose();
-  }
-
-  listToScroll() {
-    // print(controller.offset);
   }
 
   _onStartScroll(ScrollStartNotification notification) {
@@ -65,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   _onUpdateScroll(ScrollUpdateNotification notification) {
     setState(() {
+      scrollDirection = pageController.position.userScrollDirection;
       isScrolling = true;
       hasEndedScroll = false;
       hasStartedScroll = false;
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   _onEndScroll(ScrollEndNotification notification) {
-    updateActiveIndex(notification);
+    toggleAnimationAndUpdateFruitIndex();
     setState(() {
       isScrolling = false;
       hasEndedScroll = true;
@@ -80,29 +80,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
   }
 
-  updateActiveIndex(ScrollEndNotification notification) async {
+  toggleAnimationAndUpdateFruitIndex() async {
     fruitController!.reset();
     bottleController!.reset();
-    if (activeBgIndex > activeFruitIndex) {
-      fruits.add(fruits[activeFruitIndex]);
-    } else {
-      // fruits.insert(0, fruits[activeBgIndex]);
-    }
+
     setState(() {
       activeFruitIndex = activeBgIndex;
     });
+
     await fruitController!.forward();
-    await fruitMiniController!.forward();
+    fruitMiniController!.reset();
+    fruitMiniController!.forward();
     await bottleController!.forward();
-
-    // fruits.forEach((item) => print(item.fruit));
-  }
-
-  animate() {
-    fruitController!.reset();
-    bottleController!.reset();
-    fruitController!.forward();
-    bottleController!.forward();
   }
 
   String generateAssetName(int index, String suffix) {
@@ -154,31 +143,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
             Positioned(
-              top: AppSizing.height(context) / 15,
-              left: 0,
-              right: 0,
-              child: TweenAnimationBuilder(
-                key: ValueKey(activeBgIndex),
-                duration: const Duration(milliseconds: 1500),
-                tween: Tween<Offset>(
-                  begin: Offset(0, 150),
-                  end: Offset.zero,
+              top: AppSizing.height(context) / 8,
+              left: AppSizing.height(context) * 0.08,
+              right: AppSizing.height(context) * 0.08,
+              child: Container(
+                width: AppSizing.width(context) * 0.3,
+                // color: Colors.teal,
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: 150,
+                  ),
                 ),
-                curve: Curves.bounceInOut,
-                builder: (context, offset, child) {
-                  return Container(
-                    child: Center(
-                      child: Transform.translate(
-                        offset: offset,
-                        child: Container(
-                          width: AppSizing.width(context) * 0.5,
-                          color: Colors.teal,
-                          child: Image.asset("assets/images/logo.png"),
-                        ),
-                      ),
-                    ),
-                  );
-                },
               ),
             ),
             Positioned(
@@ -187,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               right: 0,
               child: Container(
                 alignment: Alignment.bottomCenter,
-                // height: AppSizing.height(context) * 0.8,
                 height: AppSizing.height(context),
                 width: AppSizing.width(context),
                 child: NotificationListener(
@@ -208,81 +183,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       setState(() {
                         activeBgIndex = page;
                       });
+                      print(page);
                     },
                     itemBuilder: (c, i) {
                       return Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          AnimatedBuilder(
-                            animation: bottleController!,
-                            builder: (context, child) {
-                              return Transform.scale(
-                                scale: bottleAnimation.value,
-                                child: Opacity(
-                                  opacity: i == activeFruitIndex ? 1 : 0,
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Image.asset(generateAssetName(i, "bottle"), height: AppSizing.height(context) * 0.7),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          Positioned(
-                            child: AnimatedBuilder(
-                              animation: fruitController!,
-                              builder: (context, child) {
-                                return Transform.scale(
-                                  scale: isScrolling && activeFruitIndex == i ? 1 : fruitAnimation.value,
-                                  child: Opacity(
-                                    opacity: 1,
-                                    // opacity: fruitAnimation.value.clamp(0, 1),
-                                    child: Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.identity()
-                                        ..translate(isScrolling ? AppSizing.width(context) * 0.8 : 0.0, 0)
-                                        ..scale(1.5),
-                                      child: AnimatedOpacity(
-                                        opacity: 1,
-                                        duration: Duration(milliseconds: 400),
-                                        // opacity: isScrolling && activeBgIndex == i ? 1 : 0,
-                                        child: Image.asset(
-                                          height: AppSizing.height(context),
-                                          width: AppSizing.width(context),
-                                          isScrolling && activeFruitIndex == i
-                                              ? generateAssetName(
-                                                  activeFruitIndex + 1,
-                                                  "slice",
-                                                )
-                                              : generateAssetName(activeFruitIndex + 1, "slice"),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Positioned(
-                            child: AnimatedBuilder(
-                              animation: fruitMiniController!,
-                              builder: (context, child) {
-                                return Transform.scale(
-                                  scale: isScrolling ? 0 : fruitAnimation.value,
-                                  child: Image.asset(
-                                    height: AppSizing.height(context),
-                                    width: AppSizing.width(context),
-                                    isScrolling && activeFruitIndex == i
-                                        ? generateAssetName(
-                                            activeFruitIndex + 1,
-                                            "mini_slice",
-                                          )
-                                        : generateAssetName(activeFruitIndex + 1, "mini_slice"),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                          fruitMiniSlice(i),
+                          bottle(i),
+                          fruitSlice(i),
                         ],
                       );
                     },
@@ -292,6 +201,90 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Positioned fruitSlice(int i) {
+    return Positioned(
+      child: AnimatedBuilder(
+        animation: fruitController!,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: isScrolling && activeFruitIndex == i ? 1 : fruitAnimation.value,
+            child: Opacity(
+              // opacity: fruitAnimation.value.clamp(0, 1),
+              opacity: 1,
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..translate(
+                    isScrolling
+                        ? scrollDirection == ScrollDirection.forward
+                            ? -AppSizing.width(context) * 0.8
+                            : AppSizing.width(context) * 0.8
+                        : 0.0,
+                    0,
+                  )
+                  ..scale(1.5),
+                child: Builder(
+                  builder: (context) {
+                    bool condition = scrollDirection == ScrollDirection.reverse && activeFruitIndex == i;
+                    final newIndex = condition ? activeFruitIndex + 1 : (activeFruitIndex - 1).clamp(0, 1);
+                    return Image.asset(
+                      height: AppSizing.height(context),
+                      width: AppSizing.width(context),
+                      isScrolling ? generateAssetName(newIndex, "slice") : generateAssetName(activeFruitIndex, "slice"),
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  AnimatedBuilder bottle(int i) {
+    return AnimatedBuilder(
+      animation: bottleController!,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: bottleAnimation.value,
+          child: Opacity(
+            opacity: i == activeFruitIndex ? 1 : 0,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                generateAssetName(i, "bottle"),
+                height: AppSizing.height(context) * 0.7,
+                width: AppSizing.width(context),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Positioned fruitMiniSlice(int index) {
+    return Positioned(
+      child: AnimatedBuilder(
+        animation: fruitMiniController!,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: fruitMiniAnimation.value,
+            child: Opacity(
+              opacity: fruitMiniAnimation.value.clamp(0, 1),
+              child: Image.asset(
+                height: AppSizing.height(context),
+                width: AppSizing.width(context),
+                generateAssetName(index, "mini_slice"),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

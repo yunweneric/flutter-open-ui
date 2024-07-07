@@ -13,7 +13,9 @@ class FruitItem {
   });
 }
 
-List<FruitItem> fruits = [
+List<int> list = List.generate(10, (index) => index);
+
+List<FruitItem> baseList = [
   FruitItem(
     color: AppColors.yellow,
     colorName: "yellow",
@@ -30,3 +32,11 @@ List<FruitItem> fruits = [
     lightColor: AppColors.purpleLight,
   ),
 ];
+
+List<FruitItem> generateItems() {
+  List<FruitItem> newList = [];
+  for (var _ in list) {
+    newList.addAll(baseList);
+  }
+  return newList;
+}
