@@ -24,10 +24,9 @@ Flutter open-source project that's all about pushing the boundaries of User Inte
 To contribute to this repo,
 
 - Fork the repo
-- Check out to the `starter_app`. This branch is the simple `flutter counter app`
-- Create your own branch from the `starter_app` branch
-- Make sure the branch name follows the numbering ex: AuthUI01, AuthUI02, AuthUI03, OnboardingUI01 ...
-- Change your flutter version using fvm
+- Check out to the `main`. This branch is the simple `flutter counter app`
+- Create your own branch from the `main` branch
+- (Optional) Change your flutter version using fvm
 
   ```
   fvm use 3.xx
@@ -36,16 +35,15 @@ To contribute to this repo,
 - You can learn how to use fvm here [How to use Fvm](https://fvm.app/)
 
 - Create your mockups
-- Add your mockup images to the image on the Readme file using this [Figma Link](https://www.figma.com/design/UkbKjgmGzKFubnmE9VO2IL/Flutter-Open-UI?t=1Rp4VYHVXIp8manu-1)
-- Update the README.md file on the main branch by replacing the image with the new image containing your mockup
+- Add your mockup image in the `showcase` folder. You can use this [Figma](https://www.figma.com/design/UkbKjgmGzKFubnmE9VO2IL/Flutter-Open-UI?t=1Rp4VYHVXIp8manu-1) to do your mockup images
+
 - Add all your changes
   ```
   git add .
   ```
 - Commit your changes
 
-  ```![Uploading app_logo3.png…]()
-
+  ```
   git commit -m 'proper commit message'
   ```
 
@@ -65,6 +63,19 @@ To contribute to this repo,
  <td>
       <a href="">
         <img src="./showcase/coming_soon.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+     <td>
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
+        <img src="./showcase/coming_soon.png" alt="Image 1" width="1000"/>
+      </a>
+    </td>
+    <td>
+  </tr>
+<tr>
+ <td>
+      <a href="https://github.com/yunweneric/flutter_openUI/tree/fruity_lips">
+        <img src="./showcase/fruity_lips.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
