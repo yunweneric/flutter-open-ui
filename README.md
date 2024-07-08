@@ -58,61 +58,103 @@ To contribute to this repo,
 ## Gallery
 
 <table>
-
-<tr>
- <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/fruity_lips">
-        <img src="./showcase/fruity_lips.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
-        <img src="./showcase/fashion_shop.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-    <td>
-  </tr>
-
-  <tr>
-   <td>
-      <a href="">
-        <img src="./showcase/ios.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-   <td>
-      <a href="">
-        <img src="./showcase/Todo.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-   
-    
-  </tr>
-  <tr>
-    <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
-        <img src="./showcase/Collaboration.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
-        <img src="./showcase/BarLogin.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-    
-   
-  </tr>
-  <tr>
-   <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
-        <img src="./showcase/train_onboard.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-     <td>
-      <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
-        <img src="./showcase/pet_onboard.png" alt="Image 1" width="1000"/>
-      </a>
-    </td>
-    
-  </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/fruity_lips">
+                <img src="./showcase/fruity_lips.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
+                <img src="./showcase/fashion_shop.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/fruity_lips">
+                <img src="./showcase/car.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
+                <img src="./showcase/animated_fruits.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">
+                <img src="./showcase/ios.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="">
+                <img src="./showcase/Todo.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
+                <img src="./showcase/theming.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
+                <img src="./showcase/nike_shop.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
+                <img src="./showcase/Collaboration.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
+                <img src="./showcase/BarLogin.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
+                <img src="./showcase/watch_store.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
+                <img src="./showcase/Frame 14.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+     <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
+                <img src="./showcase/Frame 20.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
+                <img src="./showcase/pet_onboard.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
+                <img src="./showcase/train_onboard.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
+                <img src="./showcase/nageo.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
 
 </table>
