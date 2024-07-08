@@ -8,7 +8,6 @@
         <td>
         <img src="./showcase/animate_cover.png" alt="Image 1" />
         </td>
-        <td>
     </tr>
 
 </table>
