@@ -82,7 +82,7 @@ To contribute to this repo,
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/yunweneric/flutter_openUI/tree/fruity_lips">
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/car_shop_slider">
                 <img src="./showcase/car.png" alt="Image 1" width="1000" />
             </a>
         </td>
