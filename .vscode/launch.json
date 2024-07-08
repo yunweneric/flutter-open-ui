@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "dev",
+      "name": "flutter-open-ui",
       "request": "launch",
       "type": "dart"
     },

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const bgColor = Color(0xFF010101);
-  static const primary = Color(0XFFFF6778);
-  // static const primary = Colors.teal;
-  static const bgCard = Color(0xFF171717);
-  static const pink = Color(0xFFC09FF8);
-  static const purple = Color(0xFFFEC4DD);
-  static const white = Color(0xFFFFFFFF);
+  static const purpleLight = Color(0xffAE4EDB);
+  static const purple = Color(0xff6848C6);
+  static const greenLight = Color(0xffBCDB4E);
+  static const green = Color(0xff8EC648);
+  static const yellow = Color(0xffFFEE57);
+  static const yellowLight = Color(0xffFFB930);
 }
