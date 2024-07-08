@@ -212,8 +212,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         builder: (context, child) {
           return Transform.scale(
             scale: isScrolling && activeFruitIndex == i ? 1 : fruitAnimation.value,
-            child: Opacity(
-              // opacity: fruitAnimation.value.clamp(0, 1),
+            child: AnimatedOpacity(
+              duration: fruitAnimationDuration,
+              // opacity: isScrolling || hasEndedScroll && activeFruitIndex == i ? 1 : 0,
               opacity: 1,
               child: Transform(
                 alignment: Alignment.center,
@@ -230,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: Builder(
                   builder: (context) {
                     bool condition = scrollDirection == ScrollDirection.reverse && activeFruitIndex == i;
-                    final newIndex = condition ? activeFruitIndex + 1 : (activeFruitIndex - 1).clamp(0, 1);
+                    final newIndex = condition ? activeFruitIndex + 1 : (activeFruitIndex - 1).clamp(0, fruits.length - 1);
                     return Image.asset(
                       height: AppSizing.height(context),
                       width: AppSizing.width(context),

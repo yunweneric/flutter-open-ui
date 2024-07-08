@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Fruity Lips',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: AppColors.yellow,
