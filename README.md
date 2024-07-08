@@ -92,7 +92,6 @@ To contribute to this repo,
                 <img src="./showcase/animated_fruits.png" alt="Image 1" width="1000" />
             </a>
         </td>
-        <td>
     </tr>
     <tr>
         <td>
