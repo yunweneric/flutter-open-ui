@@ -117,12 +117,12 @@ To contribute to this repo,
   <tr>
    <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
-        <img src="./showcase/train_onboarding.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/train_onboard.png" alt="Image 1" width="1000"/>
       </a>
     </td>
      <td>
       <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
-        <img src="./showcase/pet_onboarding.png" alt="Image 1" width="1000"/>
+        <img src="./showcase/pet_onboard.png" alt="Image 1" width="1000"/>
       </a>
     </td>
     
