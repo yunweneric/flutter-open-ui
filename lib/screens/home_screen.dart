@@ -1,14 +1,8 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_openui/screens/animated_bg.dart';
-import 'package:flutter_openui/screens/chat_screen.dart';
-import 'package:flutter_openui/utils/assets.dart';
-import 'package:flutter_openui/utils/colors.dart';
+import 'package:flutter_openui/utils/fruits.dart';
 import 'package:flutter_openui/utils/sizing.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,75 +11,191 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  List<ListItem> items = [
-    ListItem(title: "I need some UI inspiration for dark...", icon: AppAsset.speech, color: AppColors.pink),
-    ListItem(title: "Show me some color palettes for AI...", icon: AppAsset.chat, color: AppColors.purple),
-    ListItem(title: "What are the best mobile apps 2023...", icon: AppAsset.picture, color: AppColors.purple),
-  ];
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  int activeBgIndex = 12;
+  int activeFruitIndex = 12;
 
-  AnimationController? controller;
-  Animation<double>? animateRotation;
-  Animation<double>? scaleAnimation;
-  bool isAnimating = false;
+  AnimationController? fruitController;
+  AnimationController? fruitMiniController;
+  AnimationController? bottleController;
+  PageController pageController = PageController(initialPage: 12);
+
+  bool isScrolling = false;
+  bool hasEndedScroll = false;
+  bool hasStartedScroll = false;
+  ScrollDirection? scrollDirection;
+  final fruitAnimationDuration = const Duration(milliseconds: 200);
+  final bottleAnimationDuration = const Duration(milliseconds: 500);
+  late Animation<double> fruitAnimation;
+  late Animation<double> bottleAnimation;
+  late Animation<double> fruitMiniAnimation;
+  List<FruitItem> fruits = generateItems();
   @override
   void initState() {
-    controller = AnimationController(duration: Duration(seconds: 5), vsync: this)..repeat();
-    final Animation<double> curve = CurvedAnimation(parent: controller!, curve: Curves.ease);
-    animateRotation = Tween<double>(begin: 0, end: pi * 2).animate(curve);
-    scaleAnimation = Tween<double>(begin: 1.1, end: 1).animate(curve);
+    bottleController = AnimationController(vsync: this, duration: bottleAnimationDuration);
+    fruitController = AnimationController(vsync: this, duration: fruitAnimationDuration);
+    fruitMiniController = AnimationController(vsync: this, duration: bottleAnimationDuration);
+    Animation<double> fruitCurve = CurvedAnimation(parent: fruitController!, curve: Curves.easeInBack);
+    Animation<double> bottleCurve = CurvedAnimation(parent: bottleController!, curve: Curves.elasticOut);
+    Animation<double> fruitMinCurve = CurvedAnimation(parent: fruitMiniController!, curve: Curves.elasticOut);
+    bottleAnimation = Tween<double>(begin: 0.2, end: 1.5).animate(bottleCurve);
+    fruitAnimation = Tween<double>(begin: 1.5, end: 0.0).animate(fruitCurve);
+    fruitMiniAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(fruitMinCurve);
+    toggleAnimationAndUpdateFruitIndex();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    pageController.dispose();
+    bottleController?.dispose();
+    fruitController?.dispose();
+    fruitMiniController?.dispose();
     super.dispose();
+  }
+
+  _onStartScroll(ScrollStartNotification notification) {
+    setState(() {
+      isScrolling = false;
+      hasEndedScroll = false;
+      hasStartedScroll = true;
+    });
+  }
+
+  _onUpdateScroll(ScrollUpdateNotification notification) {
+    setState(() {
+      scrollDirection = pageController.position.userScrollDirection;
+      isScrolling = true;
+      hasEndedScroll = false;
+      hasStartedScroll = false;
+    });
+  }
+
+  _onEndScroll(ScrollEndNotification notification) {
+    toggleAnimationAndUpdateFruitIndex();
+    setState(() {
+      isScrolling = false;
+      hasEndedScroll = true;
+      hasStartedScroll = false;
+    });
+  }
+
+  toggleAnimationAndUpdateFruitIndex() async {
+    fruitController!.reset();
+    bottleController!.reset();
+
+    setState(() {
+      activeFruitIndex = activeBgIndex;
+    });
+
+    await fruitController!.forward();
+    fruitMiniController!.reset();
+    fruitMiniController!.forward();
+    await bottleController!.forward();
+  }
+
+  String generateAssetName(int index, String suffix) {
+    return "assets/images/${fruits[index].colorName}_${suffix}.png";
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
         body: Stack(
+          clipBehavior: Clip.none,
           children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              child: AnimatedBG(controller: controller!, animateRotation: animateRotation),
-            ),
-            Positioned(
-              top: -20,
-              left: 50,
-              child: SvgPicture.asset(
-                AppAsset.home_grid,
-                color: AppColors.white.withOpacity(0.8),
-                width: AppSizing.width(context),
-                height: AppSizing.height(context) * 0.4,
-              ),
-            ),
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+            AnimatedContainer(
               width: AppSizing.width(context),
-              height: AppSizing.height(context),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppSizing.k30(context),
-                    appbar(context),
-                    AppSizing.k30(context),
-                    Text("How may I help\nyou today?", style: Theme.of(context).textTheme.displayLarge),
-                    AppSizing.k30(context),
-                    homeCards(context),
-                    AppSizing.k20(context),
-                    listItems(context),
+              duration: const Duration(milliseconds: 700),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [
+                    fruits[activeBgIndex].color,
+                    fruits[activeBgIndex].lightColor.withOpacity(0.9),
                   ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: AnimatedContainer(
+                width: AppSizing.width(context) / 2,
+                height: AppSizing.height(context) / 2,
+                duration: const Duration(milliseconds: 700),
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.5),
+                      fruits[activeBgIndex].color.withOpacity(0.2),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: AppSizing.height(context) / 8,
+              left: AppSizing.height(context) * 0.08,
+              right: AppSizing.height(context) * 0.08,
+              child: Container(
+                width: AppSizing.width(context) * 0.3,
+                // color: Colors.teal,
+                child: Center(
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: 150,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                height: AppSizing.height(context),
+                width: AppSizing.width(context),
+                child: NotificationListener(
+                  onNotification: (scrollNotification) {
+                    if (scrollNotification is ScrollStartNotification) {
+                      _onStartScroll(scrollNotification);
+                    } else if (scrollNotification is ScrollUpdateNotification) {
+                      _onUpdateScroll(scrollNotification);
+                    } else if (scrollNotification is ScrollEndNotification) {
+                      _onEndScroll(scrollNotification);
+                    }
+                    return true;
+                  },
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: fruits.length,
+                    onPageChanged: (page) {
+                      setState(() {
+                        activeBgIndex = page;
+                      });
+                      print(page);
+                    },
+                    itemBuilder: (c, i) {
+                      return Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          fruitMiniSlice(i),
+                          bottle(i),
+                          fruitSlice(i),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -95,166 +205,88 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 
-  Column listItems(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Text("History", style: Theme.of(context).textTheme.displayMedium),
-          trailing: Text("See all", style: Theme.of(context).textTheme.displaySmall),
-        ),
-        ...items.map(
-          (e) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Theme.of(context).cardColor.withOpacity(0.8),
-            ),
-            margin: EdgeInsets.only(bottom: 10),
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              tileColor: Theme.of(context).cardColor,
-              leading: CircleAvatar(
-                backgroundColor: e.color,
-                child: Image.asset(e.icon, height: 20, width: 20),
-              ),
-              title: Text(
-                e.title,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              trailing: Icon(Icons.more_vert_rounded),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Row homeCards(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: ((context, animation, secondaryAnimation) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: const ChatScreen(),
-                  );
-                }),
-              ),
-            );
-          },
-          child: Container(
-            height: AppSizing.height(context) * 0.25,
-            width: AppSizing.width(context) * 0.42,
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Theme.of(context).primaryColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      child: Image.asset(AppAsset.speech, width: 20, height: 20),
-                      backgroundColor: Theme.of(context).cardColor.withOpacity(0.2),
-                    ),
-                    Icon(CupertinoIcons.arrow_up_right),
-                  ],
+  Positioned fruitSlice(int i) {
+    return Positioned(
+      child: AnimatedBuilder(
+        animation: fruitController!,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: isScrolling && activeFruitIndex == i ? 1 : fruitAnimation.value,
+            child: AnimatedOpacity(
+              duration: fruitAnimationDuration,
+              // opacity: isScrolling || hasEndedScroll && activeFruitIndex == i ? 1 : 0,
+              opacity: 1,
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..translate(
+                    isScrolling
+                        ? scrollDirection == ScrollDirection.forward
+                            ? -AppSizing.width(context) * 0.8
+                            : AppSizing.width(context) * 0.8
+                        : 0.0,
+                    0,
+                  )
+                  ..scale(1.5),
+                child: Builder(
+                  builder: (context) {
+                    bool condition = scrollDirection == ScrollDirection.reverse && activeFruitIndex == i;
+                    final newIndex = condition ? activeFruitIndex + 1 : (activeFruitIndex - 1).clamp(0, fruits.length - 1);
+                    return Image.asset(
+                      height: AppSizing.height(context),
+                      width: AppSizing.width(context),
+                      isScrolling ? generateAssetName(newIndex, "slice") : generateAssetName(activeFruitIndex, "slice"),
+                    );
+                  },
                 ),
-                Text(
-                  "Talk \nwith Bot",
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 28, color: AppColors.bgColor),
-                )
-              ],
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            homeMinorCard(
-              context: context,
-              icon: AppAsset.chat,
-              text: "Chat with bot",
-              color: AppColors.pink,
-            ),
-            AppSizing.k10(context),
-            homeMinorCard(
-              context: context,
-              icon: AppAsset.picture,
-              text: "Search by Image",
-              color: AppColors.purple,
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  Row appbar(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Theme.of(context).cardColor,
-          child: SvgPicture.asset(AppAsset.menu),
-        ),
-        Text("Hi, Flutter 👋"),
-        ClipOval(
-          child: Image.asset(AppAsset.user, width: 40, height: 40),
-        ),
-      ],
-    );
-  }
-
-  Container homeMinorCard({required BuildContext context, required String icon, required Color color, required String text}) {
-    return Container(
-      height: AppSizing.height(context) * 0.25 * 0.48,
-      width: AppSizing.width(context) * 0.42,
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: color,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(
-                backgroundColor: Theme.of(context).cardColor.withOpacity(0.2),
-                child: Image.asset(icon, width: 20, height: 20),
               ),
-              Icon(CupertinoIcons.arrow_up_right),
-            ],
-          ),
-          Text(
-            text,
-            style: TextStyle(color: AppColors.bgColor, fontWeight: FontWeight.w500),
-          )
-        ],
+            ),
+          );
+        },
       ),
     );
   }
-}
 
-class ListItem {
-  final String title;
-  final String icon;
-  final Color color;
+  AnimatedBuilder bottle(int i) {
+    return AnimatedBuilder(
+      animation: bottleController!,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: bottleAnimation.value,
+          child: Opacity(
+            opacity: i == activeFruitIndex ? 1 : 0,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                generateAssetName(i, "bottle"),
+                height: AppSizing.height(context) * 0.7,
+                width: AppSizing.width(context),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
-  ListItem({required this.title, required this.icon, required this.color});
+  Positioned fruitMiniSlice(int index) {
+    return Positioned(
+      child: AnimatedBuilder(
+        animation: fruitMiniController!,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: fruitMiniAnimation.value,
+            child: Opacity(
+              opacity: fruitMiniAnimation.value.clamp(0, 1),
+              child: Image.asset(
+                height: AppSizing.height(context),
+                width: AppSizing.width(context),
+                generateAssetName(index, "mini_slice"),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
