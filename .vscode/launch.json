@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "flutter-open-ui",
+      "name": "flutter_open_animate",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "flutter-open-ui (profile mode)",
+      "name": "flutter_open_animate (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "flutter-open-ui (release mode)",
+      "name": "flutter_open_animate (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"
