@@ -130,7 +130,7 @@ To contribute to this repo,
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI02">
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/animated_watch_shop">
                 <img src="./showcase/watch_store.png" alt="Image 1" width="1000" />
             </a>
         </td>
