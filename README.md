@@ -87,7 +87,7 @@ To contribute to this repo,
             </a>
         </td>
         <td>
-            <a href="https://github.com/yunweneric/flutter_openUI/tree/fashion_shop">
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/animated_fruit_carousel">
                 <img src="./showcase/animated_fruits.png" alt="Image 1" width="1000" />
             </a>
         </td>
@@ -136,14 +136,14 @@ To contribute to this repo,
         </td>
         <td>
             <a href="https://github.com/yunweneric/flutter_openUI/tree/authUI01">
-                <img src="./showcase/Frame 14.png" alt="Image 1" width="1000" />
+                <img src="./showcase/doughnuts_animate.png" alt="Image 1" width="1000" />
             </a>
         </td>
     </tr>
      <tr>
         <td>
             <a href="https://github.com/yunweneric/flutter_openUI/tree/Onboarding_01">
-                <img src="./showcase/Frame 20.png" alt="Image 1" width="1000" />
+                <img src="./showcase/nike_zoomer.png" alt="Image 1" width="1000" />
             </a>
         </td>
         <td>
@@ -159,7 +159,7 @@ To contribute to this repo,
             </a>
         </td>
         <td>
-            <a href="https://github.com/yunweneric/flutter_openUI/tree/pet_onboarding_ui">
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/nat_geo_carousel">
                 <img src="./showcase/nageo.png" alt="Image 1" width="1000" />
             </a>
         </td>
