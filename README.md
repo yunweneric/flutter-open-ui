@@ -1,6 +1,17 @@
 # Flutter Open UIs for your projects!
 
-![thumbnail](https://github.com/yunweneric/flutter_openUI/assets/57493613/45f99c55-4e43-441c-94c8-ed2ae4026006)
+<table>
+    <tr>
+        <td>
+          <img src="./showcase/thumbnail.png" alt="Image 1" />
+        </td>
+        <td>
+        <img src="./showcase/animate_cover.png" alt="Image 1" />
+        </td>
+        <td>
+    </tr>
+
+</table>
 
 Flutter open-source project that's all about pushing the boundaries of User Interfaces! 🌟✨ If you're a Flutter enthusiast or just someone who appreciates stunning UI/UX, this project is tailor-made for you! 🚀🎨
 
