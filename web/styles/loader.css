@@ -1,0 +1,33 @@
+* {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+#loading {
+  background-color: #ff3d6c;
+  color: white;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#spinner {
+  position: absolute;
+  opacity: 0.7;
+  border: 8px dotted #ffffff;
+  animation: rotate 2s infinite linear;
+  border-radius: 60px;
+  height: 60px;
+  width: 60px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
