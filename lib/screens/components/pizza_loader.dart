@@ -23,6 +23,7 @@ class _PizzaLoaderState extends State<PizzaLoader> {
           activeIndex += 1;
       });
     });
+
     super.initState();
   }
 
