@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/screens/components/annotated_region.dart';
 import 'package:flutter_openui/screens/components/app_clipper.dart';
 import 'package:flutter_openui/screens/data/pizza.dart';
@@ -247,15 +245,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       right: 0,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            circleAvatar(icon: SvgPicture.asset("assets/icons/back.svg")),
-            AnimatedBuilder(
-                animation: bounceController,
-                builder: (context, value) {
-                  return Transform.translate(
+        child: AnimatedBuilder(
+            animation: bounceController,
+            builder: (context, value) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Transform.translate(
+                    offset: Offset(bounceAnimation.value * AppSizing.width(context) * -0.3, 0),
+                    child: circleAvatar(
+                      icon: SvgPicture.asset("assets/icons/back.svg"),
+                    ),
+                  ),
+                  Transform.translate(
                     offset: Offset(0, bounceAnimation.value * -AppSizing.height(context) * 0.3),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -281,13 +284,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-                  );
-                }),
-            circleAvatar(
-              icon: SvgPicture.asset("assets/icons/heart.svg"),
-            ),
-          ],
-        ),
+                  ),
+                  Transform.translate(
+                    offset: Offset(bounceAnimation.value * AppSizing.width(context) * 0.3, 0),
+                    child: circleAvatar(
+                      icon: SvgPicture.asset("assets/icons/heart.svg"),
+                    ),
+                  ),
+                ],
+              );
+            }),
       ),
     );
   }

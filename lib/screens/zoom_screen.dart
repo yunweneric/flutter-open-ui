@@ -12,6 +12,7 @@ class ZoomScreen extends StatefulWidget {
 }
 
 class _ZoomScreenState extends State<ZoomScreen> {
+  bool popping = false;
   @override
   Widget build(BuildContext context) {
     return AppAnnotatedRegion(
@@ -32,11 +33,25 @@ class _ZoomScreenState extends State<ZoomScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: kToolbarHeight) + const EdgeInsets.only(left: 20),
                 child: GestureDetector(
-                  onTap: () => Navigator.pop(context, true),
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Theme.of(context).primaryColorLight,
-                    child: const Icon(Icons.arrow_back),
+                  onTap: () async {
+                    setState(() {
+                      popping = true;
+                    });
+                    await Future.delayed(Duration(milliseconds: 400));
+                    Navigator.pop(context, true);
+                  },
+                  child: AnimatedOpacity(
+                    opacity: popping ? 0 : 1,
+                    duration: const Duration(milliseconds: 500),
+                    child: AnimatedScale(
+                      duration: const Duration(milliseconds: 500),
+                      scale: popping ? 0 : 1,
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Theme.of(context).primaryColorLight,
+                        child: const Icon(Icons.arrow_back),
+                      ),
+                    ),
                   ),
                 ),
               ),
