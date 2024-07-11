@@ -143,13 +143,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: value,
+                                padding: EdgeInsets.symmetric(horizontal: 0),
                                 fixedSize: Size(AppSizing.width(context) * 0.25, 45),
                               ),
                               child: Text(
                                 cartItems.contains(pizzas[activeIndex]) ? "Checkout" : "Add",
                                 style: TextStyle(
                                   color: cartItems.contains(pizzas[activeIndex]) ? AppColors.black : AppColors.white,
-                                  fontSize: 10,
+                                  fontSize: 12,
                                 ),
                               ),
                             );
@@ -430,7 +431,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       height: AppSizing.height(context) * 0.06,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       width: AppSizing.height(context) * 0.06,
       decoration: BoxDecoration(
         shape: BoxShape.circle,

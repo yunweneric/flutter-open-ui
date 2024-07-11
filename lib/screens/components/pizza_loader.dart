@@ -13,18 +13,32 @@ class PizzaLoader extends StatefulWidget {
 class _PizzaLoaderState extends State<PizzaLoader> {
   Timer? timer;
   int activeIndex = 0;
+  bool isAdding = true;
+
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(milliseconds: 200), (tick) {
-      setState(() {
-        if (activeIndex >= 7) {
-          activeIndex = 0;
-        } else
-          activeIndex += 1;
-      });
-    });
-
     super.initState();
+    timer = Timer.periodic(const Duration(seconds: 1), (tick) {
+      setState(() {
+        if (activeIndex > 8) {
+          activeIndex = 0;
+        } else {
+          activeIndex += 1;
+        }
+        // if (isAdding) {
+        //   activeIndex++;
+        //   if (activeIndex >= 8) {
+        //     isAdding = false;
+        //   }
+        // } else {
+        //   activeIndex--;
+        //   if (activeIndex <= 0) {
+        //     isAdding = true;
+        //   }
+        // }
+      });
+      print(activeIndex);
+    });
   }
 
   @override
@@ -36,8 +50,21 @@ class _PizzaLoaderState extends State<PizzaLoader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image.asset(
-        "assets/images/loader_${activeIndex}.png",
+      child: Stack(
+        children: [
+          Image.asset(
+            "assets/images/loader_${7}.png",
+            width: 250,
+            height: 250,
+            fit: BoxFit.contain,
+          ),
+          Container(
+            child: CustomPaint(
+              size: Size(250, 250),
+              painter: Ellipse43Painter(index: 8),
+            ),
+          )
+        ],
       ),
     );
 

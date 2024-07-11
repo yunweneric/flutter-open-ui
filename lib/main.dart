@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         primaryColor: AppColors.primary,
         primaryColorLight: AppColors.white,
         primaryColorDark: AppColors.black,
+        scaffoldBackgroundColor: AppColors.white,
         textTheme: TextTheme(
           displayMedium: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800),
         ),
