@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/screens/components/pizza_loader.dart';
 import 'package:flutter_openui/screens/home_screen.dart';
 import 'package:flutter_openui/screens/routes/router.dart';
@@ -17,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 5), () async {
       setState(() => visible = false);
-      await Future.delayed(Duration(milliseconds: 300));
+      await Future.delayed(const Duration(milliseconds: 300));
       AppRouter.navigate(context, const HomeScreen());
     });
     super.initState();
@@ -28,12 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           opacity: 1,
           child: AnimatedScale(
             scale: visible ? 1 : 0.5,
-            child: PizzaLoader(),
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
+            child: const PizzaLoader(),
           ),
         ),
       ),
