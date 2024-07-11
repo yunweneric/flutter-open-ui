@@ -12,8 +12,8 @@ class AppRouter {
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
-          child: child,
           opacity: animation,
+          child: child,
         );
       },
     );

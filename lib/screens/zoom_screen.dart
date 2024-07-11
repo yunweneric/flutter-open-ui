@@ -25,7 +25,7 @@ class _ZoomScreenState extends State<ZoomScreen> {
                 child: Image.asset(
                   height: AppSizing.height(context),
                   width: AppSizing.width(context),
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                   "assets/images/pizza_${widget.activePizza.index}.png",
                 ),
               ),

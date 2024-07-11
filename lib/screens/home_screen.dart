@@ -30,17 +30,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     heighController = AnimationController(vsync: this, duration: duration);
     bounceController = AnimationController(vsync: this, duration: bounceDuration);
-    final curvedAnimation = CurvedAnimation(
-      parent: heighController,
-      curve: Curves.easeIn,
-    );
-    final bounceAnimationCurve = CurvedAnimation(
-      parent: bounceController,
-      curve: Curves.elasticInOut,
-    );
+    final curvedAnimation = CurvedAnimation(parent: heighController, curve: Curves.easeIn);
+    final bounceAnimationCurve = CurvedAnimation(parent: bounceController, curve: Curves.elasticInOut);
     heightAnimation = Tween<double>(begin: 1, end: 0.7).animate(curvedAnimation);
     bounceAnimation = Tween<double>(begin: 1, end: 0).animate(bounceAnimationCurve);
-    animate();
+    initialAnimation();
     super.initState();
   }
 
@@ -50,16 +44,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int previousQuantity = 0;
   List<Pizza> cartItems = [];
 
-  animate() async {
+  initialAnimation() async {
     heighController.reset();
     bounceController.reset();
+    bounceController.forward();
     heighController.forward();
+  }
+
+  animateTransition() {
+    final bounceAnimationCurve = CurvedAnimation(parent: bounceController, curve: Curves.easeIn);
+    bounceAnimation = Tween<double>(begin: 1, end: 0).animate(bounceAnimationCurve);
     bounceController.forward();
   }
 
-  reverseAnimations() {
-    heighController.forward();
-    bounceController.forward();
+  reverseAnimateTransition() {
+    bounceController.reverse();
   }
 
   @override
@@ -103,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           opacity: 1 - value,
                           child: Text(
                             pizzas[activeIndex].description,
-                            style: TextStyle(height: 1.8),
+                            style: const TextStyle(height: 1.8),
                           ),
                         ),
                       );
@@ -114,26 +113,49 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       cartActions(),
-                      Text(
-                        "\$${pizzas[activeIndex].price * pizzas[activeIndex].quantity}",
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            cartItems.add(pizzas[activeIndex]);
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.blue,
-                          fixedSize: Size(AppSizing.width(context) * 0.25, 45),
-                          // padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                        ),
-                        child: Text(
-                          cartItems.contains(pizzas[activeIndex]) ? "Checkout" : "Add",
-                          style: TextStyle(color: AppColors.white, fontSize: 10),
-                        ),
-                      )
+                      TweenAnimationBuilder(
+                          duration: miniDuration,
+                          key: ValueKey(pizzas[activeIndex].quantity),
+                          tween: Tween<double>(begin: 1, end: 0),
+                          builder: (context, value, child) {
+                            final factor = previousQuantity > pizzas[activeIndex].quantity ? -10 : 30;
+                            return Transform(
+                              transform: Matrix4.identity()..translate(value * factor),
+                              child: Opacity(
+                                opacity: 1 - value,
+                                child: Text(
+                                  "\$${(pizzas[activeIndex].price * pizzas[activeIndex].quantity).toStringAsFixed(2)}",
+                                  style: Theme.of(context).textTheme.displayMedium,
+                                ),
+                              ),
+                            );
+                          }),
+                      TweenAnimationBuilder(
+                          duration: miniDuration,
+                          tween: ColorTween(
+                            begin: cartItems.contains(pizzas[activeIndex]) ? AppColors.blue : AppColors.primary,
+                            end: cartItems.contains(pizzas[activeIndex]) ? AppColors.primary : AppColors.blue,
+                          ),
+                          builder: (context, value, child) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  cartItems.add(pizzas[activeIndex]);
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: value,
+                                fixedSize: Size(AppSizing.width(context) * 0.25, 45),
+                              ),
+                              child: Text(
+                                cartItems.contains(pizzas[activeIndex]) ? "Checkout" : "Add",
+                                style: TextStyle(
+                                  color: cartItems.contains(pizzas[activeIndex]) ? AppColors.black : AppColors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            );
+                          })
                     ],
                   )
                 ],
@@ -244,8 +266,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           key: ValueKey(activeIndex),
                           tween: Tween<double>(begin: 1.0, end: 0.0),
                           builder: (context, value, child) {
+                            final factor = previousIndex > activeIndex ? 30 : -30;
                             return Transform(
-                              transform: Matrix4.identity()..translate(value * -30),
+                              transform: Matrix4.identity()..translate(value * factor),
                               child: Opacity(
                                 opacity: (1 - value).clamp(0, 1),
                                 child: Text(
@@ -287,6 +310,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   itemCount: pizzas.sublist(0, 3).length,
                   onPageChanged: (page) {
                     setState(() {
+                      previousIndex = activeIndex;
                       activeIndex = page;
                     });
                   },
@@ -306,13 +330,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Positioned(
                 child: InkWell(
                   onTap: () async {
-                    reverseAnimations();
+                    await reverseAnimateTransition();
                     final res = await AppRouter.navigate(
                       context,
                       ZoomScreen(activePizza: pizzas[activeIndex]),
                     );
                     if (res) {
-                      animate();
+                      animateTransition();
                     }
                   },
                   child: SvgPicture.asset('assets/icons/zoom.svg'),
@@ -342,13 +366,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               key: ValueKey(pizzas[activeIndex].quantity),
               tween: Tween<double>(begin: 1, end: 0),
               builder: (context, value, child) {
+                final factor = previousQuantity > pizzas[activeIndex].quantity ? -10 : 10;
                 return Transform.translate(
-                  offset: Offset(0, value * 10),
+                  offset: Offset(0, value * factor),
                   child: Opacity(
                     opacity: 1 - value,
                     child: Text(
                       pizzas[activeIndex].quantity.toString(),
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                      style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
                     ),
                   ),
                 );
@@ -361,13 +386,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           top: -5,
           child: circleAvatar(
             onTap: () {
-              print(['previousQuantity', previousQuantity]);
-              print(['activeIndex', pizzas[activeIndex].quantity]);
               if (pizzas[activeIndex].quantity > 0) {
                 setState(() {
+                  previousQuantity = pizzas[activeIndex].quantity;
                   final newQuantity = pizzas[activeIndex].quantity - 1;
                   pizzas[activeIndex].quantity = newQuantity;
-                  previousQuantity = newQuantity;
                 });
               }
               if (pizzas[activeIndex].quantity == 0) {
@@ -384,12 +407,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           top: -5,
           child: circleAvatar(
             onTap: () {
-              print(['previousQuantity', previousQuantity]);
-              print(['activeIndex', pizzas[activeIndex].quantity]);
               setState(() {
+                previousQuantity = pizzas[activeIndex].quantity;
                 final newQuantity = pizzas[activeIndex].quantity + 1;
                 pizzas[activeIndex].quantity = newQuantity;
-                previousQuantity = newQuantity;
               });
             },
             icon: Icon(Icons.add),
