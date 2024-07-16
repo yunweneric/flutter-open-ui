@@ -6,6 +6,7 @@ import 'package:flutter_openui/data/mountain.dart';
 import 'package:flutter_openui/utils/colors.dart';
 import 'package:flutter_openui/utils/helper.dart';
 import 'package:flutter_openui/utils/sizing.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void resetViewportFraction() {
-    _animation = Tween<double>(begin: 1, end: 0.9).animate(
+    _animation = Tween<double>(begin: 1, end: 0.95).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     )..addListener(() {
         setState(() {
@@ -72,11 +73,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          resetViewportFraction();
-        },
-      ),
       body: AnimatedContainer(
         alignment: Alignment.center,
         duration: const Duration(milliseconds: 400),
@@ -111,56 +107,105 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       },
                       itemBuilder: (c, i) {
                         final mountain = mountains[i];
+                        final maxHeight = isExpanded ? AppSizing.height(context) : AppSizing.height(context) * 0.35;
+                        final margin = isExpanded ? EdgeInsets.zero : EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.18);
                         return Center(
                           child: Transform(
                             alignment: Alignment.center,
-                            transform: Matrix4.identity()..rotateZ(pi * -1.2),
+                            transform: Matrix4.identity()
+                              ..setEntry(3, 2, 0.01)
+                              ..rotateZ(pi * -1.2),
                             child: Stack(
+                              alignment: Alignment.center,
                               children: [
-                                AnimatedContainer(
-                                    duration: duration,
-                                    padding: const EdgeInsets.all(10),
-                                    margin: isExpanded ? EdgeInsets.zero : EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.15),
-                                    constraints: BoxConstraints(
-                                      maxHeight: isExpanded ? AppSizing.height(context) : AppSizing.height(context) * 0.4,
-                                    ),
-                                    width: AppSizing.width(context),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(mountain.image),
-                                        fit: BoxFit.cover,
+                                Positioned(
+                                  left: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  child: Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.identity()
+                                      ..translate(0.0, 0.0)
+                                      // ..rotateZ(-1.2 * pi)
+                                      ..scale(1.3),
+                                    child: AnimatedContainer(
+                                      duration: duration,
+                                      child: SvgPicture.asset(
+                                        "assets/icons/road_stripes.svg",
+                                        width: AppSizing.width(context),
+                                        height: AppSizing.height(context),
                                       ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Italia",
-                                              style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(color: AppColors.white),
-                                                borderRadius: BorderRadius.circular(5),
-                                              ),
-                                              child: Text(
-                                                "B",
-                                                style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          "Monti Lessini",
-                                          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                        )
-                                      ],
-                                    )),
+                                  ),
+                                ),
+                                // Transform(
+                                //   transform: Matrix4.identity()..translate(40.0, 40.0),
+                                //   child: AnimatedContainer(
+                                //     duration: duration,
+                                //     height: maxHeight,
+                                //     margin: margin,
+                                //     child: SvgPicture.asset(
+                                //       "assets/icons/shadow.svg",
+                                //       width: AppSizing.width(context),
+                                //     ),
+                                //   ),
+                                // ),
+                                // Transform.scale(
+                                //   scaleY: 1.23,
+                                //   scaleX: 1.3,
+                                //   child: AnimatedContainer(
+                                //     duration: duration,
+                                //     height: maxHeight,
+                                //     margin: margin,
+                                //     child: SvgPicture.asset(
+                                //       "assets/icons/all.svg",
+                                //       width: AppSizing.width(context),
+                                //       color: AppColors.white,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Positioned(
+                                //   child: AnimatedContainer(
+                                //     duration: duration,
+                                //     padding: const EdgeInsets.all(10),
+                                //     margin: margin,
+                                //     constraints: BoxConstraints(maxHeight: maxHeight),
+                                //     width: AppSizing.width(context),
+                                //     decoration: BoxDecoration(
+                                //       image: DecorationImage(image: AssetImage(mountain.image), fit: BoxFit.cover),
+                                //     ),
+                                //     child: Column(
+                                //       crossAxisAlignment: CrossAxisAlignment.start,
+                                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //       children: [
+                                //         Row(
+                                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                //           children: [
+                                //             Text(
+                                //               "ITALIA",
+                                //               style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                                //             ),
+                                //             Container(
+                                //               padding: EdgeInsets.all(10),
+                                //               decoration: BoxDecoration(
+                                //                 border: Border.all(color: AppColors.white),
+                                //                 borderRadius: BorderRadius.circular(5),
+                                //               ),
+                                //               child: Text(
+                                //                 "B",
+                                //                 style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //         Text(
+                                //           "MONTI LESSINI",
+                                //           style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                                //         )
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -206,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Transform.translate(
                       offset: Offset(leftOffset, 0),
                       child: Text(
-                        items.isNotEmpty ? items[0] : "----",
+                        items.isNotEmpty ? items[0].toUpperCase() : "----",
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(
                               color: Helper.hexToColor(mountains[activeIndex].fg),
                             ),
@@ -217,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Transform.translate(
                           offset: Offset(rightOffset, 0),
                           child: Text(
-                            items.length > 1 ? items[1] : "----",
+                            items.length > 1 ? items[1].toUpperCase() : "----",
                             style: Theme.of(context).textTheme.displayLarge!.copyWith(
                                   color: Helper.hexToColor(mountains[activeIndex].fg),
                                 ),
@@ -228,11 +273,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           child: Column(
                             children: [
                               Text(
-                                mountains[activeIndex].location,
+                                mountains[activeIndex].location.toUpperCase(),
                                 style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.white),
                               ),
                               Text(
-                                formattedCoord,
+                                formattedCoord.toUpperCase(),
                                 style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.white),
                               ),
                             ],

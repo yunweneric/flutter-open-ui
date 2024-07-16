@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         primaryColorDark: AppColors.black,
         scaffoldBackgroundColor: AppColors.white,
         textTheme: TextTheme(
-          displayLarge: GoogleFonts.lato(fontSize: 80, fontWeight: FontWeight.w900),
-          displayMedium: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800),
+          displayLarge: GoogleFonts.lato(fontSize: 60, fontWeight: FontWeight.w900),
+          displayMedium: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w900),
         ),
       ),
       home: const SplashScreen(),

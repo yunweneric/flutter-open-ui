@@ -1,0 +1,11 @@
+<svg viewBox="0 0 555 245" fill="none"
+    xmlns="http://www.w3.org/2000/svg" index="0" class="absolute -z-1 left-1/2 top-4/5 w-full gsap:track" style="stroke: rgb(249, 205, 108);">
+    <defs>
+        <mask id="theMask_0" maskUnits="userSpaceOnUse">
+            <path class="stroke-[7] md:stroke-[11] gsap:mask" d="M17.5 -0.5V17.5L25.5 43.5L12 59L5.5 87L17.5 112L52.5 101L83 115.5L94.5 157L83 187L109.5 207L143 202.5L161.5 178L152.5 144H190.5L206.5 121.5L209.5 97.5L232.5 103.5L250 124.5L289.5 137.5L279.5 170.5L304.5 196H348L354 170.5L372.5 140L401 129.5L421 103.5L449 129.5L466.5 144L478.5 168L497.5 192V222.5L528.5 233L553.5 239" stroke="#fff" vector-effect="non-scaling-stroke" style="stroke-dashoffset: 0; stroke-dasharray: none;"></path>
+        </mask>
+    </defs>
+    <g mask="url(#theMask_0)">
+        <path class="stroke-[7] md:stroke-[11]" d="M17.5 -0.5V17.5L25.5 43.5L12 59L5.5 87L17.5 112L52.5 101L83 115.5L94.5 157L83 187L109.5 207L143 202.5L161.5 178L152.5 144H190.5L206.5 121.5L209.5 97.5L232.5 103.5L250 124.5L289.5 137.5L279.5 170.5L304.5 196H348L354 170.5L372.5 140L401 129.5L421 103.5L449 129.5L466.5 144L478.5 168L497.5 192V222.5L528.5 233L553.5 239" stroke-linejoin="round" stroke-dasharray="14 8" vector-effect="non-scaling-stroke"></path>
+    </g>
+</svg>
