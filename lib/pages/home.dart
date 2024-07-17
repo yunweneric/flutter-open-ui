@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     });
   }
 
-  curve(ctrl) => CurvedAnimation(parent: ctrl, curve: Curves.bounceIn);
+  curve(ctrl) => CurvedAnimation(parent: ctrl, curve: Curves.bounceOut);
 
   setAnimatedValues(int index, BuildContext? context) {
     if (context != null) {
