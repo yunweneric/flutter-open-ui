@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_nike_slider/utils/colors.dart';
@@ -16,45 +17,52 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   int activeIndex = 5;
-  final duration = const Duration(milliseconds: 400);
+  final duration = const Duration(milliseconds: 1400);
   AnimationController? _controller;
   Animation<double>? _widthAnimation;
   Animation<double>? _textTranslationAnimation;
   Animation<double>? _widthReduceAnimation;
-  Animation<double>? _rotationAnimation;
+  Animation<double>? _shoeRotationAnimation;
+  Animation<double>? _textRotationAnimation;
   bool hasReversed = false;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: duration);
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 1), () {
       setAnimatedValues(5, context);
+      _toggleAnimation(5);
     });
   }
 
-  curve(ctrl) => CurvedAnimation(parent: ctrl, curve: Curves.linear);
+  curve(ctrl) => CurvedAnimation(parent: ctrl, curve: Curves.bounceIn);
 
   setAnimatedValues(int index, BuildContext? context) {
     if (context != null) {
       _widthAnimation = Tween<double>(
-        begin: Sizing.width(context) / 3,
-        end: Sizing.width(context),
+        begin: Sizing.isMobile(context) ? Sizing.height(context) / 3 : Sizing.width(context) / 3,
+        end: Sizing.isMobile(context) ? Sizing.height(context) : Sizing.width(context),
       ).animate(curve(_controller!));
 
       _textTranslationAnimation = Tween<double>(
-        begin: 1.8,
-        end: 2.5,
+        begin: Sizing.isMobile(context) ? 1.0 : 1.9,
+        end: Sizing.isMobile(context) ? 1.9 : 2.5,
       ).animate(curve(_controller!));
 
       _widthReduceAnimation = Tween<double>(
-        begin: Sizing.width(context) / 3,
+        begin: Sizing.isMobile(context) ? Sizing.height(context) / 3 : Sizing.width(context) / 3,
         end: 0,
       ).animate(curve(_controller!));
 
-      _rotationAnimation = Tween<double>(
+      _shoeRotationAnimation = Tween<double>(
         begin: -0.7,
-        end: -0.1,
+        end: -0.0,
+      ).animate(curve(_controller!));
+
+      _textRotationAnimation = Tween<double>(
+        begin: 0.0,
+        end: pi * -0.5,
       ).animate(curve(_controller!));
     }
   }
@@ -89,93 +97,112 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             top: 0,
             left: 0,
             right: 0,
-            child: Row(
+            child: Wrap(
               children: [
-                ...[0, 1, 2].map(
-                  (index) {
-                    return AnimatedBuilder(
-                      animation: _controller!,
-                      builder: (context, _) {
-                        return nikeSlide(context, index);
-                      },
-                    );
-                  },
-                ).toList()
+                ...[0, 1, 2].map((index) {
+                  return AnimatedBuilder(
+                    animation: _controller!,
+                    builder: (context, _) {
+                      return nikeSlide(context, index);
+                    },
+                  );
+                }).toList()
               ],
             ),
           ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Follow(activeIndex: activeIndex),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: NavBar(),
-          ),
+          if (Sizing.isDesktop(context))
+            Positioned(
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: Follow(activeIndex: activeIndex),
+            ),
+          if (Sizing.isDesktop(context))
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: NavBar(),
+            ),
         ],
       ),
     );
   }
 
-  Container nikeSlide(BuildContext context, int index) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: index == 0
-            ? AppColors.blue
-            : index == 1
-                ? AppColors.red
-                : AppColors.yellow,
-      ),
-      width: index == activeIndex ? _widthAnimation?.value ?? Sizing.width(context) / 3 : _widthReduceAnimation?.value ?? Sizing.width(context) / 3,
-      height: Sizing.height(context),
-      child: Stack(
+  Widget nikeSlide(BuildContext context, int index) {
+    return Builder(builder: (context) {
+      final width = Sizing.isMobile(context)
+          ? Sizing.width(context)
+          : index == activeIndex
+              ? _widthAnimation?.value ?? Sizing.width(context) / 3
+              : _widthReduceAnimation?.value ?? Sizing.width(context) / 3;
+      final height = Sizing.isMobile(context)
+          ? index == activeIndex
+              ? _widthAnimation?.value ?? Sizing.height(context) / 3
+              : _widthReduceAnimation?.value ?? Sizing.height(context) / 3
+          : Sizing.width(context);
+      return AnimatedContainer(
+        duration: duration,
+        curve: Curves.bounceOut,
         clipBehavior: Clip.hardEdge,
-        children: [
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Transform.scale(
-                scale: _textTranslationAnimation?.value ?? 1.8,
-                child: Text(
-                  overflow: TextOverflow.ellipsis,
-                  index == 0
-                      ? "BLUE"
-                      : index == 1
-                          ? "RED"
-                          : "YELLOW",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 100,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.white,
-                    fontStyle: FontStyle.italic,
+        decoration: BoxDecoration(
+          color: index == 0
+              ? AppColors.blue
+              : index == 1
+                  ? AppColors.red
+                  : AppColors.yellow,
+        ),
+        width: width,
+        height: height,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..scale(index == activeIndex ? _textTranslationAnimation?.value ?? 1.8 : 1.0)
+                    ..rotateZ(index == activeIndex ? _textRotationAnimation?.value ?? 0.0 : 0.0),
+                  child: Text(
+                    index == 0
+                        ? "BLUE"
+                        : index == 1
+                            ? "RED"
+                            : "YELLOW",
+                    style: GoogleFonts.poppins(
+                      fontSize: 90,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: InkWell(
-              onTap: () => _toggleAnimation(index),
-              child: Transform.rotate(
-                angle: _rotationAnimation?.value ?? -0.7,
-                child: Image.asset("assets/images/nike_${index}.png"),
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () => _toggleAnimation(index),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..rotateZ(index == activeIndex ? _shoeRotationAnimation?.value ?? -0.7 : -0.7)
+                    ..scale(1.0),
+                  child: Image.asset("assets/images/nike_${index}.png"),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
