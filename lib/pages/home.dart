@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ).animate(curve(_controller!));
 
       _textTranslationAnimation = Tween<double>(
-        begin: Sizing.isMobile(context) ? 1.0 : 1.9,
+        begin: Sizing.isMobile(context) ? 0.8 : 1.9,
         end: Sizing.isMobile(context) ? 1.9 : 2.5,
       ).animate(curve(_controller!));
 
@@ -140,7 +140,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ? index == activeIndex
               ? _widthAnimation?.value ?? Sizing.height(context) / 3
               : _widthReduceAnimation?.value ?? Sizing.height(context) / 3
-          : Sizing.width(context);
+          : Sizing.height(context);
+
       return AnimatedContainer(
         duration: duration,
         curve: Curves.bounceOut,
