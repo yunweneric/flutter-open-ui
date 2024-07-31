@@ -16,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -27,7 +26,6 @@ class _MyAppState extends State<MyApp> {
             title: 'Animated Dark',
             debugShowCheckedModeBanner: false,
             theme: theme.currentTheme,
-            // darkTheme: AppTheme.dark(),
             home: const HomePage(),
           );
         },

@@ -78,15 +78,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             itemCount: 2,
             controller: textPageController,
             itemBuilder: (c, i) {
-              return Center(
-                child: Text(
-                  i == 1 ? "DARK" : "LIGHT",
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontSize: 300,
-                        color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
+              return Sizing.isMobile(context)
+                  ? generateMobileText(i)
+                  : Center(
+                      child: Text(
+                        i == 1 ? "DARK" : "LIGHT",
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                              fontSize: 300,
+                              color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
+                            ),
                       ),
-                ),
-              );
+                    );
             },
           ),
           PageView.builder(
@@ -104,15 +106,36 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             },
           ),
           ShadedBottle(activeIndex: activeIndex, duration: duration),
+          // if (!Sizing.isMobile(context))
           NavBar(
             onToggle: () {
               animate(theme: theme);
             },
             activeIndex: activeIndex,
           ),
-          Positioned(bottom: 10, left: 0, right: 0, child: Follow(activeIndex: activeIndex))
+          if (!Sizing.isMobile(context)) Positioned(bottom: 10, left: 0, right: 0, child: Follow(activeIndex: activeIndex))
         ],
       ),
+    );
+  }
+
+  Widget generateMobileText(int i) {
+    String text = i == 1 ? "DARK" : "LIGHT";
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: text.split("").map((el) {
+        return Flexible(
+          child: Text(
+            el,
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                  fontSize: 200,
+                  fontWeight: FontWeight.w900,
+                  color: i == 0 ? AppColors.textBlack : AppColors.textWhite,
+                ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

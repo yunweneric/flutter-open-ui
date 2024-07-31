@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_open_animate/utils/sizing.dart';
 import 'package:flutter_svg/svg.dart';
 
 class NavBar extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Positioned(
       left: 50,
-      top: 30,
+      top: Sizing.isMobile(context) ? 60 : 30,
       right: 50,
       child: Builder(builder: (context) {
         return Padding(
@@ -43,24 +44,25 @@ class _NavBarState extends State<NavBar> {
           "Logo",
           style: TextStyle(color: Theme.of(context).primaryColorDark),
         ),
-        Expanded(
-          child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                navItem(title: 'Home'),
-                navDivider(),
-                navItem(title: 'About'),
-                navDivider(),
-                navItem(title: 'Store'),
-              ],
+        if (!Sizing.isMobile(context))
+          Expanded(
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  navItem(title: 'Home'),
+                  navDivider(),
+                  navItem(title: 'About'),
+                  navDivider(),
+                  navItem(title: 'Store'),
+                ],
+              ),
             ),
           ),
-        ),
         Row(
           children: [
-            navItem(title: 'EN'),
-            navDivider(width: 20),
+            if (!Sizing.isMobile(context)) navItem(title: 'EN'),
+            if (!Sizing.isMobile(context)) navDivider(width: Sizing.width(context) * 0.03),
             TweenAnimationBuilder(
               key: ValueKey(activeIndex),
               tween: Tween<Offset>(
