@@ -71,7 +71,7 @@ To contribute to this repo,
     <tr>
         <td>
             <a href="#">
-                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+                <img src="./showcase/circle_carousel.png" alt="Image 1" width="1000" />
             </a>
         </td>
         <td>
