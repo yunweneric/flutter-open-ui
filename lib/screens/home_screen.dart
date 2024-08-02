@@ -42,55 +42,56 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.dispose();
   }
 
+  int activeIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     List<int> items = List.generate(13, (item) => item);
     return Scaffold(
       body: Transform.rotate(
         angle: 0.5 * pi,
-        child: AnimatedBuilder(
-            animation: controller,
-            builder: (context, val) {
-              return Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()..scale(1.0),
-                child: Opacity(
-                  opacity: fadeTextAnimation.value,
-                  child: ListWheelScrollView(
-                    controller: ScrollController(initialScrollOffset: 200),
-                    perspective: 0.009,
-                    itemExtent: AppSizing.height(context) * 0.15,
-                    children: items.map(
-                      (index) {
-                        return GestureDetector(
-                          onTap: () async {
-                            await controller.reverse();
-                            final navigate = await AppRouter.navigate(context, DetailScreen(tag: index));
-                            if (navigate) {
-                              controller.forward();
-                            }
-                          },
-                          child: Transform.rotate(
-                            angle: -0.5 * pi,
-                            child: Hero(
-                              tag: index,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/image_${index}.jpg",
-                                  fit: BoxFit.cover,
-                                  width: AppSizing.width(context) * 0.3,
-                                ),
+        child: ListWheelScrollView(
+          controller: ScrollController(initialScrollOffset: 300),
+          perspective: 0.005,
+          itemExtent: AppSizing.height(context) * 0.12,
+          children: items.map(
+            (index) {
+              return GestureDetector(
+                onTap: () async {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                  await controller.reverse();
+                  final navigate = await AppRouter.navigate(context, DetailScreen(tag: index));
+                  if (navigate) {
+                    controller.forward();
+                  }
+                },
+                child: AnimatedBuilder(
+                    animation: controller,
+                    builder: (context, value) {
+                      return Opacity(
+                        opacity: index == activeIndex ? 1 : fadeTextAnimation.value,
+                        child: Transform.rotate(
+                          angle: -0.5 * pi,
+                          child: Hero(
+                            tag: index,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.asset(
+                                "assets/images/image_${index}.jpg",
+                                fit: BoxFit.cover,
+                                width: AppSizing.width(context) * 0.25,
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ).toList(),
-                  ),
-                ),
+                        ),
+                      );
+                    }),
               );
-            }),
+            },
+          ).toList(),
+        ),
       ),
     );
   }
