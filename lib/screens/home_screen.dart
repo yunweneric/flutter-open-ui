@@ -146,9 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
         height = 30;
       }
       if (value >= 1.2) {
-        height = 100;
-        width = 100;
-        radius = 50;
+        height = 120;
+        width = 120;
+        radius = 60;
       }
       return AnimatedContainer(
         duration: const Duration(milliseconds: 500),
