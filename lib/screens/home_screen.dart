@@ -14,9 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double value = 0.0;
-  final pageController = PageController(initialPage: 0);
-  int activeIndex = 0;
+  double value = 1.0;
+  final pageController = PageController(initialPage: 1);
+  int activeIndex = 1;
 
   final duration = const Duration(milliseconds: 500);
 
@@ -24,10 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
-        value = 1.0;
-        activeIndex = 1;
+        value = 2.0;
+        activeIndex = 2;
       });
-      pageController.animateToPage(1, duration: duration, curve: Curves.elasticOut);
+      pageController.animateToPage(2, duration: duration, curve: Curves.elasticOut);
     });
 
     super.initState();

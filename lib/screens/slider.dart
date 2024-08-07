@@ -14,7 +14,7 @@ class AppSlider extends StatefulWidget {
 }
 
 class _AppSliderState extends State<AppSlider> {
-  double _value = 1.0;
+  double _value = 2.0;
 
   @override
   Widget build(BuildContext context) {
