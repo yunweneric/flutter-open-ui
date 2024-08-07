@@ -23,16 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  Color generateColors() {
-    if (value <= 0.5) {
-      return AppColors.bgRed;
-    } else if (value >= 0.5 && value <= 1.2) {
-      return AppColors.bgOrange;
-    } else {
-      return AppColors.bgGreen;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  headerSection(),
-                  eyesSection(),
-                ],
-              ),
+              Column(children: [headerSection(), eyesSection()]),
               textAndSliderSection(),
             ],
           ),
@@ -250,5 +235,15 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  Color generateColors() {
+    if (value <= 0.5) {
+      return AppColors.bgRed;
+    } else if (value >= 0.5 && value <= 1.2) {
+      return AppColors.bgOrange;
+    } else {
+      return AppColors.bgGreen;
+    }
   }
 }
