@@ -14,9 +14,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double value = 1.0;
-  final pageController = PageController(initialPage: 1);
-  int activeIndex = 1;
+  double value = 0.0;
+  final pageController = PageController(initialPage: 0);
+  int activeIndex = 0;
+
+  final duration = const Duration(milliseconds: 500);
+
+  @override
+  void initState() {
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        value = 1.0;
+        activeIndex = 1;
+      });
+      pageController.animateToPage(1, duration: duration, curve: Curves.elasticOut);
+    });
+
+    super.initState();
+  }
+
   @override
   void dispose() {
     pageController.dispose();
@@ -35,8 +51,32 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(children: [headerSection(), eyesSection()]),
-              textAndSliderSection(),
+              TweenAnimationBuilder(
+                  duration: Duration(milliseconds: 1000),
+                  tween: Tween<double>(begin: 1, end: 0),
+                  curve: Curves.easeOutBack,
+                  builder: (context, doubleVal, child) {
+                    return Transform.translate(
+                      offset: Offset(0, doubleVal * -AppSizing.height(context) / 2),
+                      child: Column(
+                        children: [
+                          headerSection(),
+                          eyesSection(),
+                        ],
+                      ),
+                    );
+                  }),
+              TweenAnimationBuilder(
+                duration: Duration(milliseconds: 1000),
+                tween: Tween<double>(begin: 1, end: 0),
+                curve: Curves.easeOutBack,
+                builder: (context, doubleVal, child) {
+                  return Transform.translate(
+                    offset: Offset(0, doubleVal * AppSizing.height(context) / 2),
+                    child: textAndSliderSection(),
+                  );
+                },
+              ),
             ],
           ),
         ),
