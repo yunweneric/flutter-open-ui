@@ -71,6 +71,18 @@ To contribute to this repo,
 <table>
   <tr>
         <td>
+            <a href="#">
+                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/manage_subscriptions">
+                <img src="./showcase/manage_subs.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+  <tr>
+        <td>
             <a href="https://github.com/yunweneric/flutter_openUI/tree/leave_a_review">
                 <img src="./showcase/leave_a_review.png" alt="Image 1" width="1000" />
             </a>
