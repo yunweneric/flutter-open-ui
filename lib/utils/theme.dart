@@ -104,6 +104,7 @@ class AppTheme {
     return ThemeData(
       colorScheme: const ColorScheme.light(primary: AppColors.PRIMARY, error: AppColors.RED),
       primaryColor: AppColors.PRIMARY,
+      hoverColor: Colors.amberAccent,
       primaryColorDark: AppColors.TEXTBLACK,
       primaryColorLight: AppColors.TEXTWHITE,
       scaffoldBackgroundColor: AppColors.BG,

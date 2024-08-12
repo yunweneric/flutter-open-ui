@@ -5,7 +5,7 @@ class AppColors {
   // static const Color PRIMARY = Colors.teal;
 
   // Background colors
-  static const Color BG = Color.fromARGB(255, 214, 215, 215);
+  static const Color BG = Color.fromARGB(255, 228, 229, 229);
   static const Color BGDARK = Color(0xFF161616);
 
   // static const Color BGCARDDARK = Color(0xFF070D36);
