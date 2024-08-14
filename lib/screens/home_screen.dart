@@ -26,30 +26,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     activeCondition = weather.first;
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 700),
-    );
-
-    fadeTextAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.easeOut,
-      ),
-    );
-
-    Future.delayed(Duration(milliseconds: 700), () => controller.forward());
-
     super.initState();
   }
 
   final duration = const Duration(milliseconds: 500);
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
