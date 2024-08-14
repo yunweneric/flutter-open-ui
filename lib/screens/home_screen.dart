@@ -2,6 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_openui/routes/router.dart';
+import 'package:flutter_openui/screens/data.dart';
+import 'package:flutter_openui/screens/detail_screen.dart';
+import 'package:flutter_openui/screens/widget/footer.dart';
+import 'package:flutter_openui/screens/widget/temperature_widget.dart';
+import 'package:flutter_openui/utils/colors.dart';
 import 'package:flutter_openui/utils/sizing.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,9 +20,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> fadeTextAnimation;
+  bool isPushed = false;
 
+  Condition? activeCondition;
   @override
   void initState() {
+    activeCondition = weather.first;
     controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 700),
@@ -34,6 +43,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
   }
 
+  final duration = const Duration(milliseconds: 500);
+
   @override
   void dispose() {
     controller.dispose();
@@ -42,47 +53,122 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    List<int> items = List.generate(13, (item) => item);
     return Scaffold(
-      body: Transform.rotate(
-        angle: 0.5 * pi,
-        child: AnimatedBuilder(
-            animation: controller,
-            builder: (context, val) {
-              return Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()..scale(1.0),
-                child: Opacity(
-                  opacity: fadeTextAnimation.value,
-                  child: ListWheelScrollView(
-                    controller: ScrollController(initialScrollOffset: 200),
-                    perspective: 0.009,
-                    itemExtent: AppSizing.height(context) * 0.15,
-                    children: items.map(
-                      (index) {
-                        return GestureDetector(
-                          onTap: () async {},
-                          child: Transform.rotate(
-                            angle: -0.5 * pi,
-                            child: Hero(
-                              tag: index,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/image_${index}.jpg",
-                                  fit: BoxFit.cover,
-                                  width: AppSizing.width(context) * 0.3,
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/images/cloudy.jpg",
+            width: AppSizing.width(context),
+            height: AppSizing.height(context),
+            fit: BoxFit.cover,
+          ),
+          Container(
+            height: AppSizing.height(context),
+            width: AppSizing.width(context),
+            color: Colors.black.withOpacity(0.4),
+          ),
+          AnimatedPositioned(
+            duration: duration,
+            top: 80,
+            left: 20,
+            right: 20,
+            child: Column(
+              children: [
+                Text(
+                  "Weekview",
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                        color: AppColors.textWhite,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                SizedBox(
+                  height: AppSizing.height(context) * 0.5,
+                  width: AppSizing.width(context) * 0.8,
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: false,
+                    itemCount: weather.length,
+                    itemBuilder: (context, index) {
+                      final condition = weather[index];
+                      return AnimatedScale(
+                        // alignment: Alignment.bottomCenter,
+                        duration: duration,
+                        scale: activeCondition == condition
+                            ? 1.0
+                            : isPushed
+                                ? 0.5
+                                : 1.0,
+                        child: Hero(
+                          tag: condition.day,
+                          flightShuttleBuilder: (flightContext, animation, flightDirection, fromHeroContext, toHeroContext) {
+                            final customAnimation = Tween<double>(begin: 0, end: 1).animate(animation);
+                            return AnimatedBuilder(
+                              animation: customAnimation,
+                              builder: (context, child) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: customAnimation.value * 80, vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        condition.day,
+                                        style: Theme.of(context).textTheme.displaySmall!.copyWith(color: AppColors.textWhite),
+                                      ),
+                                      temperatureWidget(condition, context),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () async {
+                                setState(() {
+                                  isPushed = true;
+                                  activeCondition = condition;
+                                });
+                                await AppRouter.navigate(context, DetailScreen(condition: condition));
+                                setState(() {
+                                  isPushed = false;
+                                  activeCondition = condition;
+                                });
+                              },
+                              child: Container(
+                                // padding: const EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      condition.day,
+                                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: AppColors.textWhite),
+                                    ),
+                                    AppSizing.kwSpacer(context, 0.2),
+                                    temperatureWidget(condition, context),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ).toList(),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              );
-            }),
+              ],
+            ),
+          ),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 500),
+            bottom: isPushed ? -80 : 0,
+            left: 0,
+            right: 0,
+            child: Footer(),
+          )
+        ],
       ),
     );
   }
