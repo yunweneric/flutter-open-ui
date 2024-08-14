@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_openui/routes/router.dart';
-import 'package:flutter_openui/screens/detail_screen.dart';
 import 'package:flutter_openui/utils/sizing.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,13 +61,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     children: items.map(
                       (index) {
                         return GestureDetector(
-                          onTap: () async {
-                            await controller.reverse();
-                            final navigate = await AppRouter.navigate(context, DetailScreen(tag: index));
-                            if (navigate) {
-                              controller.forward();
-                            }
-                          },
+                          onTap: () async {},
                           child: Transform.rotate(
                             angle: -0.5 * pi,
                             child: Hero(
