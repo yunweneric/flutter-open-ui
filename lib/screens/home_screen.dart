@@ -1,7 +1,5 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/routes/router.dart';
 import 'package:flutter_openui/screens/data.dart';
 import 'package:flutter_openui/screens/detail_screen.dart';
@@ -142,11 +140,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ),
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             bottom: isPushed ? -80 : 0,
             left: 0,
             right: 0,
-            child: Footer(),
+            child: const Footer(),
           )
         ],
       ),

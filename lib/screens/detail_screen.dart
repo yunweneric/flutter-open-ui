@@ -169,7 +169,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Transform.translate(offset: Offset(0, (1 - value) * 80), child: Footer()),
+                child: Transform.translate(offset: Offset(0, (1 - value) * 80), child: const Footer()),
               )
             ],
           );
