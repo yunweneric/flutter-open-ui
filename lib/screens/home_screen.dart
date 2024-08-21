@@ -21,13 +21,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   List<Mountain> data = allMountains.map((item) => Mountain.fromJson(item)).toList();
   List<Mountain> mountains = [];
-  final duration = const Duration(milliseconds: 500);
+  final duration = const Duration(milliseconds: 2000);
   late PageController pageController;
-  late AnimationController _animationController;
-  late AnimationController _closetItemController;
-  late Animation<double> _animation;
-  late Animation<double> _closestItemInitAnimation;
-  bool isExpanded = true;
+  final curve = Curves.elasticOut;
 
   @override
   void initState() {
@@ -37,36 +33,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       previousIndex = mountains.length - 2;
     });
     pageController = PageController(viewportFraction: 1, initialPage: mountains.length - 2);
-    _animationController = AnimationController(vsync: this, duration: duration);
-    _closetItemController = AnimationController(vsync: this, duration: duration);
-    Future.delayed(Duration(seconds: 5), () => resetViewportFraction());
+    Future.delayed(const Duration(seconds: 2), () => resetViewportFraction());
     super.initState();
   }
 
   void resetViewportFraction() {
-    _animation = Tween<double>(begin: 1, end: 0.95).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    )..addListener(() {
-        setState(() {
-          pageController = PageController(
-            viewportFraction: _animation.value,
-            initialPage: mountains.length - 2,
-          );
-        });
-      });
-    _animationController.forward();
     setState(() {
       activeIndex = mountains.length - 2;
       previousIndex = mountains.length - 2;
-      isExpanded = false;
     });
+    pageController = PageController(
+      viewportFraction: 0.95,
+      initialPage: mountains.length - 2,
+    );
   }
 
   @override
   void dispose() {
     pageController.dispose();
-    _closetItemController.dispose();
-    _animationController.dispose();
     super.dispose();
   }
 
@@ -94,11 +78,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       clipBehavior: Clip.none,
                       controller: pageController,
                       onPageChanged: (page) {
-                        print(["page", page]);
                         if (page == mountains.length - 1 || page == 1) {
-                          setState(() {
-                            mountains = [...mountains, ...mountains];
-                          });
+                          setState(() => mountains = [...mountains, ...mountains]);
                         }
                         setState(() {
                           previousIndex = activeIndex;
@@ -107,112 +88,99 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       },
                       itemBuilder: (c, i) {
                         final mountain = mountains[i];
-                        final maxHeight = isExpanded ? AppSizing.height(context) : AppSizing.height(context) * 0.35;
-                        final margin = isExpanded ? EdgeInsets.zero : EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.18);
-                        return Center(
-                          child: Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.identity()
-                              ..setEntry(3, 2, 0.01)
-                              ..rotateZ(pi * -1.2),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Positioned(
-                                  left: 0,
-                                  top: 0,
-                                  bottom: 0,
-                                  child: Transform(
-                                    alignment: Alignment.center,
-                                    transform: Matrix4.identity()
-                                      ..translate(0.0, 0.0)
-                                      // ..rotateZ(-1.2 * pi)
-                                      ..scale(1.3),
-                                    child: AnimatedContainer(
-                                      duration: duration,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/road_stripes.svg",
-                                        width: AppSizing.width(context),
-                                        height: AppSizing.height(context),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Transform(
-                                //   transform: Matrix4.identity()..translate(40.0, 40.0),
-                                //   child: AnimatedContainer(
-                                //     duration: duration,
-                                //     height: maxHeight,
-                                //     margin: margin,
-                                //     child: SvgPicture.asset(
-                                //       "assets/icons/shadow.svg",
-                                //       width: AppSizing.width(context),
-                                //     ),
-                                //   ),
-                                // ),
-                                // Transform.scale(
-                                //   scaleY: 1.23,
-                                //   scaleX: 1.3,
-                                //   child: AnimatedContainer(
-                                //     duration: duration,
-                                //     height: maxHeight,
-                                //     margin: margin,
-                                //     child: SvgPicture.asset(
-                                //       "assets/icons/all.svg",
-                                //       width: AppSizing.width(context),
-                                //       color: AppColors.white,
-                                //     ),
-                                //   ),
-                                // ),
-                                // Positioned(
-                                //   child: AnimatedContainer(
-                                //     duration: duration,
-                                //     padding: const EdgeInsets.all(10),
-                                //     margin: margin,
-                                //     constraints: BoxConstraints(maxHeight: maxHeight),
-                                //     width: AppSizing.width(context),
-                                //     decoration: BoxDecoration(
-                                //       image: DecorationImage(image: AssetImage(mountain.image), fit: BoxFit.cover),
-                                //     ),
-                                //     child: Column(
-                                //       crossAxisAlignment: CrossAxisAlignment.start,
-                                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //       children: [
-                                //         Row(
-                                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //           children: [
-                                //             Text(
-                                //               "ITALIA",
-                                //               style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                //             ),
-                                //             Container(
-                                //               padding: EdgeInsets.all(10),
-                                //               decoration: BoxDecoration(
-                                //                 border: Border.all(color: AppColors.white),
-                                //                 borderRadius: BorderRadius.circular(5),
-                                //               ),
-                                //               child: Text(
-                                //                 "B",
-                                //                 style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //         Text(
-                                //           "MONTI LESSINI",
-                                //           style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
-                                //         )
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),
-                        );
+                        final maxHeight = AppSizing.height(context) * 0.35;
+                        final margin = EdgeInsets.symmetric(horizontal: AppSizing.width(context) * 0.18);
+                        return mountainCard(context, maxHeight, margin, mountain);
                       },
                     );
                   }),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Center mountainCard(BuildContext context, double maxHeight, EdgeInsets margin, Mountain mountain) {
+    return Center(
+      child: Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.01)
+          ..rotateZ(pi * -1.2),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Transform(
+              transform: Matrix4.identity()..translate(40.0, 40.0),
+              child: AnimatedContainer(
+                duration: duration,
+                height: maxHeight,
+                margin: margin,
+                curve: curve,
+                child: SvgPicture.asset(
+                  "assets/icons/shadow.svg",
+                  width: AppSizing.width(context),
+                ),
+              ),
+            ),
+            Transform.scale(
+              scaleY: 1.23,
+              scaleX: 1.3,
+              child: AnimatedContainer(
+                duration: duration,
+                height: maxHeight,
+                margin: margin,
+                curve: curve,
+                child: SvgPicture.asset(
+                  "assets/icons/all.svg",
+                  width: AppSizing.width(context),
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+            Positioned(
+              child: AnimatedContainer(
+                duration: duration,
+                padding: const EdgeInsets.all(10),
+                margin: margin,
+                curve: curve,
+                constraints: BoxConstraints(maxHeight: maxHeight),
+                width: AppSizing.width(context),
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(mountain.image), fit: BoxFit.cover),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "ITALIA",
+                          style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.white),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            "B",
+                            style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "MONTI LESSINI",
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(color: AppColors.white),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -240,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               duration: duration,
               tween: Tween<double>(begin: 1, end: 0),
               key: ValueKey(activeIndex),
-              curve: Curves.easeOut,
+              curve: curve,
               builder: (context, value, child) {
                 final isLeft = previousIndex < activeIndex;
                 final leftOffset = isLeft ? value * AppSizing.width(context) * 0.5 : value * AppSizing.width(context) * -0.5;
