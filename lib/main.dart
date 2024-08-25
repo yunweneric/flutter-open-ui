@@ -27,7 +27,6 @@ class _MyAppState extends State<MyApp> {
       child: BlocBuilder<NavigationBloc, NavigationState>(
         bloc: navBloc,
         builder: (context, state) {
-          print(["updating"]);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Wallet App',
