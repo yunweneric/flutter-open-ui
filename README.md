@@ -71,8 +71,8 @@ To contribute to this repo,
 <table>
 <tr>
         <td>
-            <a href="#">
-                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/fade_caarousel">
+                <img src="./showcase/fade_carousel.png" alt="Image 1" width="1000" />
             </a>
         </td>
         <td>
