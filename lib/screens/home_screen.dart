@@ -32,7 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: controller,
             itemCount: 6,
             onPageChanged: (page) {
-              controller.animateToPage(page, duration: Duration(milliseconds: 700), curve: Curves.easeOutExpo);
+              controller.animateToPage(
+                page,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeOutExpo,
+              );
               setState(() {
                 activeIndex = page;
               });
