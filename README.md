@@ -68,8 +68,19 @@ To contribute to this repo,
 ## Gallery
 
 <table>
-<table>
-<tr>
+    <tr>
+        <td>
+            <a href="#">
+                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/nft_card_scroll">
+                <img src="./showcase/nft_card_gallery.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
         <td>
             <a href="https://github.com/yunweneric/flutter_openUI/tree/fade_caarousel">
                 <img src="./showcase/fade_carousel.png" alt="Image 1" width="1000" />
