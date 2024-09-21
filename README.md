@@ -75,6 +75,18 @@ To contribute to this repo,
             </a>
         </td>
         <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/language_app">
+                <img src="./showcase/language_app2.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/language_app">
+                <img src="./showcase/language_app.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
             <a href="https://github.com/yunweneric/flutter_openUI/tree/nft_card_scroll">
                 <img src="./showcase/nft_card_gallery.png" alt="Image 1" width="1000" />
             </a>
