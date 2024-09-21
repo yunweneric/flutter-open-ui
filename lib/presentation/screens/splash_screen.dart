@@ -45,8 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     AnimatedChild(
                       animation: animation,
                       offset: -1,
-                      child: Image.network(
-                        "$url/assets/images/splash_logo.png",
+                      child: Image.asset(
+                        "assets/images/splash_logo.png",
                         height: AppSizing.kHPercentage(context, 40),
                       ),
                     ),
