@@ -5,51 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static TextTheme lightTextTheme = TextTheme(
-    displayLarge: GoogleFonts.inter(
-      color: AppColors.TEXTBLACK,
-      fontWeight: FontWeight.w800,
-      fontSize: 30.sp,
-    ),
-    displayMedium: GoogleFonts.inter(
-      color: AppColors.TEXTBLACK,
-      fontWeight: FontWeight.w600,
-      fontSize: 16.sp,
-    ),
-    displaySmall: GoogleFonts.inter(
-      color: AppColors.TEXTBLACK,
-      fontWeight: FontWeight.w600,
-      fontSize: 12.sp,
-    ),
-    bodyMedium: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
-      fontSize: 14.sp,
-      height: 1.5,
-      letterSpacing: 0.1,
-      fontWeight: FontWeight.normal,
-    ),
-    bodySmall: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
-      fontSize: 12.sp,
-    ),
-    labelMedium: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
-      fontSize: 14.sp,
-    ),
-    labelSmall: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
-      fontSize: 12.sp,
-      letterSpacing: 0,
-    ),
-  );
   static TextTheme darkTextTheme = TextTheme(
     displayLarge: GoogleFonts.inter(
       color: AppColors.TEXTWHITE,
       fontWeight: FontWeight.w800,
-      fontSize: 30.sp,
+      fontSize: 28.sp,
     ),
     displayMedium: GoogleFonts.inter(
       color: AppColors.TEXTWHITE,
@@ -62,25 +22,25 @@ class AppTheme {
       fontSize: 12.sp,
     ),
     bodyMedium: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
+      color: AppColors.TEXTWHITE,
       fontWeight: FontWeight.normal,
       fontSize: 14.sp,
       height: 1.5.h,
       letterSpacing: 0.1,
     ),
     bodySmall: GoogleFonts.inter(
-      color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
+      color: AppColors.TEXTWHITE,
+      fontWeight: FontWeight.w500,
       fontSize: 12.sp,
     ),
     labelMedium: GoogleFonts.inter(
       color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 14.sp,
     ),
     labelSmall: GoogleFonts.inter(
       color: AppColors.TEXTGREY,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 12.sp,
       letterSpacing: 0,
     ),
@@ -116,7 +76,7 @@ class AppTheme {
     return ThemeData(
       primaryColor: AppColors.PRIMARY,
       scaffoldBackgroundColor: AppColors.BGDARK,
-      primaryColorDark: AppColors.BGGRAY,
+      primaryColorDark: AppColors.TEXTWHITE,
       primaryColorLight: AppColors.TEXTBLACK,
       cardColor: AppColors.BGCARDDARK,
       colorScheme: const ColorScheme.dark(primary: AppColors.PRIMARY, error: AppColors.RED),
@@ -127,6 +87,7 @@ class AppTheme {
       inputDecorationTheme: darkInputDecoration,
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.BGDARK,
+        surfaceTintColor: AppColors.BGDARK,
         titleTextStyle: GoogleFonts.inter(
           color: AppColors.TEXTWHITE,
           fontWeight: FontWeight.w500,

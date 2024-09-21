@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/presentation/screens/home_screen.dart';
 import 'package:flutter_openui/presentation/screens/splash_screen.dart';
 import 'package:flutter_openui/shared/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
