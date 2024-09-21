@@ -26,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  final url = "https://raw.githubusercontent.com/yunweneric/flutter-open-ui/b53201c1802865cb708d65a5ff2f286eb6ca317a";
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -44,8 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     AnimatedChild(
                       animation: animation,
                       offset: -1,
-                      child: Image.asset(
-                        "assets/images/splash_logo.png",
+                      child: Image.network(
+                        "$url/assets/images/splash_logo.png",
                         height: AppSizing.kHPercentage(context, 40),
                       ),
                     ),

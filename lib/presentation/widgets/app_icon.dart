@@ -10,7 +10,7 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
+    return SvgPicture.network(
       icon,
       color: color,
       width: size?.w ?? 30.w,
