@@ -76,7 +76,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                     ),
-                    Divider(),
+                    Divider(color: Color.fromARGB(255, 238, 238, 238)),
                     Text(
                       "#670920",
                       style: Theme.of(context).textTheme.labelSmall,
@@ -89,7 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       "5:32PM",
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
-                    Divider(),
+                    Divider(color: Color.fromARGB(255, 238, 238, 238)),
                     Text(
                       "Paid via Credit Card",
                       style: Theme.of(context).textTheme.labelSmall,
