@@ -8,5 +8,6 @@ class AppSizing {
   static bool isDesktop(BuildContext context) => width(context) > 895;
   static SizedBox k20(BuildContext context) => SizedBox(height: height(context) * 0.02);
   static SizedBox k10(BuildContext context) => SizedBox(height: height(context) * 0.01);
+  static SizedBox k5(BuildContext context) => SizedBox(height: height(context) * 0.005);
   static SizedBox kwSpacer(BuildContext context, double factor) => SizedBox(width: width(context) * factor);
 }
