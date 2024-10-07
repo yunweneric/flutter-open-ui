@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/data/models/category.dart';
-import 'package:flutter_openui/data/models/word.dart';
+import 'package:flutter_openui/data/models/basuu_category.dart';
+import 'package:flutter_openui/data/models/basuu_word.dart';
 import 'package:flutter_openui/presentation/widgets/basuu_app_bar.dart';
 import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
 import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';

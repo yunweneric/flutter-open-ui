@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/data/models/category.dart';
+import 'package:flutter_openui/data/models/basuu_category.dart';
 import 'package:flutter_openui/presentation/screens/basuu_home_screen.dart';
 import 'package:flutter_openui/presentation/screens/basuu_learning_screen.dart';
 import 'package:flutter_openui/presentation/widgets/basuu_animated_child.dart';
