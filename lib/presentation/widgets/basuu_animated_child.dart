@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 
-class AnimatedChild extends StatelessWidget {
+class BasuuAnimatedChild extends StatelessWidget {
   final Widget child;
   final double animation;
   final double offset;
-  const AnimatedChild({super.key, required this.child, required this.animation, required this.offset});
+  const BasuuAnimatedChild({super.key, required this.child, required this.animation, required this.offset});
   @override
   Widget build(BuildContext context) {
     return Transform.translate(

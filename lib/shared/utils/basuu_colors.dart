@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+class BasuuColors {
   static const BGDARK = Color(0xFF14161B);
   static const BGWHITE = Color(0xFFC0C0C0);
   static const Color BGCARDDARK = Color(0xFF22252E);

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_openui/data/models/category.dart';
-import 'package:flutter_openui/presentation/screens/home_screen.dart';
-import 'package:flutter_openui/presentation/screens/learning_screen.dart';
-import 'package:flutter_openui/presentation/widgets/animated_child.dart';
-import 'package:flutter_openui/presentation/widgets/animated_screen.dart';
-import 'package:flutter_openui/presentation/widgets/app_bar.dart';
-import 'package:flutter_openui/presentation/widgets/app_button.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
+import 'package:flutter_openui/presentation/screens/basuu_home_screen.dart';
+import 'package:flutter_openui/presentation/screens/basuu_learning_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_child.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_bar.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
 import 'package:flutter_openui/routes/router.dart';
-import 'package:flutter_openui/shared/icons.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 
-class PreStartScreen extends StatefulWidget {
-  final List<Category> categories;
-  const PreStartScreen({super.key, required this.categories});
+class BasuuPreStartScreen extends StatefulWidget {
+  final List<BasuuCategory> categories;
+  const BasuuPreStartScreen({super.key, required this.categories});
 
   @override
-  State<PreStartScreen> createState() => _PreStartScreenState();
+  State<BasuuPreStartScreen> createState() => _PreStartScreenState();
 }
 
-class _PreStartScreenState extends State<PreStartScreen> {
-  Category? selectedCategory;
+class _PreStartScreenState extends State<BasuuPreStartScreen> {
+  BasuuCategory? selectedCategory;
   bool animated = false;
 
   @override
@@ -36,10 +36,10 @@ class _PreStartScreenState extends State<PreStartScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return AnimatedScreen(
+    return BasuuAnimatedScreen(
       builder: (context, animated, animation) {
         return Scaffold(
-          appBar: appBar(
+          appBar: basuuAppBar(
             title: "Pre-start",
             theme: theme,
             onBack: () => Navigator.pop(context),
@@ -50,17 +50,17 @@ class _PreStartScreenState extends State<PreStartScreen> {
               left: 20.w,
               right: 20.w,
             ),
-            child: AppButton(
-              icon: const AppIcon(icon: AppIcons.book),
+            child: BasuuButton(
+              icon: const BasuuIcon(icon: BasuuIcons.book),
               onPressed: () => AppRouter.navigate(
                 context,
-                LearningScreen(selectedCategory: selectedCategory!),
+                BasuuLearningScreen(selectedCategory: selectedCategory!),
               ),
               text: "Start Learning",
             ),
           ),
           body: SafeArea(
-            child: AnimatedChild(
+            child: BasuuAnimatedChild(
               offset: 2,
               animation: animation,
               child: SingleChildScrollView(
@@ -85,7 +85,7 @@ class _PreStartScreenState extends State<PreStartScreen> {
                                 tileColor: theme.cardColor,
                                 onTap: () {
                                   setState(() => selectedCategory = category);
-                                  AppRouter.navigate(context, HomeScreen(level: category));
+                                  AppRouter.navigate(context, BasuuHomeScreen(level: category));
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.r),
@@ -123,8 +123,8 @@ class _PreStartScreenState extends State<PreStartScreen> {
                                         ),
                                         child: const Padding(
                                           padding: EdgeInsets.all(3),
-                                          child: AppIcon(
-                                            icon: AppIcons.chevron_right,
+                                          child: BasuuIcon(
+                                            icon: BasuuIcons.chevron_right,
                                             size: 20,
                                           ),
                                         ),

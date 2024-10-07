@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AnimatedScreen extends StatefulWidget {
+class BasuuAnimatedScreen extends StatefulWidget {
   final bool? animated;
   final Widget Function(BuildContext context, bool animated, double animation) builder;
-  const AnimatedScreen({super.key, this.animated, required this.builder});
+  const BasuuAnimatedScreen({super.key, this.animated, required this.builder});
 
   @override
-  State<AnimatedScreen> createState() => _AnimatedScreenState();
+  State<BasuuAnimatedScreen> createState() => _AnimatedScreenState();
 }
 
-class _AnimatedScreenState extends State<AnimatedScreen> {
+class _AnimatedScreenState extends State<BasuuAnimatedScreen> {
   bool animated = false;
 
   @override

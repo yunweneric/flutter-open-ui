@@ -1,34 +1,34 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_openui/data/models/category.dart';
-import 'package:flutter_openui/presentation/screens/pre_start_screen.dart';
-import 'package:flutter_openui/presentation/widgets/animated_screen.dart';
-import 'package:flutter_openui/presentation/widgets/animated_child.dart';
-import 'package:flutter_openui/presentation/widgets/app_button.dart';
+import 'package:flutter_openui/data/models/basuu_category.dart';
+import 'package:flutter_openui/presentation/screens/basuu_pre_start_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_child.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_openui/routes/router.dart';
-import 'package:flutter_openui/shared/utils/colors.dart';
+import 'package:flutter_openui/shared/utils/basuu_colors.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 
-class ChooseCategoryScreen extends StatefulWidget {
-  const ChooseCategoryScreen({super.key});
+class BasuuChooseCategoryScreen extends StatefulWidget {
+  const BasuuChooseCategoryScreen({super.key});
 
   @override
-  State<ChooseCategoryScreen> createState() => _ChooseCategoryScreenState();
+  State<BasuuChooseCategoryScreen> createState() => _ChooseCategoryScreenState();
 }
 
-class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
-  List<Category> categories = [
-    Category(label: "A1", title: "1 - 100", color: AppColors.TEAL, percentage: 80, isChecked: true),
-    Category(label: "A2", title: '101 - 1K', color: AppColors.DGREEN, percentage: 44),
-    Category(label: "B1", title: "1K - 2K", color: AppColors.DARKORANGE, percentage: 27),
-    Category(label: "B2", title: "2K - 3K", color: AppColors.DARKRED, percentage: 9),
-    Category(label: "C1", title: "3K - 4K", color: AppColors.MIDRED),
-    Category(label: "C2", title: '4K - 5K', color: AppColors.DEEPRED),
+class _ChooseCategoryScreenState extends State<BasuuChooseCategoryScreen> {
+  List<BasuuCategory> categories = [
+    BasuuCategory(label: "A1", title: "1 - 100", color: BasuuColors.TEAL, percentage: 80, isChecked: true),
+    BasuuCategory(label: "A2", title: '101 - 1K', color: BasuuColors.DGREEN, percentage: 44),
+    BasuuCategory(label: "B1", title: "1K - 2K", color: BasuuColors.DARKORANGE, percentage: 27),
+    BasuuCategory(label: "B2", title: "2K - 3K", color: BasuuColors.DARKRED, percentage: 9),
+    BasuuCategory(label: "C1", title: "3K - 4K", color: BasuuColors.MIDRED),
+    BasuuCategory(label: "C2", title: '4K - 5K', color: BasuuColors.DEEPRED),
   ];
-  void updateCheckedItem(Category category) {
+  void updateCheckedItem(BasuuCategory category) {
     final index = categories.indexOf(category);
     final newCategories = categories;
     newCategories[index] = category.copyWith(
@@ -42,7 +42,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return AnimatedScreen(
+    return BasuuAnimatedScreen(
       // animated: animatedStatus,
       builder: (context, animated, animation) {
         return Scaffold(
@@ -52,14 +52,14 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
               left: 20.w,
               right: 20.w,
             ),
-            child: AppButton(
+            child: BasuuButton(
               onPressed: categories.where((item) => item.isChecked == true).isEmpty
                   ? null
                   : () {
                       setState(() => animatedStatus = false);
                       AppRouter.navigate(
                         context,
-                        PreStartScreen(categories: categories.where((item) => item.isChecked == true).toList()),
+                        BasuuPreStartScreen(categories: categories.where((item) => item.isChecked == true).toList()),
                       );
                     },
               text: "Continue",
@@ -72,7 +72,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                 child: Column(
                   children: [
                     AppSizing.khSpacer(kToolbarHeight),
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       animation: animation,
                       offset: -1,
                       child: Text(
@@ -83,7 +83,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     ),
                     AppSizing.kh20Spacer(),
                     AppSizing.kh20Spacer(),
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       animation: animation,
                       offset: 1,
                       child: Column(

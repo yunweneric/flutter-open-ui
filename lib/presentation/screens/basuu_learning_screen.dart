@@ -4,32 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_openui/data/models/category.dart';
 import 'package:flutter_openui/data/models/word.dart';
-import 'package:flutter_openui/presentation/widgets/app_bar.dart';
-import 'package:flutter_openui/presentation/widgets/app_button.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
-import 'package:flutter_openui/shared/icons.dart';
-import 'package:flutter_openui/shared/utils/colors.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_bar.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
+import 'package:flutter_openui/shared/utils/basuu_colors.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LearningScreen extends StatefulWidget {
-  final Category selectedCategory;
-  const LearningScreen({super.key, required this.selectedCategory});
+class BasuuLearningScreen extends StatefulWidget {
+  final BasuuCategory selectedCategory;
+  const BasuuLearningScreen({super.key, required this.selectedCategory});
 
   @override
-  State<LearningScreen> createState() => _LearningScreenState();
+  State<BasuuLearningScreen> createState() => _LearningScreenState();
 }
 
-class _LearningScreenState extends State<LearningScreen> {
+class _LearningScreenState extends State<BasuuLearningScreen> {
   final activeIndex = 0;
-  List<Word> words = [
-    Word(title: "mother", hasLearned: true),
-    Word(title: "day", hasLearned: false),
-    Word(title: "put", hasLearned: false),
-    Word(title: "trailblazing", hasLearned: true),
-    Word(title: "start", hasLearned: false),
-    Word(title: "race", hasLearned: false),
-    Word(title: "race", hasLearned: false),
+  List<BasuuWord> words = [
+    BasuuWord(title: "mother", hasLearned: true),
+    BasuuWord(title: "day", hasLearned: false),
+    BasuuWord(title: "put", hasLearned: false),
+    BasuuWord(title: "trailblazing", hasLearned: true),
+    BasuuWord(title: "start", hasLearned: false),
+    BasuuWord(title: "race", hasLearned: false),
+    BasuuWord(title: "race", hasLearned: false),
   ];
   bool? isCorrect;
   bool isWordVisible = false;
@@ -47,7 +47,7 @@ class _LearningScreenState extends State<LearningScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: appBar(
+      appBar: basuuAppBar(
         onBack: () => Navigator.pop(context),
         theme: theme,
         title: "Learn new words",
@@ -112,7 +112,7 @@ class _LearningScreenState extends State<LearningScreen> {
                                 style: theme.textTheme.displayLarge,
                               )
                             : const Center(
-                                child: AppIcon(icon: AppIcons.eye_visible),
+                                child: BasuuIcon(icon: BasuuIcons.eye_visible),
                               ),
                       ),
                     ),
@@ -137,9 +137,9 @@ class _LearningScreenState extends State<LearningScreen> {
     return Builder(builder: (context) {
       Color color = theme.cardColor;
       if (isLeft && isCorrect == true) {
-        color = AppColors.GREEN;
+        color = BasuuColors.GREEN;
       } else if (!isLeft && isCorrect == false) {
-        color = AppColors.RED;
+        color = BasuuColors.RED;
       } else {
         color = theme.cardColor;
       }
@@ -147,7 +147,7 @@ class _LearningScreenState extends State<LearningScreen> {
         tween: ColorTween(begin: theme.cardColor, end: color),
         duration: const Duration(milliseconds: 700),
         builder: (context, color, child) {
-          return AppButton(
+          return BasuuButton(
             onPressed: () => setState(() {
               isCorrect = isLeft;
             }),

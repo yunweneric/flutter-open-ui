@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
-import 'package:flutter_openui/shared/icons.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-AppBar appBar({
+AppBar basuuAppBar({
   required ThemeData theme,
   required String title,
   String? rightIcon,
@@ -27,7 +27,7 @@ AppBar appBar({
                   color: theme.cardColor,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: const AppIcon(icon: AppIcons.arrow_back),
+                child: const BasuuIcon(icon: BasuuIcons.arrow_back),
               ),
             ),
           ),
@@ -46,7 +46,7 @@ AppBar appBar({
                 color: theme.cardColor,
                 borderRadius: BorderRadius.circular(10.r),
               ),
-              child: AppIcon(icon: rightIcon),
+              child: BasuuIcon(icon: rightIcon),
             ),
           ),
         ),

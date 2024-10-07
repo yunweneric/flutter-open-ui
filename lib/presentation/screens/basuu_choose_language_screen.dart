@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/presentation/screens/choose_category_screen.dart';
-import 'package:flutter_openui/presentation/widgets/animated_child.dart';
-import 'package:flutter_openui/presentation/widgets/animated_screen.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
+import 'package:flutter_openui/presentation/screens/basuu_choose_category_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_child.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
 import 'package:flutter_openui/routes/router.dart';
-import 'package:flutter_openui/shared/icons.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Language {
+class BasuuLanguage {
   final String icon;
   final String name;
 
-  Language({required this.icon, required this.name});
+  BasuuLanguage({required this.icon, required this.name});
 }
 
-class ChooseLanguageScreen extends StatefulWidget {
-  const ChooseLanguageScreen({super.key});
+class BasuuChooseLanguageScreen extends StatefulWidget {
+  const BasuuChooseLanguageScreen({super.key});
 
   @override
-  State<ChooseLanguageScreen> createState() => _ChooseLanguageScreenState();
+  State<BasuuChooseLanguageScreen> createState() => _ChooseLanguageScreenState();
 }
 
-class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
-  List<Language> languages = [
-    Language(icon: AppIcons.flag_en, name: "English"),
-    Language(icon: AppIcons.flag_es, name: "Spanish"),
-    Language(icon: AppIcons.flag_fr, name: "French"),
-    Language(icon: AppIcons.flag_ru, name: "Russian"),
+class _ChooseLanguageScreenState extends State<BasuuChooseLanguageScreen> {
+  List<BasuuLanguage> languages = [
+    BasuuLanguage(icon: BasuuIcons.flag_en, name: "English"),
+    BasuuLanguage(icon: BasuuIcons.flag_es, name: "Spanish"),
+    BasuuLanguage(icon: BasuuIcons.flag_fr, name: "French"),
+    BasuuLanguage(icon: BasuuIcons.flag_ru, name: "Russian"),
   ];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: AnimatedScreen(
+      body: BasuuAnimatedScreen(
         builder: (context, animated, animation) {
           return SafeArea(
             child: SingleChildScrollView(
@@ -42,7 +42,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                 child: Column(
                   children: [
                     AppSizing.khSpacer(kToolbarHeight / 2),
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       offset: -1,
                       animation: animation,
                       child: ListTile(
@@ -56,7 +56,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                             color: theme.cardColor,
                             borderRadius: BorderRadius.circular(10.r),
                           ),
-                          child: const AppIcon(icon: AppIcons.arrow_back, size: 20),
+                          child: const BasuuIcon(icon: BasuuIcons.arrow_back, size: 20),
                         ),
                         title: Text(
                           "What language are you want to study?",
@@ -65,7 +65,7 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                       ),
                     ),
                     AppSizing.kh20Spacer(),
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       offset: 1,
                       animation: animation,
                       child: Column(
@@ -76,13 +76,13 @@ class _ChooseLanguageScreenState extends State<ChooseLanguageScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(bottom: 12),
                                 child: ListTile(
-                                  onTap: () => AppRouter.navigate(context, const ChooseCategoryScreen()),
+                                  onTap: () => AppRouter.navigate(context, const BasuuChooseCategoryScreen()),
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(color: theme.highlightColor),
                                     borderRadius: BorderRadius.circular(12.r),
                                   ),
                                   contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 2.h),
-                                  leading: AppIcon(icon: language.icon),
+                                  leading: BasuuIcon(icon: language.icon),
                                   title: Text(language.name),
                                 ),
                               ),

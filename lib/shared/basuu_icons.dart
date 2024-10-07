@@ -1,4 +1,4 @@
-// class AppIcons {
+// class BasuuIcons {
 //   static const flash = "assets/icons/flash.svg";
 //   static const arrow_back = "assets/icons/arrow_back.svg";
 //   static const book = "assets/icons/book.svg";
@@ -13,7 +13,7 @@
 //   static const flag_ru = "assets/icons/flag_ru.svg";
 // }
 
-class AppIcons {
+class BasuuIcons {
   static const url = "https://raw.githubusercontent.com/yunweneric/flutter-open-ui/b53201c1802865cb708d65a5ff2f286eb6ca317a";
   static const flash = "$url/assets/icons/flash.svg";
   static const arrow_back = "$url/assets/icons/arrow_back.svg";

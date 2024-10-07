@@ -1,14 +1,14 @@
-class Word {
+class BasuuWord {
   final String title;
   final bool hasLearned;
 
-  Word({required this.title, required this.hasLearned});
+  BasuuWord({required this.title, required this.hasLearned});
 
-  Word copyWith({
+  BasuuWord copyWith({
     String? title,
     bool? hasLearned,
   }) {
-    return Word(
+    return BasuuWord(
       title: title ?? this.title,
       hasLearned: hasLearned ?? this.hasLearned,
     );

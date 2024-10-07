@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_openui/data/models/category.dart';
 import 'package:flutter_openui/data/models/word.dart';
-import 'package:flutter_openui/presentation/widgets/app_bar.dart';
-import 'package:flutter_openui/presentation/widgets/app_button.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
-import 'package:flutter_openui/shared/icons.dart';
-import 'package:flutter_openui/shared/utils/colors.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_bar.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
+import 'package:flutter_openui/shared/utils/basuu_colors.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatefulWidget {
-  final Category level;
+class BasuuHomeScreen extends StatefulWidget {
+  final BasuuCategory level;
 
-  const HomeScreen({super.key, required this.level});
+  const BasuuHomeScreen({super.key, required this.level});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<BasuuHomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<Word> words = [
-    Word(title: "mother", hasLearned: true),
-    Word(title: "day", hasLearned: false),
-    Word(title: "put", hasLearned: false),
-    Word(title: "trailblazing", hasLearned: true),
-    Word(title: "start", hasLearned: false),
-    Word(title: "race", hasLearned: false),
-    Word(title: "race", hasLearned: false),
+class _HomeScreenState extends State<BasuuHomeScreen> {
+  List<BasuuWord> words = [
+    BasuuWord(title: "mother", hasLearned: true),
+    BasuuWord(title: "day", hasLearned: false),
+    BasuuWord(title: "put", hasLearned: false),
+    BasuuWord(title: "trailblazing", hasLearned: true),
+    BasuuWord(title: "start", hasLearned: false),
+    BasuuWord(title: "race", hasLearned: false),
+    BasuuWord(title: "race", hasLearned: false),
   ];
-  void updateCheckedItem(Word word, bool status) {
+  void updateCheckedItem(BasuuWord word, bool status) {
     final index = words.indexOf(word);
     final newCategories = words;
     newCategories[index] = word.copyWith(hasLearned: status);
@@ -49,10 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: appBar(
+      appBar: basuuAppBar(
         title: "${widget.level.label} Level",
         theme: theme,
-        rightIcon: AppIcons.close,
+        rightIcon: BasuuIcons.close,
         onNext: () => Navigator.pop(context),
       ),
       body: SizedBox(
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AppSizing.kh20Spacer(),
-                AppButton(
+                BasuuButton(
                   bgColor: theme.scaffoldBackgroundColor,
                   width: AppSizing.width(context),
                   onPressed: () {
@@ -72,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       words = words.map((item) => item.copyWith(hasLearned: false)).toList();
                     });
                   },
-                  style: TextStyle(color: AppColors.RED, fontSize: 18.sp),
+                  style: TextStyle(color: BasuuColors.RED, fontSize: 18.sp),
                   text: 'Reset all progress',
                   side: BorderSide(color: theme.highlightColor),
-                  icon: const AppIcon(icon: AppIcons.reset),
+                  icon: const BasuuIcon(icon: BasuuIcons.reset),
                 ),
                 AppSizing.kh20Spacer(),
                 const Text(
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: EdgeInsets.only(right: 5.w),
                                   child: CircleAvatar(
                                     radius: 4.r,
-                                    backgroundColor: item.hasLearned ? AppColors.GREEN : theme.highlightColor,
+                                    backgroundColor: item.hasLearned ? BasuuColors.GREEN : theme.highlightColor,
                                   ),
                                 );
                               }),
@@ -119,8 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             AppSizing.kwSpacer(5.w),
                             TweenAnimationBuilder(
                               tween: ColorTween(
-                                begin: item.hasLearned ? AppColors.GREEN : theme.cardColor,
-                                end: item.hasLearned ? AppColors.GREEN : theme.cardColor,
+                                begin: item.hasLearned ? BasuuColors.GREEN : theme.cardColor,
+                                end: item.hasLearned ? BasuuColors.GREEN : theme.cardColor,
                               ),
                               duration: const Duration(milliseconds: 700),
                               builder: (context, color, child) {
@@ -134,8 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       vertical: 12.h,
                                       horizontal: 4.w,
                                     ),
-                                    label: AppIcon(
-                                      icon: AppIcons.check,
+                                    label: BasuuIcon(
+                                      icon: BasuuIcons.check,
                                       size: 20,
                                       color: item.hasLearned ? theme.primaryColorDark : null,
                                     ),

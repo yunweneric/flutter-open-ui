@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Category {
+class BasuuCategory {
   final String label;
   final String title;
   final Color color;
   final int? percentage;
   final bool? isChecked;
 
-  Category({
+  BasuuCategory({
     required this.label,
     required this.title,
     required this.color,
@@ -15,14 +15,14 @@ class Category {
     this.isChecked,
   });
 
-  Category copyWith({
+  BasuuCategory copyWith({
     String? label,
     String? title,
     Color? color,
     int? percentage,
     bool? isChecked,
   }) {
-    return Category(
+    return BasuuCategory(
       label: label ?? this.label,
       title: title ?? this.title,
       color: color ?? this.color,

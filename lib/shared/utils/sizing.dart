@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/shared/utils/colors.dart';
+import 'package:flutter_openui/shared/utils/basuu_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSizing {
@@ -19,21 +19,21 @@ class AppSizing {
 
   static OutlineInputBorder mainFocusBorder() {
     return OutlineInputBorder(
-      borderSide: const BorderSide(width: 0.6, color: AppColors.PRIMARY),
+      borderSide: const BorderSide(width: 0.6, color: BasuuColors.PRIMARY),
       borderRadius: BorderRadius.all(Radius.circular(45.r)),
     );
   }
 
   static OutlineInputBorder focusedErrorBorder() {
     return OutlineInputBorder(
-      borderSide: const BorderSide(width: 1, color: AppColors.RED),
+      borderSide: const BorderSide(width: 1, color: BasuuColors.RED),
       borderRadius: BorderRadius.all(Radius.circular(45.r)),
     );
   }
 
   static OutlineInputBorder errorBorder() {
     return OutlineInputBorder(
-      borderSide: const BorderSide(width: 0.6, color: AppColors.RED),
+      borderSide: const BorderSide(width: 0.6, color: BasuuColors.RED),
       borderRadius: BorderRadius.all(Radius.circular(45.r)),
     );
   }

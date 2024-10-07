@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/presentation/screens/choose_language_screen.dart';
-import 'package:flutter_openui/presentation/widgets/animated_child.dart';
-import 'package:flutter_openui/presentation/widgets/app_button.dart';
-import 'package:flutter_openui/presentation/widgets/app_icon.dart';
+import 'package:flutter_openui/presentation/screens/basuu_choose_language_screen.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_animated_child.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_button.dart';
+import 'package:flutter_openui/presentation/widgets/basuu_app_icon.dart';
 import 'package:flutter_openui/routes/router.dart';
-import 'package:flutter_openui/shared/icons.dart';
+import 'package:flutter_openui/shared/basuu_icons.dart';
 import 'package:flutter_openui/shared/utils/sizing.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class BasuuSplashScreen extends StatefulWidget {
+  const BasuuSplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<BasuuSplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<BasuuSplashScreen> {
   bool animated = false;
 
   @override
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: AppSizing.kMainPadding(context),
                 child: Column(
                   children: [
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       animation: animation,
                       offset: -1,
                       child: Image.network(
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                     ),
                     AppSizing.khSpacer(AppSizing.kHPercentage(context, 10)),
-                    AnimatedChild(
+                    BasuuAnimatedChild(
                       animation: animation,
                       offset: 1,
                       child: Column(
@@ -69,15 +69,15 @@ class _SplashScreenState extends State<SplashScreen> {
                             textAlign: TextAlign.center,
                           ),
                           AppSizing.khSpacer(AppSizing.kHPercentage(context, 8)),
-                          AppButton(
+                          BasuuButton(
                             onPressed: () async {
                               setState(() => animated = false);
-                              final hasPopped = await AppRouter.navigate(context, const ChooseLanguageScreen());
+                              final hasPopped = await AppRouter.navigate(context, const BasuuChooseLanguageScreen());
                               setState(() => animated = hasPopped);
                             },
                             width: AppSizing.width(context),
-                            icon: const AppIcon(
-                              icon: AppIcons.flash,
+                            icon: const BasuuIcon(
+                              icon: BasuuIcons.flash,
                               size: 20,
                             ),
                             text: "Get started",

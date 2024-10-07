@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/presentation/screens/splash_screen.dart';
-import 'package:flutter_openui/shared/theme.dart';
+import 'package:flutter_openui/presentation/screens/basuu_splash_screen.dart';
+import 'package:flutter_openui/shared/basuu_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -27,8 +27,8 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
-              theme: AppTheme.dark(),
-              home: const SplashScreen(),
+              theme: BasuuTheme.dark(),
+              home: const BasuuSplashScreen(),
             );
           },
         );
