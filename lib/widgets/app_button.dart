@@ -12,6 +12,7 @@ class AppButton extends StatelessWidget {
   final Widget? icon;
   final double? width;
   final double? height;
+  final double? borderRadius;
   final bool isDisabled;
   final bool isElevated;
   final BorderSide? side;
@@ -21,6 +22,7 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     this.bgColor,
+    this.borderRadius,
     this.textColor,
     this.disabledBgColor,
     this.textStyle,
@@ -41,35 +43,33 @@ class AppButton extends StatelessWidget {
       onPressed: isDisabled ? null : onPressed,
       style: ElevatedButton.styleFrom(
         elevation: isElevated ? null : 0,
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
         disabledBackgroundColor: disabledBgColor ?? bgColor?.withOpacity(.5),
         backgroundColor: bgColor ?? theme.colorScheme.primary,
         surfaceTintColor: bgColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r), side: side ?? BorderSide.none),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius ?? 16.r), side: side ?? BorderSide.none),
         shadowColor: AppColors.TEXTBLACK.withOpacity(.1),
       ),
-      child: Padding(
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (icon != null) ...[
-              icon!,
-              const SizedBox(width: 8),
-            ],
-            Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: textStyle ??
-                    theme.textTheme.bodyMedium!.copyWith(
-                      color: textColor ?? AppColors.TEXTWHITE,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp,
-                    ),
-              ),
-            ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) ...[
+            icon!,
+            const SizedBox(width: 8),
           ],
-        ),
+          Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: textStyle ??
+                  theme.textTheme.bodyMedium!.copyWith(
+                    color: textColor ?? AppColors.TEXTWHITE,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp,
+                  ),
+            ),
+          ),
+        ],
       ),
     );
   }

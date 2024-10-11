@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_openui/screens/home_screen.dart';
 import 'package:flutter_openui/screens/onboarding_screen.dart';
-import 'package:flutter_openui/shared/theme.dart';
+import 'package:flutter_openui/utils/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -15,15 +14,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(390, 844),
-        useInheritedMediaQuery: true,
-        builder: (context, _) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Doctor App',
-            theme: AppTheme.light(),
-            home: const OnboardingScreen(),
-          );
-        });
+      designSize: const Size(390, 844),
+      useInheritedMediaQuery: true,
+      builder: (context, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Doctor App',
+          theme: AppTheme.light(),
+          home: const OnboardingScreen(),
+        );
+      },
+    );
   }
 }
