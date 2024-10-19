@@ -6,8 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class OnboardingData {
   final String title;
   final String description;
+  final String image;
 
-  OnboardingData({required this.title, required this.description});
+  OnboardingData({
+    required this.title,
+    required this.description,
+    required this.image,
+  });
 }
 
 class OnboardingScreen extends StatefulWidget {
@@ -18,51 +23,75 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  int activeIndex = 2;
-  int previousIndex = 2;
+  int activeIndex = 0;
+  int previousIndex = 5;
+  PageController controller = PageController(initialPage: 1);
+  final curve = Curves.fastOutSlowIn;
+  final duration = const Duration(milliseconds: 700);
 
   List<OnboardingData> data = [
     OnboardingData(
       title: 'Meet Doctors Online',
       description: 'Connect with Specialized Doctors Online for Convenient and Comprehensive Medical Consultations.',
+      image: 'assets/images/doctor_0.png',
     ),
     OnboardingData(
       title: "Connect with Specialists",
       description: "Connect with Specialized Doctors Online for Convenient and Comprehensive Medical Consultations.",
+      image: 'assets/images/doctor_1.png',
     ),
     OnboardingData(
       title: 'Thousands of Online Specialists',
       description: ' Explore a Vast Array of Online Medical Specialists, Offering an Extensive Range of Expertise Tailored to Your Healthcare Needs.',
+      image: 'assets/images/doctor_2.png',
+    ),
+    OnboardingData(
+      title: 'Meet Doctors Online',
+      description: 'Connect with Specialized Doctors Online for Convenient and Comprehensive Medical Consultations.',
+      image: 'assets/images/doctor_0.png',
+    ),
+    OnboardingData(
+      title: "Connect with Specialists",
+      description: "Connect with Specialized Doctors Online for Convenient and Comprehensive Medical Consultations.",
+      image: 'assets/images/doctor_1.png',
+    ),
+    OnboardingData(
+      title: 'Thousands of Online Specialists',
+      description: ' Explore a Vast Array of Online Medical Specialists, Offering an Extensive Range of Expertise Tailored to Your Healthcare Needs.',
+      image: 'assets/images/doctor_2.png',
     ),
   ];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        activeIndex = 0;
-        previousIndex = 0;
-      });
+      // *When the post from is called, trigger the initial animation.
+      //* Variables are initially declared with edge values
+      reset();
     });
     super.initState();
   }
 
   moveToNext(int index) {
-    if (index == 2) {
+    //* If the index is the last item then move to the next screen
+    if (index == data.length - 1) {
+      //* Here, you will implement the routing to the next screen
     } else {
       setState(() {
         previousIndex = index;
         activeIndex = index + 1;
       });
     }
-    controller.animateToPage(
-      activeIndex,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.decelerate,
-    );
+    controller.animateToPage(activeIndex, duration: duration, curve: curve);
   }
 
-  PageController controller = PageController(initialPage: 0);
+  reset() {
+    setState(() {
+      previousIndex = data.length - 1;
+      activeIndex = 0;
+    });
+    controller.animateToPage(activeIndex, duration: duration, curve: curve);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +101,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           SizedBox(
             width: AppSizing.width(context),
             height: AppSizing.height(context) * 0.6,
-            // alignment: Alignment.center,
             child: Stack(
               children: [
-                Image.asset(
-                  width: AppSizing.width(context),
-                  height: AppSizing.height(context) * 0.6,
-                  'assets/images/doctor_$activeIndex.png',
-                  fit: BoxFit.cover,
-                ),
                 Positioned(
                   top: 0,
                   bottom: 0,
@@ -88,30 +110,69 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   right: 0,
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: ClipRRect(
-                      // borderRadius: BorderRadius.circular(50),
-                      child: TweenAnimationBuilder(
-                        key: ValueKey(activeIndex),
-                        tween: Tween<double>(begin: 1, end: 0),
-                        duration: const Duration(milliseconds: 1500),
-                        builder: (context, value, child) {
-                          return Opacity(
-                            opacity: value,
-                            child: Image.asset(
-                              // width: AppSizing.width(context) * value,
-                              // height: AppSizing.height(context) * 0.6 * value,
-                              width: AppSizing.width(context),
-                              height: AppSizing.height(context) * 0.6,
-                              // width: 50,
-                              // height: 50,
-                              'assets/images/doctor_$previousIndex.png',
-                              fit: BoxFit.cover,
+                    child: TweenAnimationBuilder(
+                      key: ValueKey(activeIndex),
+                      curve: curve,
+                      tween: Tween<double>(begin: 1.0, end: 0.0),
+                      duration: duration,
+                      builder: (context, value, child) {
+                        return Transform(
+                          alignment: Alignment.bottomCenter,
+                          transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.01)
+                            ..rotateX(value * -0.06),
+                          child: Opacity(
+                            opacity: 1,
+                            child: GestureDetector(
+                              onPanUpdate: (coord) {},
+                              onVerticalDragUpdate: (_) {},
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.r * value),
+                                  topRight: Radius.circular(20.r * value),
+                                ),
+                                child: Image.asset(
+                                  width: AppSizing.width(context),
+                                  height: AppSizing.height(context) * 0.6,
+                                  data[activeIndex].image,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
+                ),
+                TweenAnimationBuilder(
+                  key: ValueKey(activeIndex),
+                  tween: Tween<double>(begin: 0.0, end: 1.0),
+                  curve: curve,
+                  duration: duration,
+                  builder: (context, value, child) {
+                    return Transform(
+                      alignment: Alignment.bottomCenter,
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.01)
+                        ..rotateX(value * 0.01),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                        ),
+                        child: Opacity(
+                          opacity: 1 - value,
+                          child: Image.asset(
+                            width: AppSizing.width(context),
+                            height: AppSizing.height(context) * 0.6,
+                            data[previousIndex].image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -129,32 +190,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         SizedBox(
                           height: AppSizing.kHPercentage(context, 18),
                           child: PageView.builder(
+                            itemCount: data.length,
                             scrollDirection: Axis.vertical,
                             controller: controller,
                             itemBuilder: (c, i) {
-                              return Column(
-                                children: [
-                                  AppSizing.kh20Spacer(),
-                                  Text(
-                                    data[activeIndex].title,
-                                    style: Theme.of(context).textTheme.displaySmall,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  AppSizing.kh20Spacer(),
-                                  Text(
-                                    data[activeIndex].description,
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  AppSizing.kh20Spacer(),
-                                ],
+                              return AnimatedOpacity(
+                                opacity: activeIndex == i ? 1 : 0,
+                                duration: Duration(seconds: 5),
+                                curve: curve,
+                                child: Column(
+                                  children: [
+                                    AppSizing.kh20Spacer(),
+                                    Text(
+                                      data[activeIndex].title,
+                                      style: Theme.of(context).textTheme.displaySmall,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    AppSizing.kh20Spacer(),
+                                    Text(
+                                      data[activeIndex].description,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context).textTheme.labelMedium,
+                                    ),
+                                    AppSizing.kh20Spacer(),
+                                  ],
+                                ),
                               );
                             },
                           ),
                         ),
                         AppButton(
                           padding: EdgeInsets.symmetric(vertical: 12.h),
-                          title: activeIndex >= 2 ? 'Get Started' : "Next",
+                          title: activeIndex >= data.length - 1 ? 'Get Started' : "Next",
                           onPressed: () => moveToNext(activeIndex),
                           borderRadius: 30.r,
                         ),
@@ -162,7 +229,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ...[0, 1, 2].map((index) {
+                            ...List.generate(data.length, (i) => i).map((index) {
                               return InkWell(
                                 highlightColor: Theme.of(context).scaffoldBackgroundColor,
                                 onTap: () => moveToNext(index),
@@ -181,7 +248,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ],
                         ),
                         AppSizing.kh20Spacer(),
-                        const Text("Skip")
+                        InkWell(
+                          onTap: reset,
+                          child: const Text("Reset"),
+                        )
                       ],
                     ),
                   )
