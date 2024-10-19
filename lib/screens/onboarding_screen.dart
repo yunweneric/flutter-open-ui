@@ -249,8 +249,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         AppSizing.kh20Spacer(),
                         InkWell(
+                          borderRadius: BorderRadius.circular(10.r),
                           onTap: reset,
-                          child: const Text("Reset"),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 8.w),
+                            child: const Text("Reset"),
+                          ),
                         )
                       ],
                     ),
