@@ -1,8 +1,8 @@
-import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_openui/utils/icons.dart';
 import 'package:flutter_openui/utils/sizing.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,78 +11,82 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> fadeTextAnimation;
+class _HomeScreenState extends State<HomeScreen> {
+  int activeIndex = 0;
 
-  @override
-  void initState() {
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 700),
-    );
+  List<String> icons = [
+    AppIcons.lense,
+    AppIcons.chat,
+    AppIcons.add,
+    AppIcons.color,
+    AppIcons.setting,
+  ];
 
-    fadeTextAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.easeOut,
-      ),
-    );
-
-    Future.delayed(Duration(milliseconds: 700), () => controller.forward());
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  Tween<double> tween = Tween<double>(begin: 1.0, end: 1.2);
+  bool animationCompleted = false;
 
   @override
   Widget build(BuildContext context) {
-    List<int> items = List.generate(13, (item) => item);
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Transform.rotate(
-        angle: 0.5 * pi,
-        child: AnimatedBuilder(
-            animation: controller,
-            builder: (context, val) {
-              return Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()..scale(1.0),
-                child: Opacity(
-                  opacity: fadeTextAnimation.value,
-                  child: ListWheelScrollView(
-                    controller: ScrollController(initialScrollOffset: 200),
-                    perspective: 0.009,
-                    itemExtent: AppSizing.height(context) * 0.15,
-                    children: items.map(
-                      (index) {
-                        return GestureDetector(
-                          onTap: () async {},
-                          child: Transform.rotate(
-                            angle: -0.5 * pi,
-                            child: Hero(
-                              tag: index,
-                              child: ClipRRect(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              clipBehavior: Clip.none,
+              width: AppSizing.width(context) * 0.8,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: TweenAnimationBuilder(
+                  key: ValueKey(activeIndex),
+                  tween: tween,
+                  duration: Duration(milliseconds: animationCompleted ? 2000 : 200),
+                  curve: animationCompleted ? Curves.elasticOut : Curves.easeOut, // Using bounce out curve
+                  onEnd: () {
+                    setState(() {
+                      animationCompleted = true;
+                      tween = Tween(begin: 1.5, end: 1.0);
+                    });
+                  },
+                  builder: (context, value, child) {
+                    print(['value', value]);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(icons.length, (i) {
+                        return Transform(
+                          alignment: Alignment.bottomCenter,
+                          transform: Matrix4.identity()
+                            ..scale(i == activeIndex ? value : 1.0)
+                            ..translate(0.0, i == activeIndex ? 80.0 * (1 - value) : 0.0),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                animationCompleted = false;
+                                tween = Tween(begin: 1.0, end: 1.2);
+                                activeIndex = i;
+                              });
+                              // animate();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: theme.highlightColor,
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/image_${index}.jpg",
-                                  fit: BoxFit.cover,
-                                  width: AppSizing.width(context) * 0.3,
-                                ),
                               ),
+                              child: SvgPicture.asset(icons[i]),
                             ),
                           ),
                         );
-                      },
-                    ).toList(),
-                  ),
-                ),
-              );
-            }),
+                      }),
+                    );
+                  }),
+            ),
+          )
+        ],
       ),
     );
   }
