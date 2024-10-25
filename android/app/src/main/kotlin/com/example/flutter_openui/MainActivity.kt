@@ -1,4 +1,4 @@
-package com.example.flutter_openui
+package com.flutteropen.ui
 
 import io.flutter.embedding.android.FlutterActivity
 
