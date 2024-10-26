@@ -71,6 +71,18 @@ To contribute to this repo,
     <tr>
         <td>
             <a href="#">
+                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+        <td>
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/rounded_corners_interaction">
+                <img src="./showcase/rounded_corners_interaction.png" alt="Image 1" width="1000" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="#">
                 <img src="./showcase/docking_bar_01.png" alt="Image 1" width="1000" />
             </a>
         </td>
