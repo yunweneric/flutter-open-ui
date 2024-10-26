@@ -13,6 +13,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isExpanded = false;
+  bool hasCopied = false;
+  bool hasCopied2 = false;
+  int? activeIndex;
   @override
   Widget build(BuildContext context) {
     const duration = Duration(milliseconds: 2500);
@@ -20,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.bgGrey,
       body: Center(
         child: AnimatedContainer(
+          onEnd: () {
+            setState(() => hasCopied = true);
+          },
           margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           height: AppSizing.height(context) * (isExpanded ? 0.27 : 0.06),
@@ -65,7 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                       value: isExpanded,
                       onChanged: (val) {
-                        setState(() => isExpanded = !isExpanded);
+                        setState(() {
+                          isExpanded = !isExpanded;
+                          activeIndex = null;
+                        });
                       },
                     ),
                   ],
@@ -78,28 +87,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CartItem(isExpanded: isExpanded),
-                            CartItem(isExpanded: isExpanded),
+                            CartItem(
+                              isExpanded: isExpanded,
+                              isActive: activeIndex == 0,
+                              onTap: () => setState(() => activeIndex = 0),
+                            ),
+                            CartItem(
+                              isExpanded: isExpanded,
+                              isActive: activeIndex == 1,
+                              onTap: () => setState(() => activeIndex = 1),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CartItem(isExpanded: isExpanded),
-                            CartItem(isExpanded: isExpanded),
+                            CartItem(
+                              isExpanded: isExpanded,
+                              isActive: activeIndex == 2,
+                              onTap: () => setState(() => activeIndex = 2),
+                            ),
+                            CartItem(
+                              isActive: activeIndex == 3,
+                              isExpanded: isExpanded,
+                              onTap: () => setState(() => activeIndex = 3),
+                            ),
                           ],
                         )
                       ],
                     ),
-                    CircleAvatar(
-                      backgroundColor: AppColors.textWhite,
-                      radius: 30,
-                      child: Transform.rotate(
-                        alignment: Alignment.center,
-                        angle: pi * 0.5,
-                        child: const Icon(Icons.link),
-                      ),
+                    TweenAnimationBuilder(
+                      key: ValueKey(hasCopied),
+                      curve: Curves.elasticOut,
+                      tween: Tween<double>(begin: hasCopied ? 1.0 : 1.2, end: hasCopied ? 1.2 : 1.0),
+                      onEnd: () {
+                        setState(() => hasCopied = false);
+                        Future.delayed(const Duration(seconds: 1), () {
+                          setState(() => hasCopied2 = false);
+                        });
+                      },
+                      duration: const Duration(milliseconds: 500),
+                      builder: (context, value, child) {
+                        return Transform.scale(
+                          scale: value,
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.textWhite,
+                            radius: 26,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  hasCopied = true;
+                                  hasCopied2 = true;
+                                });
+                              },
+                              child: AnimatedCrossFade(
+                                crossFadeState: !hasCopied2 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                duration: const Duration(milliseconds: 200),
+                                firstChild: const Icon(Icons.link),
+                                secondChild: const Icon(Icons.check),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -114,19 +165,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class CartItem extends StatelessWidget {
   final bool isExpanded;
-  const CartItem({super.key, required this.isExpanded});
+  final Function()? onTap;
+  final bool isActive;
+  const CartItem({
+    super.key,
+    required this.isExpanded,
+    required this.onTap,
+    required this.isActive,
+  });
 
   @override
   Widget build(BuildContext context) {
-    const duration = Duration(milliseconds: 200);
+    const duration = Duration(milliseconds: 500);
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
       child: AnimatedContainer(
         duration: duration,
         height: AppSizing.height(context) * 0.09,
         width: AppSizing.width(context) * 0.36,
         decoration: BoxDecoration(
-          color: !isExpanded ? AppColors.textWhite : AppColors.bgGrey,
+          color: isActive
+              ? Colors.blue.withOpacity(0.2)
+              : !isExpanded
+                  ? AppColors.textWhite
+                  : AppColors.bgGrey,
           borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
