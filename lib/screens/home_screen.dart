@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE6E6E6),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Center(
@@ -61,10 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: const EdgeInsets.only(right: 10),
                           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                           decoration: BoxDecoration(
-                            color: isActive ? item.color : Colors.grey,
+                            color: isActive ? item.color : Color.fromARGB(255, 213, 212, 212),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           width: isActive ? textWidth : 40,
+                          // width: 80,
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Row(
@@ -73,14 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SvgPicture.asset(item.icon, height: 15, color: isActive ? Colors.white : null),
                                 if (isActive) ...[
                                   const SizedBox(width: 5),
-                                  SizedBox(
-                                    child: Text(
-                                      item.title,
-                                      softWrap: true,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(fontSize: 12, color: isActive ? Colors.white : null),
-                                    ),
+                                  Text(
+                                    item.title,
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(fontSize: 12, color: isActive ? Colors.white : null),
                                   ),
                                 ],
                               ],
