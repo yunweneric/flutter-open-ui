@@ -2,19 +2,10 @@ import 'package:flutter/material.dart';
 
 class TileItem {
   final String title;
-  final bool isCompleted;
+  final String icon;
+  final Color color;
 
-  TileItem({required this.title, required this.isCompleted});
-
-  TileItem copyWith({
-    String? title,
-    bool? isCompleted,
-  }) {
-    return TileItem(
-      title: title ?? this.title,
-      isCompleted: isCompleted ?? this.isCompleted,
-    );
-  }
+  TileItem({required this.title, required this.icon, required this.color});
 }
 
 class HomeScreen extends StatefulWidget {
@@ -25,49 +16,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int activeIndex = 0;
   List<TileItem> items = [
-    TileItem(title: "Post on Twitter", isCompleted: false),
-    TileItem(title: "Do the dishes", isCompleted: true),
-    TileItem(title: "Prepare slides for presentation", isCompleted: false),
-    TileItem(title: "Enjoy the ride to uber island", isCompleted: true),
-    TileItem(title: "Pick up kids from school", isCompleted: false),
+    TileItem(title: "Primary", icon: '', color: Colors.blue),
+    TileItem(title: "Transactions", icon: '', color: Colors.green),
+    TileItem(title: "Updates", icon: '', color: Colors.deepPurple),
+    TileItem(title: "Promotions", icon: '', color: Colors.redAccent),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE6E6E6),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...items.map(
-              (item) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  child: CheckboxListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    tileColor: Colors.white,
-                    fillColor: WidgetStateColor.resolveWith((states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.black;
-                      }
-                      return Colors.grey;
-                    }),
-                    checkboxShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    side: BorderSide.none,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: item.isCompleted,
-                    onChanged: (value) {
-                      setState(() {
-                        final index = items.indexOf(item);
-                        final newItem = items[index].copyWith(isCompleted: value!);
-                        items[index] = newItem;
-                      });
-                    },
-                    title: LayoutBuilder(builder: (context, constraints) {
-                      // Measure text width
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...items.map(
+                (item) {
+                  final index = items.indexOf(item);
+                  final isActive = activeIndex == index;
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: LayoutBuilder(builder: (context, c) {
                       final textPainter = TextPainter(
                         text: TextSpan(
                           text: item.title,
@@ -76,33 +48,48 @@ class _HomeScreenState extends State<HomeScreen> {
                         maxLines: 1,
                         textDirection: TextDirection.ltr,
                       )..layout();
-                      final textWidth = textPainter.size.width * 1.2;
-
-                      return Stack(
-                        children: [
-                          Text(item.title),
-                          AnimatedPositioned(
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.decelerate,
-                            top: 2,
-                            bottom: 0,
-                            left: item.isCompleted ? 0 : -textWidth,
-                            child: Center(
-                              child: Container(
-                                height: 2,
-                                color: Colors.black,
-                                width: textWidth,
-                              ),
-                            ),
-                          )
-                        ],
+                      final textWidth = textPainter.size.width + 50;
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            activeIndex = index;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 500),
+                          margin: EdgeInsets.only(right: 10),
+                          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          decoration: BoxDecoration(
+                            color: isActive ? item.color : Colors.grey,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          width: isActive ? textWidth : 40,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.card_travel),
+                              if (isActive) ...[
+                                SizedBox(width: 5),
+                                SizedBox(
+                                  // width: textWidth,
+                                  child: Text(
+                                    item.title,
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       );
                     }),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
