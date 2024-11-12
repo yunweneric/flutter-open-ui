@@ -46,8 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   child: CheckboxListTile(
-                    // enableFeedback: false,
-                    // enabled: false,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     tileColor: Colors.white,
