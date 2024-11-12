@@ -70,8 +70,8 @@ To contribute to this repo,
 <table>
     <tr>
         <td>
-            <a href="#">
-                <img src="./showcase/coming_soon.png" alt="Image 1" width="1000" />
+            <a href="https://github.com/yunweneric/flutter_openUI/tree/todos_strikethrough">
+                <img src="./showcase/todos_strikethrough.png" alt="Image 1" width="1000" />
             </a>
         </td>
         <td>
