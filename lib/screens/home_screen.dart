@@ -48,41 +48,36 @@ class _HomeScreenState extends State<HomeScreen> {
                         maxLines: 1,
                         textDirection: TextDirection.ltr,
                       )..layout();
-                      final textWidth = textPainter.size.width + 40;
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            activeIndex = index;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          margin: const EdgeInsets.only(right: 10),
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                          decoration: BoxDecoration(
-                            color: isActive ? item.color : Color.fromARGB(255, 213, 212, 212),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          width: isActive ? textWidth : 40,
-                          // width: 80,
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(item.icon, height: 15, color: isActive ? Colors.white : null),
-                                if (isActive) ...[
-                                  const SizedBox(width: 5),
-                                  Text(
+                      final textWidth = textPainter.size.width + 50;
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          color: isActive ? item.color : Color.fromARGB(255, 213, 212, 212),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        width: isActive ? textWidth : 50,
+                        child: InkWell(
+                          onTap: () => setState(() => activeIndex = index),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(item.icon, height: 15, color: isActive ? Colors.white : null),
+                              if (isActive) ...[
+                                const SizedBox(width: 5),
+                                Flexible(
+                                  child: Text(
                                     item.title,
                                     softWrap: true,
                                     maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(fontSize: 12, color: isActive ? Colors.white : null),
                                   ),
-                                ],
+                                ),
                               ],
-                            ),
+                            ],
                           ),
                         ),
                       );
