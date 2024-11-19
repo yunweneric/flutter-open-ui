@@ -67,4 +67,4 @@ To contribute to this repo,
 
 ## Gallery
 
-<img src="./showcase/tab_animations_2.png" alt="Image 1" width="1000" />
+<img src="./showcase/tab_animation_2.png" alt="Image 1" width="1000" />
