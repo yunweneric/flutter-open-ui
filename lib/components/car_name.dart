@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_car_rental/utils/colors.dart';
+import 'package:flutter_car_rental/utils/sizing.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CarName extends StatefulWidget {
@@ -25,21 +26,27 @@ class _CarNameState extends State<CarName> {
         Text(
           carNames[widget.index].title,
           style: GoogleFonts.poppins(
-            fontSize: 50,
+            fontSize: Sizing.isMobile(context) ? 40 : 80,
             fontWeight: FontWeight.bold,
             color: AppColors.gray.withOpacity(0.74),
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
         Transform.translate(
           offset: const Offset(0, -40),
           child: Text(
             carNames[widget.index].subTitle,
             style: GoogleFonts.poppins(
-              fontSize: 200,
+              fontSize: Sizing.isMobile(context) ? 80 : 200,
               fontWeight: FontWeight.bold,
               height: 0,
               color: AppColors.gray.withOpacity(0.74),
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
           ),
         ),
       ],

@@ -5,9 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "flutter-open-ui",
+      "name": "Dev",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": ["-t", "./lib/main.dart", "-d", "chrome"]
     },
     {
       "name": "flutter-open-ui (profile mode)",

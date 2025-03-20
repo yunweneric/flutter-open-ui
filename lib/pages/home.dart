@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   Container animatedCar(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: Sizing.height(context) / 4),
+      margin: EdgeInsets.only(top: Sizing.isDesktop(context) ? Sizing.height(context) / 4 : 0),
       child: PageView.builder(
         controller: scrollController,
         onPageChanged: (page) => activeIndex = page,

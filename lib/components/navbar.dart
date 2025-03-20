@@ -12,7 +12,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -21,25 +21,26 @@ class NavBar extends StatelessWidget {
           width: Sizing.width(context) / 8,
           child: Transform.scale(scale: 2, child: SvgPicture.asset("assets/icons/logo.svg")),
         ),
-        SizedBox(
-          width: Sizing.width(context) / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...navItems.map((item) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(item, style: const TextStyle(color: AppColors.black, fontSize: 16)),
-                  ),
-                );
-              })
-            ],
+        if (Sizing.isTablet(context) || Sizing.isDesktop(context))
+          SizedBox(
+            width: Sizing.width(context) / 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...navItems.map((item) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(item, style: const TextStyle(color: AppColors.black, fontSize: 16)),
+                    ),
+                  );
+                })
+              ],
+            ),
           ),
-        ),
         SizedBox(
-          width: Sizing.width(context) / 8,
+          // width:  Sizing.width(context) / 8,
           child: TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(
